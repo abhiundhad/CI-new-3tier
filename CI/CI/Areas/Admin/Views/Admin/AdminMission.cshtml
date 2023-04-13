@@ -1,0 +1,309 @@
+﻿@{
+    Layout = "_AdminSidebar";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CI_Platform</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    @* <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet" />*@
+    <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
+    <style>
+
+
+    </style>
+</head>
+<body>
+
+
+    <div class="container-fluid mt-3">
+
+        <div class="d-flex justify-content-between">
+            <h3>Mission</h3>
+            <button class="btn  landing-page-apply-mission-btn" data-bs-toggle="modal" data-bs-target="#AdminMissionmodal">
+                <i class="fa-regular fa-plus" style="color: #F88735"></i>
+                Add
+            </button>
+        </div>
+        <div class="modal fade" id="AdminMissionmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <form action="">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body usermodalbody overflow-y-auto">
+                            <div class="container-fluid p-0">
+                                <div class="row">
+                                    <div class="col-12 col-lg-4  col-md-6 mb-3">
+                                        <label for="title">Mission Title</label>
+                                        <input type="text" class="form-control" placeholder="Enter title">
+                                    </div>
+                                    <div class="col-12 col-lg-4 col-md-6 mb-3">
+                                        <label for="short description">Mission Short Description</label>
+                                        <input type="text" class="form-control" placeholder="Enter short description">
+                                    </div>
+                                    <div class="col-12 col-lg-4 col-md-6 mb-3">
+                                        <label for="organization name">Mission Organization Name</label>
+                                        <input type="text" class="form-control" placeholder="Enter organization name">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label for="description">Mission Description</label>
+                                        <textarea name="editor1" id="editor1" class="form-control"></textarea>
+                                    </div>
+                                    <div class="col-12  mb-3">
+                                        <label for="organization Detail">Mission Organization Detail</label>
+                                        <textarea type="text" class="form-control" placeholder="Enter organization name"></textarea>
+                                    </div>
+
+                                    <div class="col-12 col-lg-4 col-md-6 mb-3">
+                                        <label for="country">Country</label>
+                                        <Select class="form-control form-select">
+                                            <option selected disabled>select  country</option>
+                                            <option value="">India</option>
+                                            <option value="">USA</option>
+                                        </Select>
+                                    </div>
+                                    <div class="col-12 col-lg-4 col-md-6 mb-3">
+                                        <label for="city">city</label>
+                                        <Select class="form-control form-select">
+                                            <option selected disabled>select City</option>
+                                            <option value="">Gondal</option>
+                                            <option value="">Los Angeles</option>
+                                        </Select>
+                                    </div>
+                                    <div class="col-12 col-lg-4 col-md-6 mb-3">
+                                        <label>Theme</label>
+                                        <Select class="form-control form-select">
+                                            <option selected disabled>select Mission Theme</option>
+                                            <option value="">Enviroment</option>
+                                            <option value="">Education</option>
+                                        </Select>
+                                    </div>
+
+                                    <div class="col-12 col-lg-4 col-md-6 mb-3">
+                                        <label>Mission Start Date</label>
+                                        <input type="datetime-local" class="form-control">
+                                    </div>
+                                    <div class="col-12 col-lg-4 col-md-6 mb-3">
+                                        <label>Mission end Date</label>
+                                        <input type="datetime-local" class="form-control">
+                                    </div>
+                                    <div class="col-12 col-lg-4 col-md-6 mb-3">
+                                        <label>Mission Registraion Deadline</label>
+                                        <input type="datetime-local" class="form-control">
+                                    </div>
+                                    <div class="col-12 col-lg-4 col-md-6 mb-3">
+                                        <label>Mission Type</label>
+                                        <Select class="form-control form-select">
+                                            <option selected disabled>select MIssion Type</option>
+                                            <option value="Time">Time</option>
+                                            <option value="Goal">Goal</option>
+                                        </Select>
+                                    </div>
+                                    <div class="col-12 col-lg-4 col-md-6 mb-3">
+                                        <label>Total Seat</label>
+                                        <input type="number" class="form-control pe-0">
+                                    </div>
+                                    <div class="col-12 col-lg-4 col-md-6 mb-3">
+                                        <label>Mission Availability</label>
+                                        <Select class="form-control form-select">
+                                            <option selected disabled>select MIssion Availability</option>
+                                            <option value="">Daily</option>
+                                            <option value="">Weekly</option>
+                                            <option value="">Monthly</option>
+                                        </Select>
+                                    </div>
+
+
+
+
+                                    <div class=" col-12 mb-3 ">
+                                        <label>ADD Skills</label>
+
+                                        <div class=" d-flex  mt-2">
+                                            <select multiple style="height:300px;" id="s1" class="  px-0 col-12 col-md-5 ">
+                                                @*   @if (ViewBag.userskills != null)
+                                                {
+                                                @foreach (var it in ViewBag.remainingSkills)
+                                                {
+                                                <option value=@it.SkillId>@it.SkillName</option>
+                                                }
+                                                }
+                                                else
+                                                {
+                                                @if (ViewBag.allskills != null)
+                                                {
+                                                @foreach (var i in ViewBag.allskills)
+                                                {
+                                                <option value=@i.SkillId>@i.SkillName</option>
+                                                }
+                                                }
+                                                }*@
+                                                <option>gsfsgsggrg</option>
+                                                <option>gsgsrgrgrrgr</option>
+                                                <option>rgrgrgrggr</option>
+                                                <option>grgrgrgrrg</option>
+                                                <option>grgrgregregr</option>
+                                                <option>regregrrgrg</option>
+                                                <option>rgwggers</option>
+                                            </select>
+                                            <div class="col-2 mt-5  px-2 d-md-block d-none flex-column ">
+                                                <div class="mt-3 d-flex justify-content-center align-items-center ">
+
+                                                    <i class="bi bi-chevron-right py-2  px-1 skillimg" id="t1 " onclick="ved1()"></i>
+                                                </div>
+                                                <div class="mt-1  d-flex justify-content-center align-items-center">
+
+                                                    <i class="bi bi-chevron-left skillimg py-2  px-1" id="t2" onclick="ved2()"></i>
+
+                                                </div>
+                                                <div class="mt-1  d-flex justify-content-center align-items-center">
+
+                                                    <i class="bi bi-chevron-double-right skillimg py-2  px-1" id="t3" onclick="ved3()"></i>
+                                                </div>
+                                                <div class="mt-1  d-flex justify-content-center align-items-center">
+
+                                                    <i class="bi bi-chevron-double-left skillimg py-2 px-1 " id="t4" onclick="ved4()"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 my-2 d-flex justify-content-center  align-items-center d-block d-md-none   px-2">
+
+                                                <i class="bi bi-chevron-down  p-2 skillimg" id="t1 " onclick="ved1()"></i>
+
+                                                <i class="bi bi-chevron-up skillimg p-2 ms-2" id="t2" onclick="ved2()"></i>
+
+                                                <i class="bi bi-chevron-double-down skillimg px-2 ms-2" id="t3" onclick="ved3()"></i>
+
+                                                <i class="bi bi-chevron-double-up skillimg px-2 ms-2" id="t4" onclick="ved4()"></i>
+                                            </div>
+
+                                            <select multiple id="s2" style="height:300px;" class=" px-0 col-12 col-md-5 ">
+                                                @*     @if (ViewBag.userskills != null)
+                                                {
+                                                @foreach (var it in ViewBag.userskills)
+                                                {
+                                                <option value=@it.SkillId>@it.SkillName</option>
+                                                }
+                                                }*@
+                                                <option>sgdhdh</option>
+                                                <option>hdhhdh</option>
+                                                <option>hdhdhdthh</option>
+                                                <option>hhththtrh</option>
+                                                <option>ghfhfthth</option>
+                                                <option>hthtrhtrhtrhtrhtrth</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-4 col-md-6 mb-3">
+                                        <label>Choose Mission Image</label>
+                                        <input type="File" class="form-control " multiple>
+                                    </div
+
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                             <div class="modal-footer">
+                        <button type="button" class="btn closedbtn" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn savebtn">Save changes</button>
+                    </div>
+                    </div>
+               
+                </div>
+        
+            </form></div>
+        
+    </div>
+
+    <hr />
+
+    <table id="example" class="table" style="width:100%;border: 1px solid #e9ecef;">
+        <thead class="thead-light" style="background-color:#F8F9FC;">
+            <tr>
+                <th scope="col">Mission Title</th>
+                <th scope="col">Mission Type</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @* @foreach (var mission in Model.Missions)
+            {*@
+            <tr>
+                <th scope="row">Title</th>
+                <td>MissionType</td>
+                <td>StartDate.Value.ToShortDateString()</td>
+                <td>EndDate.Value.ToShortDateString()</td>
+                <td><i class="fas fa-edit"></i> | <i class="fa fa-trash" style="color:red"></i></td>
+            </tr>
+            <tr>
+                <th scope="row">Title</th>
+                <td>MissionType</td>
+                <td>StartDate.Value.ToShortDateString()</td>
+                <td>EndDate.Value.ToShortDateString()</td>
+                <td><i class="fas fa-edit"></i> | <i class="fa fa-trash" style="color:red"></i></td>
+            </tr>
+            <tr>
+                <th scope="row">Title</th>
+                <td>MissionType</td>
+                <td>StartDate.Value.ToShortDateString()</td>
+                <td>EndDate.Value.ToShortDateString()</td>
+                <td><i class="fas fa-edit"></i> | <i class="fa fa-trash" style="color:red"></i></td>
+            </tr>
+            <tr>
+                <th scope="row">Title</th>
+                <td>MissionType</td>
+                <td>StartDate.Value.ToShortDateString()</td>
+                <td>EndDate.Value.ToShortDateString()</td>
+                <td><i class="fas fa-edit"></i> | <i class="fa fa-trash" style="color:red"></i></td>
+            </tr>
+            <tr>
+                <th scope="row">Title</th>
+                <td>MissionType</td>
+                <td>StartDate.Value.ToShortDateString()</td>
+                <td>EndDate.Value.ToShortDateString()</td>
+                <td><i class="fas fa-edit"></i> | <i class="fa fa-trash" style="color:red"></i></td>
+            </tr>
+            <tr>
+                <th scope="row">Title</th>
+                <td>MissionType</td>
+                <td>StartDate.Value.ToShortDateString()</td>
+                <td>EndDate.Value.ToShortDateString()</td>
+                <td><i class="fas fa-edit"></i> | <i class="fa fa-trash" style="color:red"></i></td>
+            </tr>
+            @*}*@
+
+
+
+
+        </tbody>
+    </table>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+    @*  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>*@
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="~/js/Admin.js" asp-append-version="true"></script>
+    <link href="~/css/Adminindex.css" rel="stylesheet" asp-append-version="true" />
+
+</body>
+</html>
+
+@*@RenderBody()*@

@@ -1,0 +1,180 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var id = Context.Session.GetString("userID");
+
+
+}
+@{
+    PaginationModel pagination = new PaginationModel();
+
+    int pageNo = 0;
+
+    if (ViewBag.Pagination != null)
+    {
+        pagination = ViewBag.Pagination;
+        pageNo = pagination.CurrentPage;
+    }
+}
+@{
+    Layout = "_navbar2";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/css/Storypage.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="container storylistingcontainer mx-0 p-0">
+
+        <div class="row storyheader  position-relative m-0">
+           <div class="  position-absolute top-50 start-50 translate-middle text-center">
+
+                <p style="width:75vw; " class="ms-auto me-auto mb-3">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, fugiat deleniti! Aut nam incidunt vel nisi, placeat reiciendis, eos vitae accusantium a quasi tempora maiores voluptatem, voluptas optio deleniti veritatis.
+                </p>
+                <a class=" storyheaderbtn rounded-5 p-1 px-4  " href="/Employee/StoryListing/ShareStory/@id">
+                    Share your Story
+                    <i class="bi bi-arrow-right  "></i>
+                </a>
+
+            </div>
+
+        </div>
+
+       
+    </div>
+    <div class="album py-5 bg-light" id="storycards">
+        <div class="container">
+
+            <div class="row row-cols-1 row-cols-sm-2  row-cols-lg-2 row-cols-xl-3 g-3">
+
+                @foreach(var story in Model)
+                {
+                    <div class="col">
+                        <div class="card shadow-sm" style="height:100% width:98%">
+                            <div class="img-event">
+                                @if (story.storymediapath != "")
+                                {
+                                    <img class="card-img-top storyimg" id="cardBanner"
+                                         src="@story.storymediapath" alt="Card image cap">
+                                }
+                                else
+                                {
+                                    <img class="card-img-top storyimg" id="cardBanner"
+                                         src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png" alt="Card image cap">
+                                }
+                              
+                                <div class="ABC position-absolute top-0 start-0" style="height:100%; width:100%;">StoryId
+                                    <a class="btn-view  rounded-5 py-1 px-1 px-sm-4 px-lg-4 position-absolute top-50 start-50 translate-middle" href="/Employee/StoryListing/StoryDetail/@ViewBag.UserId?StoryId=@story.StoryId">
+                                        View Details
+                                        <i class="bi bi-arrow-right  "></i>
+
+                                    </a>
+                                </div>
+                                <button class="theme-btn position-absolute top-100 start-50 translate-middle ">@story.Themename</button>
+                            </div>
+                            <div class="card-body">
+                                <div class=" col-12">
+                                    <h5 class="card-title demo-1  mt-3">@story.StoryTitle</h5>
+                                    <div class="demo-2">
+                                    <p class="card-text ">
+                                        @Html.Raw(story.ShortDescription)
+                                    </p>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                 
+                                    <div class="d-flex me-auto mt-2 align-items-center ">
+                                        @if (story.Useravtar != "")
+                                        {
+                                            <img src="@story.Useravtar" class="storyuserphoto" />
+                                        }
+                                        else
+                                        {
+                                            
+                                        <img src="~/images/user1.png" class="storyuserphoto" />
+                                        }
+                                        <lable class="ms-2" id="">@story.username &nbsp;@story.lastname</lable>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+               
+
+                
+                </div>
+            <div class="container-fluid mt-3">
+                @if (pagination.TotalPages > 0)
+                {
+                    <ul class="pagination justify-content-center">
+                        @if (pagination.CurrentPage > pagination.StartPage)
+                        {
+                            <li class="page-item ms-2 d-none d-xl-block d-sm-block">
+                                <a class="page-link" style="color:#F88634" onclick="storyfilter(@pagination.StartPage)">First</a>
+                            </li>
+                            <li class="page-item ms-2">
+                                <a class="page-link" style="color:#F88634" onclick="storyfilter(@pagination.CurrentPage - 1)">  &laquo;</a>
+                            </li>
+
+                        }
+                        else
+
+                        {
+                            <li class="page-item ms-2 d-none d-xl-block d-sm-block">
+                                <a class="page-link">First</a>
+                            </li>
+                            <li class="page-item ms-2">
+                                <a class="page-link">
+
+                                    &laquo;
+                                </a>
+                            </li>
+                        }
+
+                        @for (var pg = pagination.StartPage; pg <= pagination.EndPage; pg++)
+                        {
+                            <li class="page-item @(pg == pagination.CurrentPage ? " active" : "" ) ms-2">
+                                <a class="page-link" style="@(pg==pagination.CurrentPage ? "color:white":"color:#F88634")" onclick="storyfilter(@pg)">@pg</a>
+                            </li>
+                        }
+
+                        @if (pagination.CurrentPage < pagination.TotalPages)
+                        {
+                            <li class="page-item ms-2 ">
+                                <a class="page-link" style="color:#F88634" onclick="storyfilter(@pagination.CurrentPage + 1)">&raquo;</a>
+                            </li>
+                            <li class="page-item ms-2 d-none d-xl-block d-sm-block">
+                                <a class="page-link" style="color:#F88634" onclick="storyfilter(@pagination.TotalPages)">Last</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item ms-2 ">
+                                <a class="page-link">&raquo</a>
+                            </li>
+                            <li class="page-item ms-2 d-none d-xl-block d-sm-block">
+                                <a class="page-link">Last</a>
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
+          
+            </div>
+        </div>
+   <script src="~/js/StoryListing.js"></script>
+    
+
+</body>
+</html>
+
