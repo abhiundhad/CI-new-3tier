@@ -26,8 +26,10 @@
 
     <div class="container-fluid mt-3">
 
-        <div><h3>Mission Application</h3></div>
-        <hr />
+        <div class="borderbottom">
+            <h3 class="borderbotm mb-0 " style="width:max-content">Mission Application</h3>
+            </div>
+   
 
         <table id="example" class="table" style="width:100%;border: 1px solid #e9ecef;">
             <thead class="thead-light" style="background-color:#F8F9FC;">
@@ -42,16 +44,7 @@
             </thead>
             <tbody>
 
-              @*  @foreach (var ma in Model.MissionApplication)
-                {
-                    @foreach (var miss in Model.Missions)
-                    {
-                        @if (ma.MissionId == miss.MissionId)
-                        {
-                            @foreach (var user in Model.Users)
-                            {
-                                @if (ma.UserId == user.UserId)
-                                {*@
+            
 
                                     <tr>
                                         <th scope="row">Title</th>
@@ -61,14 +54,145 @@
                                         <td>AppliedAt.ToShortDateString()</td>
                                         <td><i class="fa-regular fa-circle-check" style="color:green;"></i> | <i class="fa-sharp fa-regular fa-circle-xmark" style="color:red;"></i></td>
                                     </tr>
-                              @*  }
-                            }
-                        }
+                                    
+                                    <tr>
+                                        <th scope="row">Title</th>
+                                        <td>MissionId</td>
+                                        <td>UserId</td>
+                                        <td>FirstName LastName</td>
+                                        <td>AppliedAt.ToShortDateString()</td>
+                                        <td><i class="fa-regular fa-circle-check" style="color:green;"></i> | <i class="fa-sharp fa-regular fa-circle-xmark" style="color:red;"></i></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <th scope="row">Title</th>
+                                        <td>MissionId</td>
+                                        <td>UserId</td>
+                                        <td>FirstName LastName</td>
+                                        <td>AppliedAt.ToShortDateString()</td>
+                                        <td><i class="fa-regular fa-circle-check" style="color:green;"></i> | <i class="fa-sharp fa-regular fa-circle-xmark" style="color:red;"></i></td>
+                                    </tr>
 
-                    }
+                <tr>
+                    <th scope="row">Title</th>
+                    <td>MissionId</td>
+                    <td>UserId</td>
+                    <td>FirstName LastName</td>
+                    <td>AppliedAt.ToShortDateString()</td>
+                    <td><i class="fa-regular fa-circle-check" style="color:green;"></i> | <i class="fa-sharp fa-regular fa-circle-xmark" style="color:red;"></i></td>
+                </tr>
+                
+                                    <tr>
+                                        <th scope="row">Title</th>
+                                        <td>MissionId</td>
+                                        <td>UserId</td>
+                                        <td>FirstName LastName</td>
+                                        <td>AppliedAt.ToShortDateString()</td>
+                                        <td><i class="fa-regular fa-circle-check" style="color:green;"></i> | <i class="fa-sharp fa-regular fa-circle-xmark" style="color:red;"></i></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <th scope="row">Title</th>
+                                        <td>MissionId</td>
+                                        <td>UserId</td>
+                                        <td>FirstName LastName</td>
+                                        <td>AppliedAt.ToShortDateString()</td>
+                                        <td><i class="fa-regular fa-circle-check" style="color:green;"></i> | <i class="fa-sharp fa-regular fa-circle-xmark" style="color:red;"></i></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <th scope="row">Title</th>
+                                        <td>MissionId</td>
+                                        <td>UserId</td>
+                                        <td>FirstName LastName</td>
+                                        <td>AppliedAt.ToShortDateString()</td>
+                                        <td><i class="fa-regular fa-circle-check" style="color:green;"></i> | <i class="fa-sharp fa-regular fa-circle-xmark" style="color:red;"></i></td>
+                                        
+                                    <tr>
+                                        <th scope="row">Title</th>
+                                        <td>MissionId</td>
+                                        <td>UserId</td>
+                                        <td>FirstName LastName</td>
+                                        <td>AppliedAt.ToShortDateString()</td>
+                                        <td><i class="fa-regular fa-circle-check" style="color:green;"></i> | <i class="fa-sharp fa-regular fa-circle-xmark" style="color:red;"></i></td>
 
-                }*@
+                                        
+                                    <tr>
+                                        <th scope="row">Title</th>
+                                        <td>MissionId</td>
+                                        <td>UserId</td>
+                                        <td>FirstName LastName</td>
+                                        <td>AppliedAt.ToShortDateString()</td>
+                                        <td><i class="fa-regular fa-circle-check" style="color:green;"></i> | <i class="fa-sharp fa-regular fa-circle-xmark" style="color:red;"></i></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <th scope="row">Title</th>
+                                        <td>MissionId</td>
+                                        <td>UserId</td>
+                                        <td>FirstName LastName</td>
+                                        <td>AppliedAt.ToShortDateString()</td>
+                                        <td><i class="fa-regular fa-circle-check" style="color:green;"></i> | <i class="fa-sharp fa-regular fa-circle-xmark" style="color:red;"></i></td>
+                                        
+                                    <tr>
+                                        <th scope="row">Title</th>
+                                        <td>MissionId</td>
+                                        <td>UserId</td>
+                                        <td>FirstName LastName</td>
+                                        <td>AppliedAt.ToShortDateString()</td>
+                                        <td><i class="fa-regular fa-circle-check" style="color:green;"></i> | <i class="fa-sharp fa-regular fa-circle-xmark" style="color:red;"></i></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <th scope="row">Title</th>
+                                        <td>MissionId</td>
+                                        <td>UserId</td>
+                                        <td>FirstName LastName</td>
+                                        <td>AppliedAt.ToShortDateString()</td>
+                                        <td><i class="fa-regular fa-circle-check" style="color:green;"></i> | <i class="fa-sharp fa-regular fa-circle-xmark" style="color:red;"></i></td>
 
+                                        
+                                    <tr>
+                                        <th scope="row">Title</th>
+                                        <td>MissionId</td>
+                                        <td>UserId</td>
+                                        <td>FirstName LastName</td>
+                                        <td>AppliedAt.ToShortDateString()</td>
+                                        <td><i class="fa-regular fa-circle-check" style="color:green;"></i> | <i class="fa-sharp fa-regular fa-circle-xmark" style="color:red;"></i></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <th scope="row">Title</th>
+                                        <td>MissionId</td>
+                                        <td>UserId</td>
+                                        <td>FirstName LastName</td>
+                                        <td>AppliedAt.ToShortDateString()</td>
+                                        <td><i class="fa-regular fa-circle-check" style="color:green;"></i> | <i class="fa-sharp fa-regular fa-circle-xmark" style="color:red;"></i></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <th scope="row">Title</th>
+                                        <td>MissionId</td>
+                                        <td>UserId</td>
+                                        <td>FirstName LastName</td>
+                                        <td>AppliedAt.ToShortDateString()</td>
+                                        <td><i class="fa-regular fa-circle-check" style="color:green;"></i> | <i class="fa-sharp fa-regular fa-circle-xmark" style="color:red;"></i></td>
+                                    </tr>
+
+                <tr>
+                    <th scope="row">Title</th>
+                    <td>MissionId</td>
+                    <td>UserId</td>
+                    <td>FirstName LastName</td>
+                    <td>AppliedAt.ToShortDateString()</td>
+                    <td><i class="fa-regular fa-circle-check" style="color:green;"></i> | <i class="fa-sharp fa-regular fa-circle-xmark" style="color:red;"></i></td>
+                </tr>
+
+                                    </tr>
+                                    </tr>
+                                    </tr>
+                                    </tr>
+                              
 
 
 

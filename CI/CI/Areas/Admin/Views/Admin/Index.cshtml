@@ -26,9 +26,9 @@
 
     <div class="container-fluid mt-3">
 
-        <div class="d-flex justify-content-between">
-            <h3>User</h3>
-            <button class="btn  landing-page-apply-mission-btn" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+        <div class="d-flex justify-content-between borderbottom ">
+            <h3 class="borderbotm mb-0 ">User</h3>
+            <button class="btn  mb-2 landing-page-apply-mission-btn" data-bs-toggle="modal" data-bs-target="#exampleModal1 ">
                 <i class="fa-regular fa-plus" style="color: #F88735"></i>
                 Add
             </button>
@@ -56,7 +56,7 @@
                                         }
                                         else
                                         {*@
-                                        <img src="~/images/Abhi.jpg"
+                                        <img src="~/images/Abhi2.jpg"
                                              class="rounded-circle user-profile-img" id="user-profile-img">
                                         @* }*@
 
@@ -130,7 +130,7 @@
 
 
 
-        <hr />
+       
 
         <table id="example" class="table" style="width:100%;border: 1px solid #e9ecef;">
             <thead class="thead-light" style="background-color:#F8F9FC;">
@@ -284,109 +284,15 @@
         </table>
     </div>
 
-   @* <script>
-        function saveAdminUser() {
 
-            const toBase64 = file => new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result);
-
-                reader.onerror = error => reject(error);
-            });
-
-
-            Main();
-
-            async function Main() {
-                const file = document.querySelector('#file').files[0];
-                //console.log(await toBase64(file));
-                var abc = await toBase64(file);
-
-
-
-                alert("hii")
-                var firstName = document.getElementById("FirstName").value;
-                var lastName = document.getElementById("LastName").value;
-                var email = document.getElementById("Email").value;
-                var password = document.getElementById("Password").value;
-                //var avatar = document.getElementById("Avatar").value;
-                var department = document.getElementById("Department").value;
-                var countryList = document.getElementById("countryList").value;
-                var cityList = document.getElementById("cityList").value;
-                var profileText = document.getElementById("ProfileText").value;
-                var employeeId = document.getElementById("EmployeeId").value;
-                var status = document.getElementById("Status").value;
-                $.ajax({
-
-                    url: '/Admin/AdminPages/AddAdminUser',
-                    method: "POST",
-                    dataType: "json",
-                    data: {
-                        firstName: firstName, lastName: lastName, email: email, password: password, avatar: abc, department: department, countryList: countryList,
-                        cityList: cityList, profileText: profileText, employeeId: employeeId, status: status
-                    },
-                    success: function (result) {
-                        console.log(result);
-                        if (result.success) {
-
-                            $("#user-avatar").load(window.location.href + " #user-avatar");
-
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'profile pic has been updated successfully',
-                                showConfirmButton: false,
-                                timer: 1500,
-                            })
-
-                        }
-
-                    }
-                });
-            }
-
-        }
-
-
-        function editAdminUser(UI) {
-            $.ajax({
-
-                url: '/Admin/AdminPages/EditAdminUser',
-                method: "POST",
-                dataType: "json",
-                data: { userId: UI },
-                success: function (result) {
-                    console.log(result);
-                    if (result.success) {
-
-                        $("#user-avatar").load(window.location.href + " #user-avatar");
-
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'profile pic has been updated successfully',
-                            showConfirmButton: false,
-                            timer: 1500,
-                        })
-
-                    }
-
-                }
-            });
-        }
-    </script>*@
-    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>*@
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
 
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     <script src="~/js/Admin.js" asp-append-version="true"></script>
-    <link href="~/css/Admin.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/Adminindex.css" rel="stylesheet" asp-append-version="true" />
 
 </body>
 </html>
 
-@*@RenderBody()*@
+

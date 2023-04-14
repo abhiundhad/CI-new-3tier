@@ -1,7 +1,7 @@
 ﻿function storyfilter(pg)
 {
     $.ajax({
-        url: "/StoryListing/StoryListing",
+        url: "/Employee/StoryListing/StoryListing",
         type: "POST",
         data: { 'pg': pg },
         success: function (res) {

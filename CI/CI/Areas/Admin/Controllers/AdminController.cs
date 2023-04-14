@@ -1,10 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CI.Models;
+using CI.Repository.Interface;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class AdminController : Controller
     {
+        private readonly IUserRepository _Idb;
+        public AdminController(IUserRepository Idb)
+        {
+
+            _Idb = Idb;
+        }
         public IActionResult Index()
         {
             HttpContext.Session.SetInt32("Nav", 1);
@@ -27,7 +35,17 @@ namespace CI.Areas.Admin.Controllers
         {
             HttpContext.Session.SetInt32("Nav", 4);
             ViewBag.nav = HttpContext.Session.GetInt32("Nav");
-            return View();
+            var themevm = new AdminPanaltehmeViewModal();
+            themevm.MissionThemes = _Idb.ThemeList();
+            return View(themevm);
+        }
+        [HttpPost]
+        public IActionResult AdminTheme(AdminPanaltehmeViewModal theme)
+        {
+            _Idb.ADDNewTheme(theme.NewTheme);
+            var themevm = new AdminPanaltehmeViewModal();
+            themevm.MissionThemes = _Idb.ThemeList();
+            return View(themevm);
         }
         public IActionResult AdminSkills()
         {

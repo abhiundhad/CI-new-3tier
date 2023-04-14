@@ -380,6 +380,14 @@ namespace CI.Repository.Repository
         {
             return _db.Admins.Where(u => u.Email == Email).FirstOrDefault();
         }
+        public MissionTheme ADDNewTheme(String Theme)
+        {
+            var theme = new MissionTheme();
+            theme.Title = Theme;
+            _db.Add(theme);
+            _db.SaveChanges();
+            return theme;
+        }
 
     }
 }   

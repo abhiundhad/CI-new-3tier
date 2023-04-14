@@ -2,7 +2,7 @@
 function deletetimesheet(timesheetid) {
 
     $.ajax({
-        url: '/Volunteering/deletetimesheet',
+        url: '/Employee/Volunteering/deletetimesheet',
         type: 'POST',
         data: { timesheetid: timesheetid },
 
@@ -21,7 +21,7 @@ function deletetimesheet(timesheetid) {
 function deletegoalsheet(timesheetid) {
 
     $.ajax({
-        url: '/Volunteering/deletetimesheet',
+        url: '/Employee/Volunteering/deletetimesheet',
         type: 'POST',
         data: { timesheetid: timesheetid },
 
@@ -40,7 +40,7 @@ function deletegoalsheet(timesheetid) {
 function editgoalsheet(timesheetid) {
 
     $.ajax({
-        url: '/Volunteering/editsheet',
+        url: '/Employee/Volunteering/editsheet',
         type: 'POST',
         data: { timesheetid: timesheetid },
 
@@ -71,7 +71,7 @@ function editgoalsheet(timesheetid) {
 function edittimesheet(timesheetid) {
 
     $.ajax({
-        url: '/Volunteering/editsheet',
+        url: '/Employee/Volunteering/editsheet',
         type: 'POST',
         data: { timesheetid: timesheetid },
 

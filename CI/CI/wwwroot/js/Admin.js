@@ -11,3 +11,4 @@ $(document).ready(function () {
     $('#example').DataTable();
 });
 CKEDITOR.replace('editor1');
+CKEDITOR.replace('editor2');

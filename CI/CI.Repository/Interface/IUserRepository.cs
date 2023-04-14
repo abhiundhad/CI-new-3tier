@@ -48,5 +48,6 @@ namespace CI.Repository.Interface
         public void updateuser(User user);
         public void AddUserSkills(long skillid, long userId);
         public Admin AdminbEmail(String Email);
+        public MissionTheme ADDNewTheme(String Theme);
     }
 }

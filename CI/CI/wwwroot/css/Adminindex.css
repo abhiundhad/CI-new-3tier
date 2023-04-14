@@ -195,3 +195,11 @@ div#example_info {
     color: #F88735;
     font-weight: 500;
 }
+
+.borderbottom{
+    border-bottom:1px solid gray;
+
+}
+.borderbotm{
+    border-bottom:2px solid black;
+}

@@ -35,7 +35,7 @@ function sendRecomStory(storyid, Id) {
     sendbtn.innerHTML = "Sending...";
     $.ajax
         ({
-            url: '/StoryListing/sendRecom',
+            url: '/Employee/StoryListing/sendRecom',
             type: 'POST',
             data: { storyid: storyid, Id: Id, Email: Email },
             success: function (result) {
