@@ -10,7 +10,7 @@
     <title>@ViewData["Title"] - CI_Platform</title>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet" />
+@*    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet" />*@
     <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
 
 </head>
@@ -20,7 +20,7 @@
     <div class="container-fluid mt-3">
 
         <div class="borderbottom"><h3 class="borderbotm mb-0 " style="width:max-content">Story</h3></div>
-        <hr />
+     
 
         <table id="example" class="table" style="width:100%;border: 1px solid #e9ecef;">
             <thead class="thead-light" style="background-color:#F8F9FC;">
@@ -28,34 +28,20 @@
                     <th scope="col">Story Title</th>
                     <th scope="col">Full Name</th>
                     <th scope="col">Mission Title</th>
-                    <th scope="col">Action</th>
+                    <th scope="col" class="d-flex justify-content-center">Action</th>
                 </tr>
             </thead>
             <tbody>
 
-          @*      @foreach (var story in Model.Stories)
-                {
-                    @foreach (var miss in Model.Missions)
-                    {
-                        @if (story.MissionId == miss.MissionId)
-                        {
-                            @foreach (var user in Model.Users)
-                            {
-                                @if (story.UserId == user.UserId)
-                                {*@
+       
                                     <tr>
                                         <th scope="row">Title</th>
                                         <td>FirstName LastName</td>
                                         <td>Title</td>
-                                        <td> <a class="apply-button" href="">View</a> <i class="fa-regular fa-circle-check" style="color:green;"></i>  <i class="fa-sharp fa-regular fa-circle-xmark" style="color:red;"></i>  <i class="fa fa-trash" style="color:black"></i></td>
+                    <td class="d-flex justify-content-center align-items-center "> <a class="Viewbtn rounded-5  text-decoration-none px-2 " href="">View</a> <i class="fa-regular fa-circle-check ms-1" style="color:green;"></i>  <i class="fa-sharp fa-regular fa-circle-xmark ms-1" style="color:red;"></i>  <i class="fa fa-trash ms-1" style="color:black"></i></td>
                                     </tr>
-@*
-                                }
-                            }
-                        }
-                    }
-                }*@
 
+                                
 
 
 

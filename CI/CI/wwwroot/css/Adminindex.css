@@ -192,7 +192,7 @@ div#example_info {
 .landing-page-apply-mission-btn:hover {
     border: 2px solid #F88735;
     border-radius: 30px;
-    color: #F88735;
+    color: #F88634;
     font-weight: 500;
 }
 
@@ -202,4 +202,9 @@ div#example_info {
 }
 .borderbotm{
     border-bottom:2px solid black;
+}
+.Viewbtn {
+    color: #F88634 !important;
+    border: 1px solid #F88634!important;
+    
 }
