@@ -83,7 +83,7 @@ namespace CI.Repository.Repository
             {
                 Applied.MissionId = missionid;
                 Applied.UserId = id;
-                Applied.ApprovalStatus = "1";
+                Applied.ApprovalStatus = "Pendding";
                 Applied.AppliedAt = DateTime.Now;
             };
             _db.MissionApplications.Add(Applied);

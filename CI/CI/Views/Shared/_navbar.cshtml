@@ -421,46 +421,12 @@
 
             </div>
         </nav>
-        <div class="valuelist d-flex align-items-center flex-wrap justify-content-center mt-1 mb-1">
 
-            @if (@ViewBag.SearchCountry != null)
-            {
-                @foreach (var item in ViewBag.SearchCountry)
-                {
-                    <div class="filter-list px-2 ms-2" id=@item.CountryId>
-                        @item.Name
-                        <button class="btn-close" type="button" aria-label="close" id=@item.CountryId onclick="closeCountryfilter(this.id)"></button>
-                    </div>
 
-                }
-
-            }
-            @if (@ViewBag.SearchCity != null)
-            {
-                @foreach (var item in ViewBag.SearchCity)
-                {
-                    <div class="filter-list px-2 ms-2 " id=@item.CityId>
-                        @item.Name
-                        <button class="btn-close" type="button" aria-label="close" id=@item.CityId onclick="closeCityfilter(this.id)"></button>
-                    </div>
-                }
-            }
-            @if (@ViewBag.SearchTheme != null)
-            {
-                @foreach (var item in ViewBag.SearchTheme)
-                {
-                    <div class="filter-list px-2 ms-2" id=@item.MissionThemeId>
-                        @item.Title
-                        <button class="btn-close" type="button" aria-label="close" id=@item.MissionThemeId onclick="closethemefilter(this.id)"></button>
-                    </div>
-                }
-            }
-            @if (@ViewBag.SearchCountry != null || @ViewBag.SearchCity != null || @ViewBag.SearchTheme != null)
-            {
-                <button type="button" class="filter-list border-0 px-2 ms-2" onclick="clearall()">Clear All</button>
-            }
-
+        <div class="filters-section d-flex align-items-center flex-wrap justify-content-center  mt-2">
         </div>
+
+     
     </div>
 
 
