@@ -1,13 +1,16 @@
 ﻿using CI.Repository.Interface;
 using CI_Entity.CIDbContext;
 using CI_Entity.Models;
+using CI_Entity.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace CI.Repository.Repository
 {
@@ -83,7 +86,7 @@ namespace CI.Repository.Repository
             {
                 Applied.MissionId = missionid;
                 Applied.UserId = id;
-                Applied.ApprovalStatus = "Pendding";
+                Applied.ApprovalStatus = "0";
                 Applied.AppliedAt = DateTime.Now;
             };
             _db.MissionApplications.Add(Applied);
@@ -131,7 +134,7 @@ namespace CI.Repository.Repository
                 updatestory.MissionId = MissionId;
                 updatestory.Title = title;
                 updatestory.Description = discription;
-                updatestory.Status = "1";
+                updatestory.Status = "Pendding";
                 updatestory.CreatedAt = date;
                 updatestory.UpdatedAt= DateTime.Now;
                 updatestory.UserId = id;
@@ -146,7 +149,7 @@ namespace CI.Repository.Repository
                 newstory.MissionId = MissionId;
                 newstory.Title = title;
                 newstory.Description = discription;
-                newstory.Status = "1";
+                newstory.Status = "Pendding";
                 newstory.CreatedAt = date;
                 newstory.UserId = id;
                 _db.Add(newstory);
@@ -389,5 +392,236 @@ namespace CI.Repository.Repository
             return theme;
         }
 
+        /*sbghdfhgfdjgfdjg*/
+
+
+        
+        public List<UserSkill> UserSkills(long userid)
+        {
+            return _db.UserSkills.ToList();
+        }
+       
+        //public ContactU addContactUs(string subject, string message, string username, string email)
+        //{
+        //    var contactUs = new ContactU();
+        //    contactUs.UserName = username;
+        //    contactUs.Email = email;
+        //    contactUs.Subject = subject;
+        //    contactUs.Message = message;
+
+        //    _db.Add(contactUs);
+        //    _db.SaveChanges();
+        //    return contactUs;
+        //}
+        public MissionTheme AddTheme(string themeName)
+        {
+            var missiontheme = new MissionTheme();
+            missiontheme.Title = themeName;
+            missiontheme.CreatedAt = DateTime.Now;
+            _db.Add(missiontheme);
+            _db.SaveChanges();
+            return missiontheme;
+        }
+        public MissionTheme UpdateTheme(string themeName, long themeId)
+        {
+            var missiontheme = _db.MissionThemes.FirstOrDefault(t => t.MissionThemeId == themeId);
+            missiontheme.Title = themeName;
+            missiontheme.UpdatedAt = DateTime.Now;
+            _db.Update(missiontheme);
+            _db.SaveChanges();
+            return missiontheme;
+        }
+        public MissionTheme DeleteTheme(long themeId)
+        {
+            var theme = _db.MissionThemes.FirstOrDefault(t => t.MissionThemeId == themeId);
+            theme.DeletedAt = DateTime.Now;
+            theme.Status = 0;
+            _db.Update(theme);
+            _db.SaveChanges();
+            return theme;
+        }
+        public Skill AddSkill(string skillName)
+        {
+            var skill = new Skill();
+            skill.SkillName = skillName;
+            skill.CreatedAt = DateTime.Now;
+            _db.Add(skill);
+            _db.SaveChanges();
+            return skill;
+        }
+        public Skill UpdateSkill(string skillName, long skillId)
+        {
+            var skills = _db.Skills.FirstOrDefault(t => t.SkillId == skillId);
+            skills.SkillName = skillName;
+            skills.UpdatedAt = DateTime.Now;
+            _db.Update(skills);
+            _db.SaveChanges();
+            return skills;
+        }
+        public Skill DeleteSkill(long skillId)
+        {
+            var skill = _db.Skills.FirstOrDefault(t => t.SkillId == skillId);
+            skill.DeletedAt = DateTime.Now;
+            skill.Status = "0";
+            _db.Update(skill);
+            _db.SaveChanges();
+            return skill;
+        }
+        public User AddUser(string firstname, string lastname, string email, string password, string department, string profiletext,
+            string status, string employeeid, string avatar, long cityid, long countryid)
+        {
+            var userexist = _db.Users.Where(e => e.Email == email).Any();
+            if (!userexist)
+            {
+                var user = new User();
+                user.FirstName = firstname;
+                user.LastName = lastname;
+                user.Email = email;
+                user.Password = password;
+                user.Department = department;
+                user.Status = status;
+                user.EmployeeId = employeeid;
+                user.Avatar = avatar;
+                user.CityId = cityid;
+                user.CountryId = countryid;
+                user.ProfileText = profiletext;
+                _db.Add(user);
+                _db.SaveChanges();
+                return user;
+            }
+            else
+            {
+                return _db.Users.Find(email);
+            }
+
+        }
+        public User UpdateUser(string firstname, string lastname, string email, string password, string department, string profiletext,
+    string status, string employeeid, string avatar, long cityid, long countryid, long userId)
+        {
+
+            var user = _db.Users.FirstOrDefault(e => e.UserId == userId);
+            user.FirstName = firstname;
+            user.LastName = lastname;
+            user.Email = email;
+            user.Password = password;
+            user.Department = department;
+            user.Status = status;
+            user.EmployeeId = employeeid;
+            user.Avatar = avatar;
+            user.CityId = cityid;
+            user.CountryId = countryid;
+            user.ProfileText = profiletext;
+            user.UpdatedAt = DateTime.Now;
+            _db.Update(user);
+            _db.SaveChanges();
+            return user;
+
+        }
+        public IQueryable<MissionApplicationViewModel> GetPendingMissionApplications()
+        {
+            var applicationsList = from ma in _db.MissionApplications
+                                   join m in _db.Missions on ma.MissionId equals m.MissionId
+                                   join u in _db.Users on ma.UserId equals u.UserId
+                                   where ma.ApprovalStatus == "0"
+                                   select new MissionApplicationViewModel
+                                   {
+                                       UserId = u.UserId,
+                                       MissionId = ma.MissionId,
+                                       Title = m.Title,
+                                       AppliedAt = ma.AppliedAt,
+                                       FirstName = u.FirstName,
+                                       LastName = u.LastName,
+                                       MissionApplicationId = ma.MissionApplicationId,
+                                   };
+
+            return applicationsList;
+        }
+
+        public void Approveapplication(long MaId, string status)
+        {
+            var ma = _db.MissionApplications.FirstOrDefault(e => e.MissionApplicationId == MaId);
+            ma.ApprovalStatus = status;
+            _db.Update(ma);
+            _db.SaveChanges();
+        }
+
+        public List<CmsPage> GetCmsPages()
+        {
+            return _db.CmsPages.Where(e => e.DeletedAt == null).ToList();
+        }
+
+        public void AddCms(CI_Entity.ViewModel.AdminCmsPageVM cms)
+        {
+            var cmsPage = new CmsPage();
+            cmsPage.Title = cms.Title;
+            cmsPage.Description = HttpUtility.HtmlEncode(cms.Description);
+            cmsPage.Status = cms.Status;
+            cmsPage.Slug = cms.Slug;
+            _db.Add(cmsPage);
+            _db.SaveChanges();
+        }
+
+        public void UpdateCms(CI_Entity.ViewModel.AdminCmsPageVM cms)
+        {
+            var cmsPage = _db.CmsPages.FirstOrDefault(e => e.CmsPageId == cms.CmsPageId);
+            cmsPage.Title = cms.Title;
+            cmsPage.Description = HttpUtility.HtmlEncode(cms.Description);
+            cmsPage.Status = cms.Status;
+            cmsPage.Slug = cms.Slug;
+            cmsPage.UpdatedAt = DateTime.Now;
+            _db.Update(cmsPage);
+            _db.SaveChanges();
+        }
+
+        public void Deletecms(long id)
+        {
+            var cmsPage = _db.CmsPages.FirstOrDefault(e => e.CmsPageId == id);
+            cmsPage.DeletedAt = DateTime.Now;
+            _db.Update(cmsPage);
+            _db.SaveChanges();
+        }
+
+        public CI_Entity.ViewModel.AdminCmsPageVM GetCmsPages(long CmsPageId)
+        {
+            var cms = _db.CmsPages.FirstOrDefault(e => e.CmsPageId == CmsPageId);
+            var cmsPage = new CI_Entity.ViewModel.AdminCmsPageVM();
+            cmsPage.CmsPageId = CmsPageId;
+            cmsPage.CmsPages = _db.CmsPages.Where(e => e.DeletedAt == null).ToList();
+            cmsPage.Title = cms.Title;
+            cmsPage.Description = HttpUtility.HtmlDecode(cms.Description);
+            cmsPage.Status = cms.Status;
+            cmsPage.Slug = cms.Slug;
+
+            return cmsPage;
+        }
+
+        public IQueryable<AdminStoryVM> GetPendingStories()
+        {
+            var applicationsList = from ma in _db.Stories
+                                   join m in _db.Missions on ma.MissionId equals m.MissionId
+                                   join u in _db.Users on ma.UserId equals u.UserId
+                                   where ma.Status == "Pending"
+                                   select new AdminStoryVM
+                                   {
+                                       StoryId = ma.StoryId,
+                                       MissionTitle = m.Title,
+                                       FirstName = u.FirstName,
+                                       LastName = u.LastName,
+                                       StoryTitle = ma.Title,
+                                   };
+            return applicationsList;
+        }
+
+        public void Approvestory(long MaId, string status)
+        {
+            var ma = _db.Stories.FirstOrDefault(e => e.StoryId == MaId);
+            ma.Status = status;
+            _db.Update(ma);
+            _db.SaveChanges();
+        }
+        public User UserByUserid(long userid)
+        {
+            return _db.Users.FirstOrDefault(u => u.UserId == userid);
+        }
     }
 }   

@@ -1,4 +1,5 @@
 ﻿using CI_Entity.Models;
+using CI_Entity.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,5 +50,26 @@ namespace CI.Repository.Interface
         public void AddUserSkills(long skillid, long userId);
         public Admin AdminbEmail(String Email);
         public MissionTheme ADDNewTheme(String Theme);
+        public List<UserSkill> UserSkills(long userid);
+        public MissionTheme AddTheme(string themeName);
+        public MissionTheme UpdateTheme(string themeName, long themeId);
+        public MissionTheme DeleteTheme(long themeId);
+        public Skill AddSkill(string skillName);
+        public Skill UpdateSkill(string skillName, long skillId);
+        public Skill DeleteSkill(long skillId);
+        public User AddUser(string firstname, string lastname, string email, string password, string department, string profiletext,
+            string status, string employeeid, string avatar, long cityid, long countryid);
+        public User UpdateUser(string firstname, string lastname, string email, string password, string department, string profiletext,
+ string status, string employeeid, string avatar, long cityid, long countryid, long userId);
+        public IQueryable<MissionApplicationViewModel> GetPendingMissionApplications();
+        public void Approveapplication(long MaId, string status);
+        public List<CmsPage> GetCmsPages();
+        public void AddCms(CI_Entity.ViewModel.AdminCmsPageVM cms);
+        public void UpdateCms(CI_Entity.ViewModel.AdminCmsPageVM cms);
+        public void Deletecms(long id);
+        public CI_Entity.ViewModel.AdminCmsPageVM GetCmsPages(long CmsPageId);
+        public IQueryable<AdminStoryVM> GetPendingStories();
+        public void Approvestory(long MaId, string status);
+        public User UserByUserid(long userid);
     }
 }

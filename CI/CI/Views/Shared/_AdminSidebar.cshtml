@@ -37,64 +37,64 @@
                         <a asp-area="Admin" asp-action="Index" asp-controller="Admin" class="nav-link  sidebarcontent @(ViewBag.nav == 1? "active":"")" aria-current="page">
 
                             <i class="bi bi-person-fill   sidebar-img  "></i>
-                            <lable class="d-block d-lg-block d-md-none">User</lable>
+                            <lable class=" ms-2 d-block d-lg-block d-md-none">User</lable>
                         </a>
                     </li>
                     <li class="mt-2">
                         <a asp-area="Admin" asp-action="AdminCms" asp-controller="Admin" class="nav-link sidebarcontent @(ViewBag.nav == 2? "active":"")">
 
-                            <i class="bi bi-file-earmark-text-fill sidebar-img me-2"></i>
+                            <i class="bi bi-file-earmark-text-fill sidebar-img "></i>
 
-                            <lable class="d-block d-lg-block d-md-none">   CMS Page</lable>
+                            <lable class=" ms-2 d-block d-lg-block d-md-none">   CMS Page</lable>
                         </a>
                     </li>
                     <li class="mt-2">
                         <a  asp-area="Admin" asp-action="AdminMission" asp-controller="Admin" class="nav-link sidebarcontent @(ViewBag.nav == 3? "active":"")">
 
-                            <i class="bi bi-bullseye sidebar-img me-2"></i>
+                            <i class="bi bi-bullseye sidebar-img"></i>
 
-                            <lable class="d-block d-lg-block d-md-none">  Mission</lable>
+                            <lable class=" ms-2 d-block d-lg-block d-md-none">  Mission</lable>
                         </a>
                     </li>
                     <li class="mt-2">
                         <a asp-area="Admin" asp-action="AdminTheme" asp-controller="Admin" class="nav-link  sidebarcontent @(ViewBag.nav == 4? "active":"")">
 
 
-                            <i class="bi bi-grid-1x2-fill sidebar-img me-2"></i>
+                            <i class="bi bi-grid-1x2-fill sidebar-img "></i>
 
-                            <lable class="d-block d-lg-block d-md-none">Mission Theme</lable>
+                            <lable class=" ms-2 d-block d-lg-block d-md-none">Mission Theme</lable>
                         </a>
                     </li>
                     <li class="mt-2">
                         <a  asp-area="Admin" asp-action="AdminSkills" asp-controller="Admin" class="nav-link sidebarcontent @(ViewBag.nav == 5? "active":"")">
 
-                            <i class="bi bi-tools sidebar-img me-2"></i>
+                            <i class="bi bi-tools sidebar-img "></i>
 
-                            <lable class="d-block d-lg-block d-md-none">Mission Skills</lable>
+                            <lable class=" ms-2 d-block d-lg-block d-md-none">Mission Skills</lable>
                         </a>
                     </li>
                     <li class="mt-2">
                         <a asp-area="Admin" asp-action="AdminMissionApplication" asp-controller="Admin" class="nav-link sidebarcontent @(ViewBag.nav == 6? "active":"") ">
 
-                            <i class="bi bi-folder-fill sidebar-img me-2"></i>
+                            <i class="bi bi-folder-fill sidebar-img"></i>
 
-                            <lable class="d-block d-lg-block d-md-none">Mission Application</lable>
+                            <lable class=" ms-2 d-block d-lg-block d-md-none">Mission Application</lable>
                         </a>
                     </li>
                     <li class="mt-2">
                         <a asp-area="Admin" asp-action="AdminStory" asp-controller="Admin" class="nav-link  sidebarcontent @(ViewBag.nav == 7? "active":"")">
 
-                            <i class="bi bi-book-half sidebar-img me-2"></i>
+                            <i class="bi bi-book-half sidebar-img"></i>
 
-                            <lable class="d-block d-lg-block d-md-none">Story</lable>
+                            <lable class=" ms-2 d-block d-lg-block d-md-none">Story</lable>
                         </a>
                     </li>
                     <li class="mt-2">
                         <a asp-area="Admin" asp-action="AdminBannerManagement" asp-controller="Admin" class="nav-link  sidebarcontent @(ViewBag.nav == 8? "active":"")">
 
-                            <i class="bi bi-border-style sidebar-img me-2"></i>
+                            <i class="bi bi-border-style sidebar-img "></i>
 
-                            <lable class="d-block d-lg-block d-md-none">Banner Management</lable>
+                            <lable class=" ms-2 d-block d-lg-block d-md-none">Banner Management</lable>
                         </a>
                     </li>
 
@@ -160,31 +160,31 @@
 
                 <ul class="nav nav-pills flex-column mb-auto mt-3">
 
-                    <li class="nav-item">
-                        <a href="#1" class="nav-link  sidebarcontent active  " aria-current="page">
+                    <li class="nav-item mt-2">
+                        <a asp-area="Admin" asp-action="Index" asp-controller="Admin" class="nav-link  sidebarcontent @(ViewBag.nav == 1? "active":"")" aria-current="page">
 
-                            <i class="bi bi-person-fill   sidebar-img  "></i>
+                            <i class="bi bi-person-fill   sidebar-img me-2  "></i>
                             <lable class="d-block d-lg-block d-md-none">User</lable>
                         </a>
                     </li>
-                    <li>
-                        <a href="#2" class="nav-link sidebarcontent  ">
+                    <li class="mt-2">
+                        <a asp-area="Admin" asp-action="AdminCms" asp-controller="Admin" class="nav-link sidebarcontent @(ViewBag.nav == 2? "active":"")">
 
                             <i class="bi bi-file-earmark-text-fill sidebar-img me-2"></i>
 
                             <lable class="d-block d-lg-block d-md-none">   CMS Page</lable>
                         </a>
                     </li>
-                    <li>
-                        <a href="#3" class="nav-link  sidebarcontent">
+                    <li class="mt-2">
+                        <a asp-area="Admin" asp-action="AdminMission" asp-controller="Admin" class="nav-link sidebarcontent @(ViewBag.nav == 3? "active":"")">
 
                             <i class="bi bi-bullseye sidebar-img me-2"></i>
 
                             <lable class="d-block d-lg-block d-md-none">  Mission</lable>
                         </a>
                     </li>
-                    <li>
-                        <a href="#4" class="nav-link  sidebarcontent">
+                    <li class="mt-2">
+                        <a asp-area="Admin" asp-action="AdminTheme" asp-controller="Admin" class="nav-link  sidebarcontent @(ViewBag.nav == 4? "active":"")">
 
 
                             <i class="bi bi-grid-1x2-fill sidebar-img me-2"></i>
@@ -192,32 +192,32 @@
                             <lable class="d-block d-lg-block d-md-none">Mission Theme</lable>
                         </a>
                     </li>
-                    <li>
-                        <a href="#5" class="nav-link sidebarcontent">
+                    <li class="mt-2">
+                        <a asp-area="Admin" asp-action="AdminSkills" asp-controller="Admin" class="nav-link sidebarcontent @(ViewBag.nav == 5? "active":"")">
 
                             <i class="bi bi-tools sidebar-img me-2"></i>
 
                             <lable class="d-block d-lg-block d-md-none">Mission Skills</lable>
                         </a>
                     </li>
-                    <li>
-                        <a href="#6" class="nav-link sidebarcontent ">
+                    <li class="mt-2">
+                        <a asp-area="Admin" asp-action="AdminMissionApplication" asp-controller="Admin" class="nav-link sidebarcontent @(ViewBag.nav == 6? "active":"") ">
 
                             <i class="bi bi-folder-fill sidebar-img me-2"></i>
 
                             <lable class="d-block d-lg-block d-md-none">Mission Application</lable>
                         </a>
                     </li>
-                    <li>
-                        <a href="#7" class="nav-link  sidebarcontent">
+                    <li class="mt-2">
+                        <a asp-area="Admin" asp-action="AdminStory" asp-controller="Admin" class="nav-link  sidebarcontent @(ViewBag.nav == 7? "active":"")">
 
                             <i class="bi bi-book-half sidebar-img me-2"></i>
 
                             <lable class="d-block d-lg-block d-md-none">Story</lable>
                         </a>
                     </li>
-                    <li>
-                        <a href="#8" class="nav-link  sidebarcontent">
+                    <li class="mt-2">
+                        <a asp-area="Admin" asp-action="AdminBannerManagement" asp-controller="Admin" class="nav-link  sidebarcontent @(ViewBag.nav == 8? "active":"")">
 
                             <i class="bi bi-border-style sidebar-img me-2"></i>
 

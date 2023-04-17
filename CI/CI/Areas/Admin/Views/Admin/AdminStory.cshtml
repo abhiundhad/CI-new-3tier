@@ -1,16 +1,16 @@
-﻿
-@{
+﻿@{
     Layout = "_AdminSidebar";
 }
+@model IEnumerable< CI_Entity.ViewModel.AdminStoryVM>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - CI_Platform</title>
-  @*  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>*@
+    @*  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>*@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
 
 </head>
@@ -20,7 +20,7 @@
     <div class="container-fluid mt-3">
 
         <div class="borderbottom"><h3 class="borderbotm mb-0 " style="width:max-content">Story</h3></div>
-     
+
 
         <table id="example" class="table" style="width:100%;border: 1px solid #e9ecef;">
             <thead class="thead-light" style="background-color:#F8F9FC;">
@@ -33,22 +33,48 @@
             </thead>
             <tbody>
 
-       
-                                    <tr>
-                                        <th scope="row">Title</th>
-                                        <td>FirstName LastName</td>
-                                        <td>Title</td>
-                    <td class="d-flex justify-content-center align-items-center "> <a class="Viewbtn rounded-5  text-decoration-none px-2 " href="">View</a> <i class="fa-regular fa-circle-check ms-1" style="color:green;"></i>  <i class="fa-sharp fa-regular fa-circle-xmark ms-1" style="color:red;"></i>  <i class="fa fa-trash ms-1" style="color:black"></i></td>
-                                    </tr>
+                @foreach (var story in Model)
+                {
+                    <tr>
+                        <th scope="row">@story.StoryTitle</th>
+                        <td>@story.FirstName @story.LastName</td>
+                        <td>@story.MissionTitle</td>
+                        <td class="d-flex justify-content-center align-items-center ">
+                            <a class="Viewbtn rounded-5 me-3  text-decoration-none px-2 " href="/Employee/Home/StoryDetail/?storyId=@story.StoryId">View</a>
+                            <i class="fa-regular fa-circle-check ms-1" onclick="ApproveStory(@story.StoryId, 'Approved')" style="color:green;"></i>
+                            <i class="fa-sharp fa-regular fa-circle-xmark ms-1" onclick="ApproveStory(@story.StoryId, 'Rejected')" style="color:red;"></i>
+                            <i class="fa fa-trash ms-1" style="color:black"></i>
+                        </td>
+                    </tr>
+                }
 
-                                
+
+
 
 
 
             </tbody>
         </table>
     </div>
+    <script>
+        function ApproveStory(id, status) {
+            $.ajax({
+                url: '/Admin/Admin/ApproveStory',
+                type: 'POST',
+                data: { MaId: id, status: status },
 
+                success: function (response) {
+
+                    //document.getElementById("themeName").value = response.title;
+                    $('#example').html($(response).find('#example').html());
+
+                },
+                error: function () {
+                    alert("could not comment");
+                }
+            });
+        }
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
@@ -60,4 +86,3 @@
 
 </body>
 </html>
-

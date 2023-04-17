@@ -1,7 +1,7 @@
-﻿@*
+﻿@model CI.Models.AdminThemeViewModel
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model CI.Models.AdminPanaltehmeViewModal
 @{
     Layout = "_AdminSidebar";
 }
@@ -23,66 +23,66 @@
 </head>
 <body>
     <div class=" container">
-        <div class="d-flex justify-content-between borderbottom">
-            <h3 class="borderbotm mb-0 ">Mission Themes</h3>
-            <button class="btn mb-2 landing-page-apply-mission-btn" data-bs-toggle="modal" data-bs-target="#AdminMissionthememodal">
+        <div class="d-flex borderbottom justify-content-between">
+            <h3 class="borderbotm mb-0">Mission Themes</h3>
+            <button onclick="refreshModal()" type="button" class="btn mb-2 landing-page-apply-mission-btn" data-bs-toggle="modal" data-bs-target="#AdminMissionthememodal">
                 <i class="fa-regular fa-plus" style="color: #F88735"></i>
                 Add
             </button>
             <div class="modal fade" id="AdminMissionthememodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">ADD New Theme</h1>
-                            <button type="button" class="bg-white border-0" data-bs-dismiss="modal" aria-label="Close">
-                                <i class="bi bi-x-lg"></i>
-                            </button>
-                        </div>
-                        <form asp-area="Admin" asp-action="AdminTheme" asp-controller="Admin" method="post">
-                        <div class="modal-body">
-                            <div class="container">
-                                <div class="row">
-                                    
-                                    <div class="col-12">
 
-                                        <lable  >Theme Name</lable>
-                                        <input asp-for="NewTheme" class="form-control" />
-                                        <span asp-validation-for="NewTheme" class="text-danger"> </span>
+                    <div class="modal-content">
+
+                        <form asp-action="AddTheme" asp-controller="Admin" method="post">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">ADD New Theme</h1>
+                                <button type="button" class="bg-white border-0" data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="bi bi-x-lg"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <input type="hidden" asp-for="themeId" />
+                                            <lable>Theme Name</lable>
+                                            <input class="form-control" id="themeName" value="@Model.themeName" asp-for="themeName" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn closebtn " data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn savebtn">Save Theme</button>
-                        </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn closebtn " data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn savebtn">Save changes</button>
+                            </div>
                         </form>
                     </div>
+
                 </div>
             </div>
         </div>
-        
+
         <table id="example" class="table" style="width:100%;border: 1px solid #e9ecef;">
             <thead class="thead-light" style="background-color:#F8F9FC;">
                 <tr>
                     <th scope="col">Theme Name</th>
-                  
+
                     <th scope="col" class="d-flex justify-content-center">Action</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var items in Model.MissionThemes)
+                @foreach (var theme in Model.missionThemes)
                 {
                     <tr>
-                        <td> @items.Title</td>
+                        <td>@theme.Title</td>
 
-                        <td class="d-flex justify-content-center"><i class="fas fa-edit" data-bs-toggle="modal" data-bs-target="#AdminMissionthememodal" ></i> | <i class="fa fa-trash" style="color:red"></i></td>
+                        <td class="d-flex justify-content-center"><i class="fas fa-edit" data-bs-toggle="modal" data-bs-target="#AdminMissionthememodal" id="@theme.MissionThemeId" onclick="editAdminUser(this.id)"></i> | <i class="fa fa-trash" style="color:red" id="@theme.MissionThemeId" onclick="deleteAdminUser(this.id)"></i></td>
                     </tr>
                 }
-             
-               
 
-               
+
+
 
 
 
@@ -92,7 +92,46 @@
 
     </div>
 
+    <script>
+        function refreshModal() {
+            document.getElementById("themeName").value = "";
+        }
 
+        function editAdminUser(themeId) {
+            $.ajax({
+                url: '/Admin/Admin/GetTheme',
+                type: 'POST',
+                data: { themeId: themeId },
+
+                success: function (response) {
+
+                    //document.getElementById("themeName").value = response.title;
+                    $('#AdminMissionthememodal').html($(response).find('#AdminMissionthememodal').html());
+
+                },
+                error: function () {
+                    alert("could not comment");
+                }
+            });
+        }
+        function deleteAdminUser(themeId) {
+            $.ajax({
+                url: '/Admin/Admin/deleteTheme',
+                type: 'POST',
+                data: { themeId: themeId },
+
+                success: function (response) {
+
+                    //document.getElementById("themeName").value = response.title;
+                    $('#example').html($(response).find('#example').html());
+
+                },
+                error: function () {
+                    alert("could not comment");
+                }
+            });
+        }
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
     @*  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>*@
