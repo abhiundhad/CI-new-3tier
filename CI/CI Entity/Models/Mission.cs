@@ -21,6 +21,8 @@ public partial class Mission
 
     public DateTime? StartDate { get; set; }
 
+    public DateTime? Deadline { get; set; }
+
     public DateTime? EndDate { get; set; }
 
     public string MissionType { get; set; } = null!;

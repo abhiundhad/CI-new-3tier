@@ -44,6 +44,8 @@ namespace CI.Models
         public long? countryid { get; set; }
 
         public List<Skill> allskills { get; set; }
+        public string subject { get; set; }
+        public string massage { get; set; }
 
     }
 }

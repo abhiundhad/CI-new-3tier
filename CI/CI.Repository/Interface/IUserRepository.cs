@@ -71,5 +71,6 @@ namespace CI.Repository.Interface
         public IQueryable<AdminStoryVM> GetPendingStories();
         public void Approvestory(long MaId, string status);
         public User UserByUserid(long userid);
+        public ContactU addContactUs(string subject, string message, string username, string email);
     }
 }

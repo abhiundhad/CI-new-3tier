@@ -134,7 +134,7 @@ namespace CI.Repository.Repository
                 updatestory.MissionId = MissionId;
                 updatestory.Title = title;
                 updatestory.Description = discription;
-                updatestory.Status = "Pendding";
+                updatestory.Status = "Pending";
                 updatestory.CreatedAt = date;
                 updatestory.UpdatedAt= DateTime.Now;
                 updatestory.UserId = id;
@@ -400,19 +400,19 @@ namespace CI.Repository.Repository
         {
             return _db.UserSkills.ToList();
         }
-       
-        //public ContactU addContactUs(string subject, string message, string username, string email)
-        //{
-        //    var contactUs = new ContactU();
-        //    contactUs.UserName = username;
-        //    contactUs.Email = email;
-        //    contactUs.Subject = subject;
-        //    contactUs.Message = message;
 
-        //    _db.Add(contactUs);
-        //    _db.SaveChanges();
-        //    return contactUs;
-        //}
+        public ContactU addContactUs(string subject, string message, string username, string email)
+        {
+            var contactUs = new ContactU();
+            contactUs.UserName = username;
+            contactUs.Email = email;
+            contactUs.Subject = subject;
+            contactUs.Message = message;
+
+            _db.Add(contactUs);
+            _db.SaveChanges();
+            return contactUs;
+        }
         public MissionTheme AddTheme(string themeName)
         {
             var missiontheme = new MissionTheme();

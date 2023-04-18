@@ -172,3 +172,15 @@ input:focus, textarea:focus, select:focus {
 select[multiple]:focus option:checked {
     background: #F88634 linear-gradient(0deg, #F88634 0%, #F88634 100%);
 }
+.closebtn, btn:hover {
+    background-color: white !important;
+    border: 2px solid grey !important;
+    border-radius: 25px !important;
+}
+
+.savebtn, btn:hover {
+    background-color: #F88634 !important;
+    border: #F88634;
+    color: white !important;
+    border-radius: 25px !important;
+}

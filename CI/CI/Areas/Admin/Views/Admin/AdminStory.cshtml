@@ -40,7 +40,7 @@
                         <td>@story.FirstName @story.LastName</td>
                         <td>@story.MissionTitle</td>
                         <td class="d-flex justify-content-center align-items-center ">
-                            <a class="Viewbtn rounded-5 me-3  text-decoration-none px-2 " href="/Employee/Home/StoryDetail/?storyId=@story.StoryId">View</a>
+                            <a class="Viewbtn rounded-5 me-3  text-decoration-none px-2 " href="/Employee/StoryListing/StoryDetail/@ViewBag.UserId?storyId=@story.StoryId">View</a>
                             <i class="fa-regular fa-circle-check ms-1" onclick="ApproveStory(@story.StoryId, 'Approved')" style="color:green;"></i>
                             <i class="fa-sharp fa-regular fa-circle-xmark ms-1" onclick="ApproveStory(@story.StoryId, 'Rejected')" style="color:red;"></i>
                             <i class="fa fa-trash ms-1" style="color:black"></i>

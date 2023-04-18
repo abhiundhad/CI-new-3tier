@@ -243,6 +243,9 @@ namespace CI_PlatformWeb.Areas.Admin.Controllers
 
         public IActionResult AdminStory()
         {
+            var userId = HttpContext.Session.GetString("userID");
+
+            ViewBag.UserId = int.Parse(userId);
             HttpContext.Session.SetInt32("Nav", 7);
             ViewBag.nav = HttpContext.Session.GetInt32("Nav");
             var strories = _Idb.GetPendingStories().ToList();

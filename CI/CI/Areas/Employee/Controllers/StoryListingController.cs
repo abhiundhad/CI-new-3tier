@@ -33,11 +33,11 @@ namespace CI.Areas.Employee.Controllers
                 var userId = HttpContext.Session.GetString("userID");
 
                 ViewBag.UserId = int.Parse(userId);
-                List<Story> storylist = _db.Stories.ToList();
+                List<Story> storylist = _db.Stories.Where(X=>X.Status!="Pending").ToList();
                 List<VolunteeringVM> StoryList = new List<VolunteeringVM>();
                 foreach (var story in storylist)
                 {
-                    if (story.Status != "draft")
+                    if (story.Status != "draft" )
                     {
 
 

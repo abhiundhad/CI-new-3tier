@@ -95,18 +95,7 @@ namespace CI.Areas.Employee.Controllers
             }
 
         }
-        //        var sessionUserId = HttpContext.Session.GetString("userID");
-        //        var ID = Convert.ToInt64(sessionUserId);
-        //        var user = _Idb.alluser().FirstOrDefault(x => x.UserId == ID);
-        //            if (user.Password != model.OldPassword)
-        //            {
-        //                ViewBag.wrongoldpass = "Wrong Old password";
-        //            }
-        //            else
-        //            {
-        //                _Idb.changepassword(model.NewPassword, ID);
-        //            }
-        //TempData["userpasschang"] = "Password change Successfully";
+     
         [HttpPost]
         public async Task<IActionResult> Userprofile(UserprofileViewModel model, IFormFileCollection files)
         {
@@ -116,8 +105,7 @@ namespace CI.Areas.Employee.Controllers
 
                 var sessionUserId = HttpContext.Session.GetString("userID");
                 var id = Convert.ToInt64(sessionUserId);
-                //long id = Convert.ToInt64(userid);
-                //long storyid = model.storyId;
+              
                 var userdetail = _Idb.alluser().FirstOrDefault(u => u.UserId == id);
                 userdetail.FirstName = model.firstname;
                 userdetail.LastName = model.lastname;
@@ -173,6 +161,21 @@ namespace CI.Areas.Employee.Controllers
 
                 _Idb.updateuser(userdetail);
                 return View(model);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+
+        }
+        [HttpPost]
+        public IActionResult Contactus(UserprofileViewModel model)
+        {
+            try
+            {
+                _Idb.addContactUs(model.subject, model.massage, model.firstname, model.email);
+                return RedirectToAction("Userprofile", "home");
+                
             }
             catch (Exception ex)
             {

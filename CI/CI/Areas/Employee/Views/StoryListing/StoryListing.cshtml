@@ -32,10 +32,10 @@
     <link rel="stylesheet" href="~/css/Storypage.css" asp-append-version="true" />
 </head>
 <body>
-    <div class="container storylistingcontainer mx-0 p-0">
+    <div class="container storylistingcontainer  p-0 mx-0 ">
 
-        <div class="row storyheader  position-relative m-0">
-           <div class="  position-absolute top-50 start-50 translate-middle text-center">
+        <div class="row storyheader  position-relative ms-1 ">
+           <div class="   position-absolute top-50 start-50 translate-middle text-center">
 
                 <p style="width:75vw; " class="ms-auto me-auto mb-3">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, fugiat deleniti! Aut nam incidunt vel nisi, placeat reiciendis, eos vitae accusantium a quasi tempora maiores voluptatem, voluptas optio deleniti veritatis.
@@ -59,7 +59,7 @@
                 @foreach(var story in Model)
                 {
                     <div class="col">
-                        <div class="card shadow-sm" style="height:100% width:98%">
+                        <div class="card shadow-sm" style="height:100%; width:98%">
                             <div class="img-event">
                                 @if (story.storymediapath != "")
                                 {

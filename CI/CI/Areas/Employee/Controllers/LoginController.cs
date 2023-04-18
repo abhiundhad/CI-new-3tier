@@ -112,6 +112,9 @@ namespace CI.Areas.Employee.Controllers
                         {
                             if (admin.Password == model.Password)
                             {
+                                HttpContext.Session.SetString("userID", admin.AdminId.ToString());
+                                HttpContext.Session.SetString("Firstname", admin.FirstName);
+                               
                                 return RedirectToAction("index", "Admin", new { area = "Admin" });
                             }
                             else
