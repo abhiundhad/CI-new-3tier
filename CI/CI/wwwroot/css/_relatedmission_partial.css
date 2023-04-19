@@ -73,7 +73,16 @@ hr {
     padding-left: 5%;
     padding-right: 5%;
 }
-
+.pendingbtn {
+    position: absolute;
+    top: 8px;
+    left: 0px;
+    padding: 5px 10px;
+    /*border-radius: 30px;*/
+    color: red;
+    background-color: #D4D135;
+    font-size: 14px
+}
 .applytxt {
     color: #F88634;
     font-size: 17px;

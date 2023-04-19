@@ -136,6 +136,16 @@ border:1px solid black !important;
     background-color: rgba(58, 202, 43, 0.8);
     font-size: 14px
 }
+.pendingbtn {
+    position: absolute;
+    top: 8px;
+    left: 0px;
+    padding: 5px 10px;
+    /*border-radius: 30px;*/
+    color: red;
+    background-color: #D4D135;
+    font-size: 14px
+}
 .closedbtn {
     position: absolute;
     bottom: 12px;
@@ -179,11 +189,6 @@ border:1px solid black !important;
     display: flex !important;
 }
 
-/*.active > .page-link, .page-link.active {
-    background-color: #F88634;
-    border-color: #F88634;
-}
-*/
 
 .page-item.active .page-link {
     z-index: 3;
@@ -217,12 +222,6 @@ hr {
     border-radius: 22px;
     background-color: white;
 }
-/*.wrapper {
-    padding: 20px;*/
-   /* background: #eaeaea;*/
-  /*  max-width: 400px;*/
-    /*margin: 50px auto;*/
-/*}*/
 
 .demo-1 {
     overflow: hidden;

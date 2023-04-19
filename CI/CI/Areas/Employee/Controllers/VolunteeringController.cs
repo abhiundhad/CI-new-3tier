@@ -199,8 +199,9 @@ namespace CI.Areas.Employee.Controllers
                     string[] Startdate = volmission.StartDate.ToString().Split(" ");
                     string[] Enddate = volmission.EndDate.ToString().Split(" ");
                     var favrioute = id != null ? _Idb.favoriteMissions().Any(u => u.UserId == Convert.ToInt64(sessionUserId) && u.MissionId == volmission.MissionId) : false;
-                    var Applybtn = id != null ? _Idb.missionApplications().Any(u => u.MissionId == volmission.MissionId && u.UserId == Convert.ToInt64(sessionUserId)) : false;
-                    int Applycunt = _Idb.missionApplications().Where(m => m.MissionId == volmission.MissionId).ToList().Count();
+                    var Applybtn = id != null ? _Idb.missionApplications().Any(u => u.MissionId == volmission.MissionId && u.UserId == Convert.ToInt64(sessionUserId) && u.ApprovalStatus=="1") : false;
+                    var pendingbtn = id != null ? _Idb.missionApplications().Any(u => u.MissionId == volmission.MissionId && u.UserId == Convert.ToInt64(sessionUserId)&& u.ApprovalStatus == "0") : false;
+                    int Applycunt = _Idb.missionApplications().Where(m => m.MissionId == volmission.MissionId && m.ApprovalStatus == "1").ToList().Count();
                     var givrats = _Idb.missionRatingList().FirstOrDefault(u => u.MissionId == volmission.MissionId && u.UserId == Convert.ToInt64(sessionUserId));
                     int seatleft = Convert.ToInt32(volmission.Availability) - Applycunt;
                     var rat = _Idb.missionRatingList().Where(u => u.MissionId == volmission.MissionId).ToList();
@@ -236,6 +237,7 @@ namespace CI.Areas.Employee.Controllers
                     volunteeringVM.GoalObjectiveText = themeobjective != null ? themeobjective.GoalObjectiveText : "Null";
                     volunteeringVM.isFavriout = favrioute;
                     volunteeringVM.isApplied = Applybtn;
+                    volunteeringVM.isPendding = pendingbtn;
                     volunteeringVM.Givenrating = givrats != null ? Convert.ToInt64(givrats.Rating) : 0;
                     volunteeringVM.AvrageRating = finalrat;
                     volunteeringVM.UserId = Convert.ToInt64(sessionUserId);
@@ -254,8 +256,9 @@ namespace CI.Areas.Employee.Controllers
                         string[] Startdate1 = item.StartDate.ToString().Split(" ");
                         string[] Enddate2 = item.EndDate.ToString().Split(" ");
                         var relfavrioute = id != null ? _Idb.favoriteMissions().Any(u => u.UserId == Convert.ToInt64(sessionUserId) && u.MissionId == item.MissionId) : false;
-                        var relApplybtn = id != null ? _Idb.missionApplications().Any(u => u.MissionId == item.MissionId && u.UserId == Convert.ToInt64(sessionUserId)) : false;
-                        int Applycunts = _Idb.missionApplications().Where(m => m.MissionId == item.MissionId).ToList().Count();
+                        var relApplybtn = id != null ? _Idb.missionApplications().Any(u => u.MissionId == item.MissionId && u.UserId == Convert.ToInt64(sessionUserId) && u.ApprovalStatus == "1") : false;
+                        var relpendingbtn = id != null ? _Idb.missionApplications().Any(u => u.MissionId == item.MissionId && u.UserId == Convert.ToInt64(sessionUserId) && u.ApprovalStatus == "0") : false;
+                        int Applycunts = _Idb.missionApplications().Where(m => m.MissionId == item.MissionId && m.ApprovalStatus == "1").ToList().Count();
                         int relseatleft = Convert.ToInt32(item.Availability) - Applycunts;
                         var relrat = _Idb.missionRatingList().Where(u => u.MissionId == item.MissionId).ToList();
                         var missionpath = _Idb.MissionMediaList().FirstOrDefault(m => m.MissionId == item.MissionId);
@@ -291,6 +294,7 @@ namespace CI.Areas.Employee.Controllers
                             MissionType = item.MissionType,
                             isFavriout = relfavrioute,
                             isApplied = relApplybtn,
+                            isPendding=relpendingbtn,
                             AvrageRating = relfinalrat,
                             missionmediapath = missionpath != null ? missionpath.MediaPath : "",
                         }

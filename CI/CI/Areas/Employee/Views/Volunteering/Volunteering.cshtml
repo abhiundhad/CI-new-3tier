@@ -227,7 +227,7 @@
                             </div>
 
                         </div>
-                        @ViewBag.Missiondetail.MissionId,@ViewBag.UserId
+                       
                         <div class=" row mt-1">
                             <div class="col-12 Ratting d-flex" id="Ratting">
                                 <hr class="trees" />
@@ -284,8 +284,29 @@
 
                         </div>
                             <div class="row justify-content-center Appleddiv ">
-                        @if (ViewBag.Missiondetail.isApplied == false)
-                        {
+                        @if (ViewBag.Missiondetail.isApplied == true)
+                            {
+                                   <button class="aply  col-8 col-xl-4 d-xl-block d-lg-none  col-md-4  mt-3   d-flex rounded-5 bg-white px-4 py-2 justify-content-center ">
+                                    <a class="aplys text-decoration-none">
+                                        Alredy Applied
+
+                                    </a>
+                                </button>
+
+
+                            }
+                            else if (ViewBag.Missiondetail.isPendding == true)
+                            {
+                                <button class="aply  col-8 col-xl-4 d-xl-block d-lg-none  col-md-4  mt-3   d-flex rounded-5 bg-white px-4 py-2 justify-content-center ">
+                                    <a class="aplys text-decoration-none">
+                                      Applied Pendding
+
+                                    </a>
+                                </button>
+                            }else
+                            {
+
+
 
                                 <button class="aply  col-8 col-xl-4 d-xl-block d-lg-none  col-md-4  mt-3   d-flex rounded-5 bg-white px-4 py-2 justify-content-center " onclick="missionapplied(@ViewBag.Missiondetail.MissionId,@ViewBag.UserId)">
                                     <a class="aplys text-decoration-none">
@@ -294,19 +315,7 @@
                                     </a>
                                 </button>
 
-                        }
-                        else
-                        {
-
-
-                         
-
-                                <button class="aply  col-8 col-xl-4 d-xl-block d-lg-none  col-md-4  mt-3   d-flex rounded-5 bg-white px-4 py-2 justify-content-center ">
-                                    <a class="aplys text-decoration-none">
-                                        Alredy Aplied
-
-                                    </a>
-                                </button>
+                             
                            
 
                         }
@@ -351,25 +360,35 @@
 
             <div class="col d-xl-none d-lg-block col-lg-3 d-none me-2 Appleddiv  ">
 
-            @if (ViewBag.Missiondetail.isApplied == false)
+            @if (ViewBag.Missiondetail.isApplied == true)
             {
-                    <button class="aply   mt-4 ms-4   d-flex rounded-5 bg-white px-4 py-2 justify-content-center " onclick="missionapplied(@ViewBag.Missiondetail.MissionId,@ViewBag.UserId)">
-                        <a class="aplys text-decoration-none">
-                            Apply Now
-                            <img src="~/images/right-arrow.png" class="mt-0 ms-2" />
-                        </a>
-                    </button>
-
-            }
-            else
-            {
-      
                     <button class="aply   mt-4 ms-4   d-flex rounded-5 bg-white px-4 py-2 justify-content-center ">
                         <a class="aplys text-decoration-none">
                             Alredy Aplied
 
                         </a>
                     </button>
+
+
+                }
+                else if (ViewBag.Missiondetail.isPendding == true)
+                {
+                    <button class="aply   mt-4 ms-4   d-flex rounded-5 bg-white px-4 py-2 justify-content-center ">
+                        <a class="aplys text-decoration-none">
+                            Applied Pendding
+
+                        </a>
+                    </button>
+                }
+                else
+                {
+                    <button class="aply   mt-4 ms-4   d-flex rounded-5 bg-white px-4 py-2 justify-content-center " onclick="missionapplied(@ViewBag.Missiondetail.MissionId,@ViewBag.UserId)">
+                        <a class="aplys text-decoration-none">
+                            Apply Now
+                            <img src="~/images/right-arrow.png" class="mt-0 ms-2" />
+                        </a>
+                    </button>
+                   
 
            
 
@@ -430,7 +449,7 @@
                             <textarea class="form-control"  placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" name="comment"></textarea>
                             <label for="floatingTextarea2">Comments</label>
                         </div>
-                        <button type="button" class=" cmtbtn col-8  col-lg-4 col-md-4 px-1  py-2 mt-2 rounded-5 bg-white  align-items-center " onclick="AddPost(@ViewBag.Missiondetail.MissionId,@ViewBag.UserId)">post Comment</button>
+                        <button type="button" class=" cmtbtn col-8  col-lg-4 col-md-4 px-1  py-2 mt-2 rounded-5 bg-white  align-items-center " onclick="AddPost(@ViewBag.Missiondetail.MissionId,@ViewBag.UserId)">Post Comment</button>
 
                         <div class=" col-12 bg-light overflow-y-auto border-1 border-black" style="height:500px;">
                             @if (ViewBag.missioncomment == null)

@@ -83,8 +83,9 @@ namespace CI.Areas.Employee.Controllers
                     string[] Startdate1 = item.StartDate.ToString().Split(" ");
                     string[] Enddate2 = item.EndDate.ToString().Split(" ");
                     var favrioute = id != null ? _Idb.favoriteMissions().Any(u => u.UserId == Convert.ToInt64(SessionUserId) && u.MissionId == item.MissionId) : false;
-                    var Applybtn = id != null ? _Idb.missionApplications().Any(u => u.MissionId == item.MissionId && u.UserId == Convert.ToInt64(SessionUserId)) : false;
-                    int Applycunt = _Idb.missionApplications().Where(m => m.MissionId == item.MissionId).ToList().Count();
+                    var Applybtn = id != null ? _Idb.missionApplications().Any(u => u.MissionId == item.MissionId && u.UserId == Convert.ToInt64(SessionUserId)&& u.ApprovalStatus=="1") : false;
+                    var pendingbtn = id != null ? _Idb.missionApplications().Any(u => u.MissionId == item.MissionId && u.UserId == Convert.ToInt64(SessionUserId)&& u.ApprovalStatus=="0") : false;
+                    int Applycunt = _Idb.missionApplications().Where(m => m.MissionId == item.MissionId && m.ApprovalStatus=="1").ToList().Count();
                     var colsed = id != null ? _Idb.MissionsList().Any(u => u.StartDate < DateTime.Now) : false;
                     ViewBag.FavoriteMissions = favrioute;
                     int seatleft = Convert.ToInt32(item.Availability) - Applycunt;
@@ -124,6 +125,7 @@ namespace CI.Areas.Employee.Controllers
                         AvrageRating = finalrat,
                         isFavriout = favrioute,
                         isApplied = Applybtn,
+                        isPendding=pendingbtn,
                         isclosed = colsed,
                         missionmediapath = missionpath != null ? missionpath.MediaPath : "",
                         UserId = Convert.ToInt64(SessionUserId),

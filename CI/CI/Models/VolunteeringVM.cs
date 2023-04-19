@@ -38,6 +38,7 @@
 
         public bool isFavriout { get; set; }
         public bool isApplied { get; set; }
+        public bool isPendding { get; set; }
         public string userEmail { get; set; }
         public long? UserId { get; set; }
         public string Commenttext { get; set; }
