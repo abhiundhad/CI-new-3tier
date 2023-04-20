@@ -3,6 +3,7 @@ using CI.Repository.Interface;
 using CI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Scripting;
+using CI_Entity.ViewModel;
 
 namespace CI_PlatformWeb.Areas.Admin.Controllers
 {
@@ -123,7 +124,133 @@ namespace CI_PlatformWeb.Areas.Admin.Controllers
         {
             HttpContext.Session.SetInt32("Nav", 3);
             ViewBag.nav = HttpContext.Session.GetInt32("Nav");
-            return View();
+            var missionvm = new AdminMissionViewModel();
+            missionvm.missions = _Idb.MissionsList();
+            missionvm.countries = _Idb.CountryList();
+            missionvm.cities = _Idb.CityList();
+            missionvm.themes = _Idb.ThemeList();
+            missionvm.AllSkills = _Idb.skillList();
+
+            //var skills = _Idb.MissionSkilljoinSkill();
+            //var uskills = skills.Where(e => e.MissionId == ).ToList();
+            //ViewBag.userskills = uskills;
+            //foreach (var skill in uskills)
+            //{
+            //    var rskill = allskills.FirstOrDefault(e => e.SkillId == skill.SkillId);
+            //    allskills.Remove(rskill);
+            //}
+            //ViewBag.remainingSkills = allskills;
+            return View(missionvm);
+        }
+
+        [HttpPost]
+        public IActionResult AddMission(AdminMissionViewModel model)
+        {
+            if (model.missionId == null || model.missionId == 0)
+            {
+                var files = Request.Form.Files;
+                _Idb.AddMission(model, files);
+
+            }
+            else
+            {
+                var files = Request.Form.Files;
+                var savedUser = _Idb.UpdateMission(model, files);
+                return RedirectToAction("AdminMission");
+            }
+
+            var missionvm = new AdminMissionViewModel();
+            missionvm.missions = _Idb.MissionsList();
+            missionvm.countries = _Idb.CountryList();
+            missionvm.cities = _Idb.CityList();
+            missionvm.themes = _Idb.ThemeList();
+
+            return RedirectToAction("AdminMission");
+        }
+        [HttpPost]
+        public IActionResult GetMission(long missionId)
+        {
+            var mission = _Idb.MissionsList().FirstOrDefault(t => t.MissionId == missionId && t.Status == "1" && t.DeletedAt == null);
+            var goalmission = _Idb.GoalsList().FirstOrDefault(g => g.MissionId == missionId);
+            var allskills = _Idb.skillList();
+            var skillsJoin = _Idb.MissionSkilljoinSkill();
+            var missionskill = skillsJoin.Where(m => m.MissionId == missionId).ToList();
+            foreach (var skill in missionskill)
+            {
+                var rskill = allskills.FirstOrDefault(e => e.SkillId == skill.SkillId);
+                allskills.Remove(rskill);
+            }
+            var finalurl = "";
+            var VideoURLs = _Idb.allmedia().Where(e => e.MissionId == missionId && e.MediaType == "Video").ToList();
+            foreach (var videoURL in VideoURLs)
+            {
+                finalurl = finalurl + videoURL.MediaPath + "\r\n";
+            }
+            var missionVm = new AdminMissionViewModel();
+            missionVm.missions = _Idb.MissionsList().Where(t => t.Status == "1" && t.DeletedAt == null).ToList();
+            missionVm.title = mission.Title;
+            mission.MissionId = mission.MissionId;
+            missionVm.editor2 = mission.Description;
+            missionVm.shortdescription = mission.ShortDescription;
+            missionVm.startDate = mission.StartDate;
+            missionVm.endDate = mission.EndDate;
+            missionVm.deadline = mission.Deadline;
+            missionVm.cityId = mission.CityId;
+            missionVm.countryId = mission.CountryId;
+            missionVm.themeId = mission.ThemeId;
+            missionVm.timeavailability = mission.AvailabilityTime;
+            missionVm.organizationDetail = mission.OrganizationDetail;
+            missionVm.organizationName = mission.OrganizationName;
+            missionVm.totalseats = mission.Availability;
+            missionVm.goalValue = goalmission.GoalValue;
+            missionVm.goalObjectiveText = goalmission.GoalObjectiveText;
+            missionVm.missionType = mission.MissionType;
+            missionVm.countries = _Idb.CountryList();
+            missionVm.cities = _Idb.CityList();
+            missionVm.themes = _Idb.ThemeList();
+            missionVm.AllSkills = _Idb.skillList();
+            missionVm.MissionSkill = missionskill;
+            missionVm.RemainingSkills = allskills;
+            missionVm.url = finalurl;
+            missionVm.ImageFiles = new List<MissionMedium>();
+            missionVm.DocFiles = new List<IFormFile>();
+            var imgfiles = _Idb.MissionMediaList().Where(m => m.MissionId == missionId && m.MediaType != "Video" && m.DeletedAt == null).ToList();
+            var docfiles = _Idb.MissionDocumentList().Where(m => m.MissionId == missionId  && m.DeletedAt == null).ToList();
+            int i = 1;
+            if (imgfiles.Count > 0)
+            {
+                foreach (var ifile in imgfiles)
+                {
+                    missionVm.ImageFiles.Add(ifile);
+                }
+            }
+            i = 0;
+            foreach (var ifile in docfiles)
+            {
+                i++;
+                string fileName = "example" + i + "." + ifile.DocumentType;  // specify the file name and extension
+                string contentType = ifile.MissionDocumentId.ToString();
+                MemoryStream ms = new MemoryStream(ifile.DocumentPath);
+                var file = new FormFile(ms, 0, ms.Length, contentType, fileName);
+                missionVm.DocFiles.Add(file);
+            }
+
+            //Request.Form.Files= missionVm.ImageFiles;
+            return View("AdminMission", missionVm);
+        }
+
+        [HttpPost]
+        public IActionResult delDoc(string docId)
+        {
+            _Idb.delDoc(long.Parse(docId));
+            return Json(new { success = true });
+        }
+
+        [HttpPost]
+        public IActionResult delImg(long imgId)
+        {
+            _Idb.delImg(imgId);
+            return Json(new { success = true });
         }
         public IActionResult AdminTheme()
         {

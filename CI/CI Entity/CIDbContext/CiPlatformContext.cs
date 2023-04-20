@@ -352,6 +352,10 @@ public partial class CiPlatformContext : DbContext
                 .HasMaxLength(20)
                 .IsUnicode(false)
                 .HasColumnName("availability");
+            entity.Property(e => e.AvailabilityTime)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("availability_time");
             entity.Property(e => e.CityId).HasColumnName("city_id");
             entity.Property(e => e.CountryId).HasColumnName("country_id");
             entity.Property(e => e.CreatedAt)
@@ -473,10 +477,7 @@ public partial class CiPlatformContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("document_name");
-            entity.Property(e => e.DocumentPath)
-                .HasMaxLength(255)
-                .IsUnicode(false)
-                .HasColumnName("document_path");
+            entity.Property(e => e.DocumentPath).HasColumnName("document_path");
             entity.Property(e => e.DocumentType)
                 .HasMaxLength(255)
                 .IsUnicode(false)
@@ -547,11 +548,12 @@ public partial class CiPlatformContext : DbContext
             entity.Property(e => e.DeletedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
+            entity.Property(e => e.MediaInBytes).HasColumnName("media_in_bytes");
             entity.Property(e => e.MediaName)
                 .HasMaxLength(255)
                 .HasColumnName("media_name");
             entity.Property(e => e.MediaPath)
-                .HasMaxLength(255)
+                .IsUnicode(false)
                 .HasColumnName("media_path");
             entity.Property(e => e.MediaType)
                 .HasMaxLength(255)

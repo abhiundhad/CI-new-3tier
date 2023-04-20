@@ -13,6 +13,8 @@ public partial class MissionMedium
 
     public string? MediaType { get; set; }
 
+    public byte[]? MediaInBytes { get; set; }
+
     public string? MediaPath { get; set; }
 
     public string? Default { get; set; }

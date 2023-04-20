@@ -1,5 +1,6 @@
 ﻿using CI_Entity.Models;
 using CI_Entity.ViewModel;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,7 @@ namespace CI.Repository.Interface
         public long addstory(long MissionId, string title, DateTime date, string discription, long id,long storyid);
         public long adddraftstory(long MissionId, string title, DateTime date, string discription, long id, long storyid);
         public List<MissionMedium> MissionMediaList( );
+        public List<MissionDocument> MissionDocumentList( );
         public List <PasswordReset> storepasswordResets(string Email, string Token);
         public List <PasswordReset> Updateremovepassword(string Email, string Token,string password);
         public void addstoryMedia(long MissionId, string mediatype, string mediapath, long id ,long sid);
@@ -72,5 +74,11 @@ namespace CI.Repository.Interface
         public void Approvestory(long MaId, string status);
         public User UserByUserid(long userid);
         public ContactU addContactUs(string subject, string message, string username, string email);
+        public Mission AddMission(AdminMissionViewModel model, IFormFileCollection? files);
+        public IQueryable<SkillListVM> MissionSkilljoinSkill();
+        public Mission UpdateMission(AdminMissionViewModel model, IFormFileCollection? files);
+        public List<MissionMedium> allmedia();
+        public void delImg(long id);
+        public void delDoc(long id);
     }
 }

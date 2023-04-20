@@ -12,3 +12,46 @@ $(document).ready(function () {
 });
 CKEDITOR.replace('editor1');
 CKEDITOR.replace('editor2');
+
+
+function ved1() {
+	var a = document.getElementById("s1");
+	var c = document.getElementById("s2");
+	var b = a.options[a.selectedIndex];
+	for (var i = 0; i < a.length; i++) {
+
+		if (a.options[i].selected == true) {
+			a.options[i].selected = false
+			c.add(a.options[i])
+
+			ved1()
+		}
+
+	}
+}
+function ved2() {
+	var a = document.getElementById("s1");
+	var c = document.getElementById("s2");
+	var b = c.options[c.selectedIndex];
+	for (var i = 0; i < c.length; i++) {
+		if (c.options[i].selected == true) {
+			c.options[i].selected = false
+			a.add(c.options[i])
+			ved2()
+		}
+	}
+}
+function ved3() {
+	var a = document.getElementById("s1");
+	var c = document.getElementById("s2");
+	for (var i = 0; i < a.length;) {
+		c.add(a.options[c, i])
+	}
+}
+function ved4() {
+	var a = document.getElementById("s1");
+	var c = document.getElementById("s2");
+	for (var i = 0; i < c.length;) {
+		a.add(c.options[a, i])
+	}
+}

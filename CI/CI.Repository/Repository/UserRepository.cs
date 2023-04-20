@@ -2,6 +2,7 @@
 using CI_Entity.CIDbContext;
 using CI_Entity.Models;
 using CI_Entity.ViewModel;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
@@ -622,6 +623,266 @@ namespace CI.Repository.Repository
         public User UserByUserid(long userid)
         {
             return _db.Users.FirstOrDefault(u => u.UserId == userid);
+        }
+
+
+
+        public Mission AddMission(AdminMissionViewModel model, IFormFileCollection? files)
+        {
+            var mission = new Mission();
+            mission.Title = model.title;
+            mission.ShortDescription = model.shortdescription;
+            mission.Description = model.editor2;
+            mission.MissionType = model.missionType;
+            mission.OrganizationDetail = model.organizationDetail;
+            mission.OrganizationName = model.organizationName;
+
+            mission.StartDate = model.startDate;
+            mission.EndDate = model.endDate;
+            mission.Deadline = model.deadline;
+            mission.Status = "1";
+            mission.Availability = model.totalseats;
+            mission.AvailabilityTime = model.timeavailability;
+            mission.CityId = model.cityId;
+            mission.CountryId = model.countryId;
+            mission.ThemeId = model.themeId;
+            _db.Add(mission);
+            _db.SaveChanges();
+            if (model.url != null)
+            {
+                var videoUrls = model.url.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var videoUrl in videoUrls)
+                {
+                    var missionMedia = new MissionMedium();
+                    missionMedia.CreatedAt = DateTime.Now;
+                    missionMedia.MissionId = mission.MissionId;
+                    missionMedia.MediaPath = videoUrl;
+                    missionMedia.MediaType = "Video";
+                    _db.Add(missionMedia);
+                    _db.SaveChanges();
+                }
+            }
+            if (model.selectedSkills != null)
+            {
+                var skills = model.selectedSkills.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var skill in skills)
+                {
+                    var skillId = Convert.ToInt64(skill);
+                    var missiionskills = new MissionSkill();
+                    missiionskills.CreatedAt = DateTime.Now;
+                    missiionskills.MissionId = mission.MissionId;
+                    missiionskills.SkillId = skillId;
+                    _db.Add(missiionskills);
+                    _db.SaveChanges();
+                }
+            }
+            if (mission.MissionType == "Time")
+            {
+                var missiongoal = new GoalMission();
+                missiongoal.MissionId = mission.MissionId;
+                missiongoal.GoalObjectiveText = "default";
+                missiongoal.GoalValue = "0";
+                _db.Add(missiongoal);
+                _db.SaveChanges();
+            }
+            else
+            {
+                var missiongoal = new GoalMission();
+                missiongoal.MissionId = mission.MissionId;
+                missiongoal.GoalObjectiveText = model.goalObjectiveText;
+                missiongoal.GoalValue = model.goalValue;
+                _db.Add(missiongoal);
+                _db.SaveChanges();
+            }
+            if (files != null)
+            {
+                foreach (var file in files)
+                {
+                    if (file.ContentType.Contains("pdf") || file.ContentType.Contains("docx") || file.ContentType.Contains("xlxs"))
+                    {
+                        byte[] fileBytes;
+                        using (var stream = new MemoryStream())
+                        {
+                            file.CopyTo(stream);
+                            fileBytes = stream.ToArray();
+                        }
+                        var missionmedia = new MissionDocument();
+                        missionmedia.MissionId = mission.MissionId;
+                        var ext = file.ContentType.Split("/");
+                        missionmedia.DocumentType = ext[1];
+                        missionmedia.DocumentName = file.FileName;
+                        missionmedia.DocumentPath = fileBytes;
+                        _db.Add(missionmedia);
+                        _db.SaveChanges();
+                    }
+                    else
+                    {
+                        byte[] fileBytes;
+                        using (var stream = new MemoryStream())
+                        {
+                            file.CopyTo(stream);
+                            fileBytes = stream.ToArray();
+                        }
+                        string base64String = Convert.ToBase64String(fileBytes);
+                        var missionmedia = new MissionMedium();
+                        missionmedia.MissionId = mission.MissionId;
+                        var ext = file.ContentType.Split("/");
+                        missionmedia.MediaType = ext[1];
+                        missionmedia.MediaInBytes = fileBytes;
+                        missionmedia.MediaName = file.FileName;
+                        missionmedia.MediaPath = "data:image/" + ext[1] + ";base64," + base64String;
+                        _db.Add(missionmedia);
+                        _db.SaveChanges();
+                    }
+                }
+            }
+
+            return mission;
+        }
+
+        public IQueryable<SkillListVM> MissionSkilljoinSkill()
+        {
+            return from US in _db.MissionSkills
+                   join S in _db.Skills on US.SkillId equals S.SkillId
+                   select new SkillListVM { SkillId = US.SkillId, SkillName = S.SkillName, MissionId = US.MissionId };
+        }
+        public Mission UpdateMission(AdminMissionViewModel model, IFormFileCollection? files)
+        {
+            var mission = _db.Missions.FirstOrDefault(s => s.MissionId == model.missionId);
+            mission.Title = model.title;
+            mission.ShortDescription = model.shortdescription;
+            mission.Description = model.editor2;
+            mission.MissionType = model.missionType;
+            mission.OrganizationDetail = model.organizationDetail;
+            mission.OrganizationName = model.organizationName;
+            mission.StartDate = model.startDate;
+            mission.EndDate = model.endDate;
+            mission.Deadline = model.deadline;
+            mission.Availability = model.totalseats;
+            mission.AvailabilityTime = model.timeavailability;
+            mission.CityId = model.cityId;
+            mission.CountryId = model.countryId;
+            mission.ThemeId = model.themeId;
+            _db.Update(mission);
+            _db.SaveChanges();
+            if (model.url != null)
+            {
+                var videoUrls = model.url.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+                var abc = _db.MissionMedia.Where(e => e.MissionId == model.missionId && e.MediaType == "Video").ToList();
+                _db.RemoveRange(abc);
+                _db.SaveChanges();
+                foreach (var videoUrl in videoUrls)
+                {
+
+                    var missionMedia = new MissionMedium();
+                    missionMedia.CreatedAt = DateTime.Now;
+                    missionMedia.MissionId = mission.MissionId;
+                    missionMedia.MediaPath = videoUrl;
+                    missionMedia.MediaType = "Video";
+                    _db.Update(missionMedia);
+                    _db.SaveChanges();
+                }
+            }
+            if (model.selectedSkills != null)
+            {
+                var skills = model.selectedSkills.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                var abc = _db.MissionSkills.Where(e => e.MissionId == model.missionId).ToList();
+                _db.RemoveRange(abc);
+                _db.SaveChanges();
+                foreach (var skill in skills)
+                {
+                    var skillId = Convert.ToInt64(skill);
+                    var missiionskills = new MissionSkill();
+                    missiionskills.CreatedAt = DateTime.Now;
+                    missiionskills.MissionId = mission.MissionId;
+                    missiionskills.SkillId = skillId;
+                    _db.Update(missiionskills);
+                    _db.SaveChanges();
+                }
+            }
+            if (mission.MissionType == "Time")
+            {
+                var missiongoal = new GoalMission();
+                missiongoal.MissionId = mission.MissionId;
+                missiongoal.GoalObjectiveText = "default";
+                missiongoal.GoalValue = "0";
+                _db.Update(missiongoal);
+                _db.SaveChanges();
+            }
+            else
+            {
+                var missiongoal = new GoalMission();
+                missiongoal.MissionId = mission.MissionId;
+                missiongoal.GoalObjectiveText = model.goalObjectiveText;
+                missiongoal.GoalValue = model.goalValue;
+                _db.Update(missiongoal);
+                _db.SaveChanges();
+            }
+            if (files != null)
+            {
+                foreach (var file in files)
+                {
+                    if (file.ContentType.Contains("pdf") || file.ContentType.Contains("docx") || file.ContentType.Contains("xlxs"))
+                    {
+                        byte[] fileBytes;
+                        using (var stream = new MemoryStream())
+                        {
+                            file.CopyTo(stream);
+                            fileBytes = stream.ToArray();
+                        }
+                        var missionmedia = new MissionDocument();
+                        missionmedia.MissionId = mission.MissionId;
+                        var ext = file.ContentType.Split("/");
+                        missionmedia.DocumentType = ext[1];
+                        missionmedia.DocumentName = file.FileName;
+                        missionmedia.DocumentPath = fileBytes;
+                        _db.Update(missionmedia);
+                        _db.SaveChanges();
+                    }
+                    else
+                    {
+                        byte[] fileBytes;
+                        using (var stream = new MemoryStream())
+                        {
+                            file.CopyTo(stream);
+                            fileBytes = stream.ToArray();
+                        }
+                        string base64String = Convert.ToBase64String(fileBytes);
+                        var missionmedia = new MissionMedium();
+                        missionmedia.MissionId = mission.MissionId;
+                        var ext = file.ContentType.Split("/");
+                        missionmedia.MediaType = ext[1];
+                        missionmedia.MediaName = file.FileName ;
+                        missionmedia.MediaPath = "data:image/" + ext[1] + ";base64," + base64String;
+                        _db.Update(missionmedia);
+                        _db.SaveChanges();
+                    }
+                }
+            }
+
+            return mission;
+        }
+        public void delDoc(long id)
+        {
+            var doc = _db.MissionDocuments.FirstOrDefault(d => d.MissionDocumentId == id);
+            doc.DeletedAt = DateTime.Now;
+            _db.Update(doc);
+            _db.SaveChanges();
+        }
+        public void delImg(long id)
+        {
+            var doc = _db.MissionMedia.FirstOrDefault(d => d.MissionMediaId == id);
+            doc.DeletedAt = DateTime.Now;
+            _db.Update(doc);
+            _db.SaveChanges();
+        }
+        public List<MissionMedium> allmedia()
+        {
+            return _db.MissionMedia.ToList();
+        }
+        public List<MissionDocument> MissionDocumentList()
+        {
+            return _db.MissionDocuments.ToList();
         }
     }
 }   

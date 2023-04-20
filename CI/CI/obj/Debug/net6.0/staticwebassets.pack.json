@@ -585,6 +585,10 @@
       "PackagePath": "staticwebassets\\js\\Admin.js"
     },
     {
+      "Id": "A:\\CI-3tier-master\\CI\\CI\\wwwroot\\js\\AdminMission.js",
+      "PackagePath": "staticwebassets\\js\\AdminMission.js"
+    },
+    {
       "Id": "A:\\CI-3tier-master\\CI\\CI\\wwwroot\\js\\Missioncards.js",
       "PackagePath": "staticwebassets\\js\\Missioncards.js"
     },

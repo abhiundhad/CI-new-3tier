@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "QxATauSY27434txytNbxm7lZjOF2hmj273jjBWQTdAE=",
+  "Hash": "D+SEKrSFB10rPXwxbZFyQ8pRIjfklsiiAIk7yrH4z7k=",
   "Source": "CI",
   "BasePath": "_content/CI",
   "Mode": "Default",
@@ -2531,6 +2531,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\Admin.js"
+    },
+    {
+      "Identity": "A:\\CI-3tier-master\\CI\\CI\\wwwroot\\js\\AdminMission.js",
+      "SourceId": "CI",
+      "SourceType": "Discovered",
+      "ContentRoot": "A:\\CI-3tier-master\\CI\\CI\\wwwroot\\",
+      "BasePath": "_content/CI",
+      "RelativePath": "js/AdminMission.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\AdminMission.js"
     },
     {
       "Identity": "A:\\CI-3tier-master\\CI\\CI\\wwwroot\\js\\Missioncards.js",
