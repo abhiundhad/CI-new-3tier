@@ -110,15 +110,14 @@ public partial class CiPlatformContext : DbContext
 
             entity.Property(e => e.BannerId).HasColumnName("banner_id");
             entity.Property(e => e.CreatedAt)
-                .IsRowVersion()
-                .IsConcurrencyToken()
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
                 .HasColumnName("created_at");
             entity.Property(e => e.DeletedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.Image)
-                .HasMaxLength(512)
-                .IsUnicode(false)
+                .HasColumnType("text")
                 .HasColumnName("image");
             entity.Property(e => e.SortOrder).HasColumnName("sort_order");
             entity.Property(e => e.Text)

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Scripting;
 using CI_Entity.ViewModel;
 
+
 namespace CI_PlatformWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
@@ -25,7 +26,7 @@ namespace CI_PlatformWeb.Areas.Admin.Controllers
             HttpContext.Session.SetInt32("Nav", 1);
             ViewBag.nav = HttpContext.Session.GetInt32("Nav");
             var user = new CI_Entity.ViewModel.AdminUserViewModel();
-            user.users = _Idb.alluser().ToList();
+            user.users = _Idb.alluser().Where(x=>x.DeletedAt==null).ToList();
             user.allcity = _Idb.CityList();
             user.allcountry = _Idb.CountryList();
             return View(user);
@@ -84,7 +85,7 @@ namespace CI_PlatformWeb.Areas.Admin.Controllers
             HttpContext.Session.SetInt32("Nav", 2);
             ViewBag.nav = HttpContext.Session.GetInt32("Nav");
             var cms = new CI_Entity.ViewModel.AdminCmsPageVM();
-            cms.CmsPages = _Idb.GetCmsPages();
+            cms.CmsPages = _Idb.GetCmsPages().Where(x => x.DeletedAt == null).ToList();
             return View(cms);
         }
 
@@ -125,7 +126,7 @@ namespace CI_PlatformWeb.Areas.Admin.Controllers
             HttpContext.Session.SetInt32("Nav", 3);
             ViewBag.nav = HttpContext.Session.GetInt32("Nav");
             var missionvm = new AdminMissionViewModel();
-            missionvm.missions = _Idb.MissionsList();
+            missionvm.missions = _Idb.MissionsList().Where(x => x.DeletedAt == null).ToList();
             missionvm.countries = _Idb.CountryList();
             missionvm.cities = _Idb.CityList();
             missionvm.themes = _Idb.ThemeList();
@@ -155,7 +156,7 @@ namespace CI_PlatformWeb.Areas.Admin.Controllers
             else
             {
                 var files = Request.Form.Files;
-                var savedUser = _Idb.UpdateMission(model, files);
+                _Idb.UpdateMission(model, files);
                 return RedirectToAction("AdminMission");
             }
 
@@ -171,7 +172,8 @@ namespace CI_PlatformWeb.Areas.Admin.Controllers
         public IActionResult GetMission(long missionId)
         {
             var mission = _Idb.MissionsList().FirstOrDefault(t => t.MissionId == missionId && t.Status == "1" && t.DeletedAt == null);
-            var goalmission = _Idb.GoalsList().FirstOrDefault(g => g.MissionId == missionId);
+            var goalmission = _Idb.GoalsList().FirstOrDefault(g => g.MissionId == missionId)!=null? _Idb.GoalsList().FirstOrDefault(g => g.MissionId == missionId).GoalValue : null;
+            var goalmissiontxt = _Idb.GoalsList().FirstOrDefault(g => g.MissionId == missionId)!=null? _Idb.GoalsList().FirstOrDefault(g => g.MissionId == missionId).GoalObjectiveText : null;
             var allskills = _Idb.skillList();
             var skillsJoin = _Idb.MissionSkilljoinSkill();
             var missionskill = skillsJoin.Where(m => m.MissionId == missionId).ToList();
@@ -202,8 +204,8 @@ namespace CI_PlatformWeb.Areas.Admin.Controllers
             missionVm.organizationDetail = mission.OrganizationDetail;
             missionVm.organizationName = mission.OrganizationName;
             missionVm.totalseats = mission.Availability;
-            missionVm.goalValue = goalmission.GoalValue;
-            missionVm.goalObjectiveText = goalmission.GoalObjectiveText;
+            missionVm.goalValue = goalmission;
+            missionVm.goalObjectiveText = goalmissiontxt;
             missionVm.missionType = mission.MissionType;
             missionVm.countries = _Idb.CountryList();
             missionVm.cities = _Idb.CityList();
@@ -257,7 +259,7 @@ namespace CI_PlatformWeb.Areas.Admin.Controllers
             HttpContext.Session.SetInt32("Nav", 4);
             ViewBag.nav = HttpContext.Session.GetInt32("Nav");
             var themevm = new AdminThemeViewModel();
-            themevm.missionThemes = _Idb.ThemeList().Where(t => t.Status == 1).ToList();
+            themevm.missionThemes = _Idb.ThemeList().Where(t => t.Status == 1 || t.DeletedAt==null).ToList();
             return View(themevm);
         }
         [HttpPost]
@@ -305,7 +307,7 @@ namespace CI_PlatformWeb.Areas.Admin.Controllers
             HttpContext.Session.SetInt32("Nav", 5);
             ViewBag.nav = HttpContext.Session.GetInt32("Nav");
             var skill = new AdminSkillViewModel();
-            skill.skill = _Idb.skillList().Where(t => t.Status == "1").ToList();
+            skill.skill = _Idb.skillList().Where(t => t.Status == "1"||t.DeletedAt==null).ToList();
 
             return View(skill);
 
@@ -395,11 +397,80 @@ namespace CI_PlatformWeb.Areas.Admin.Controllers
         {
             HttpContext.Session.SetInt32("Nav", 8);
             ViewBag.nav = HttpContext.Session.GetInt32("Nav");
-            return View();
+            AdminBannerViewModel bannerVm = new AdminBannerViewModel();
+            bannerVm.banner = _Idb.AllBanners();
+            return View(bannerVm);
         }
 
+        [HttpPost]
+        public IActionResult AddBanner(string discrption, string image, int sortorder, long bannerId)
+        {
+            try
+            {
 
+                if (bannerId == 0 || bannerId == null)
+                {
+                    _Idb.AddBanner(discrption, image, sortorder);
 
+                }
+                else
+                {
+                    _Idb.UpdateBanner(discrption, image, sortorder, bannerId);
+                }
+                return RedirectToAction("AdminBannerManagement");
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home", new { area = "Employee" });
+            }
+        }
+        [HttpPost]
+        public IActionResult GetBanner(long bannerId)
+        {
+            var bannerlist = _Idb.AllBanners().FirstOrDefault(t => t.BannerId == bannerId);
+            var banner = new AdminBannerViewModel();
+            banner.img = bannerlist.Image;
+            banner.BannerText = bannerlist.Text;
+            banner.BannerSortOrder = bannerlist.SortOrder;
+            banner.BannerId = bannerId;
+            banner.banner = _Idb.AllBanners();
+            return View("AdminBannerManagement", banner);
+        }
+        [HttpPost]
+        public IActionResult DeleteUser(long userId)
+        {
+            _Idb.DeleteUser(userId);
+            var user = new CI_Entity.ViewModel.AdminUserViewModel();
+            user.users = _Idb.alluser().ToList();
+            user.allcity = _Idb.CityList();
+            user.allcountry = _Idb.CountryList();
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public IActionResult DeleteMission(long missionId)
+        {
+            _Idb.DeleteMission(missionId);
+            var missionvm = new AdminMissionViewModel();
+            missionvm.missions = _Idb.MissionsList();
+            missionvm.countries = _Idb.CountryList();
+            missionvm.cities = _Idb.CityList();
+            missionvm.themes = _Idb.ThemeList();
+            return RedirectToAction("AdminMission");
+        }
+        [HttpPost]
+        public IActionResult DeleteStory(long storyId)
+        {
+            _Idb.DeleteStory(storyId);
+
+            return RedirectToAction("AdminStory");
+        }
+        [HttpPost]
+        public IActionResult DeleteBanner(long bannerId)
+        {
+            _Idb.DeleteBanner(bannerId);
+
+            return RedirectToAction("AdminBannerManagement");
+        }
 
     }
 }

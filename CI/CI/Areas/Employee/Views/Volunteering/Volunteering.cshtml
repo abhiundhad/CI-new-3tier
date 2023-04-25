@@ -33,59 +33,73 @@
         <div class="row">
             <div class="leftdiv  col-12 col-lg-6 col-md-12 col-sm-12  ">
 
-                <div class="container  shadow-lg p-0">
+                <div class="container p-0">
 
-                    <!-- Full-width images with number text -->
-                    <div class="mySlides">
-                        @*<div class="numbertext">1 / 6</div>*@
-                        <img src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-3.png" style="width:100%">
-                    </div>
 
-                    <div class="mySlides">
-                        @*<div class="numbertext">2 / 6</div>*@
-                        <img src="~/images/img1.png" style="width:100%">
-                    </div>
+                    @{
+                        int num = 0;
+                    }
+                    @foreach (var media in ViewBag.missionmedia)
+                    {
 
-                    <div class="mySlides">
-                        @*<div class="numbertext">3 / 6</div>*@
-                        <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-2.png" style="width:100%">
-                    </div>
+                        @if (media.MediaType == "Video")
+                        {
+                            num++;
+                            <div class="mySlides" style="height:407px">
+                                <div class="numbertext">@num/ @ViewBag.missionmediacount</div>
+                                <iframe width="560" height="315" class="img-fluid vol-page-crousel" id="vol-page-crousel"
+                                        src=@media.MediaPath style="height:100%;object-fit:cover;width:100%" alt=""></iframe>
 
-                    <div class="mySlides">
-                        @*<div class="numbertext">4 / 6</div>*@
-                        <img src="~/images/img11.png" style="width:100%">
-                    </div>
+                            </div>
+                        }
+                        else
+                        {
+                            num++;
+                            <div class="mySlides">
+                                <div class="numbertext">@num/ @ViewBag.missionmediacount</div>
+                                <img src="@media.MediaPath" style="width:100%">
+                            </div>
+                        }
+                    }
 
-                    @*                    <div class="mySlides">
-                    @*<div class="numbertext">5 / 6</div>
-                    <img src ="~/images/img22.png"  style="width:100%">
-                    </div>
-
-                    <div class="mySlides">
-                    @*<div class="numbertext">6 / 6</div>*@
-                    @*   <img src="~/images/img.png" style="width:100%">
-                    </div>*@
 
                     <!-- Next and previous buttons -->
-                    <!-- Thumbnail images -->
-                    <div class="row mt-2  p-0">
+                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
-                        <a class="prev " onclick="plusSlides(-1)">&#10094;</a>
-                        <a class="next" onclick="plusSlides(1)">&#10095;</a>
-                        <div class="column pe-0  " style="width:25%">
-                            <img class="demo cursor " src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-1.png" style="width:100%" onclick="currentSlide(1)" alt="The Woods">
+                    <!-- Image text -->
+                    <!-- Thumbnail images -->
+                    <div class="row mt-1">
+                        @* <div class="column" style="width:25%">
+                        <img class="demo cursor" src="/Images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-1.png" style="width:100%" onclick="currentSlide(1)" alt="The Woods">
                         </div>
-                        <div class="column  px-0 " style="width:25%">
-                            <img class="demo cursor " src="~/images/img1.png" style="width:100%" onclick="currentSlide(2)" alt="Cinque Terre">
+                        <div class="column" style="width:25%">
+                        <img class="demo cursor" src="/Images/img1.png" style="width:100%" onclick="currentSlide(2)" alt="Cinque Terre">
                         </div>
-                        <div class="column px-0  " style="width:25%">
-                            <img class="demo cursor  " src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-1.png" style="width:100%" onclick="currentSlide(3)" alt="Mountains and fjords">
+                        <div class="column" style="width:25%">
+                        <img class="demo cursor" src="/Images/Grow-Trees-On-the-path-to-environment-sustainability-1.png" style="width:100%" onclick="currentSlide(3)" alt="Mountains and fjords">
                         </div>
-                        <div class="column ps-0 " style="width:25%">
-                            <img class="demo cursor " src="~/images/img11.png" style="width:100%" onclick="currentSlide(4)" alt="Northern Lights">
-                        </div>
+                        <div class="column" style="width:25%">
+                        <img class="demo cursor" src="/Images/img11.png" style="width:100%" onclick="currentSlide(4)" alt="Northern Lights">
+                        </div>*@
+                        @foreach (var media in ViewBag.missionmedia)
+                        {
+                            @if (media.MediaType == "Video")
+                            {
+                                <div class="column" style="width:25%">
+                                    <iframe src=@media.MediaPath title="W3Schools Free Online Web Tutorials"></iframe>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="column" style="width:25%">
+                                    <img class="demo cursor" src="@media.MediaPath" style="width:100%" onclick="currentSlide(4)" alt="Northern Lights">
+                                </div>
+                            }
+                        }
 
                     </div>
+
                 </div>
 
 

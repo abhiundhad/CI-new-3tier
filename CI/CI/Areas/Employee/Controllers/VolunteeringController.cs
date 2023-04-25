@@ -8,6 +8,7 @@ using System.Net.Mail;
 using System.Net;
 using CI.Repository.Interface;
 using System.Reflection;
+using Microsoft.SqlServer.Management.XEvent;
 //using Microsoft.SqlServer.Management.Smo;
 
 namespace CI.Areas.Employee.Controllers
@@ -205,6 +206,8 @@ namespace CI.Areas.Employee.Controllers
                     var givrats = _Idb.missionRatingList().FirstOrDefault(u => u.MissionId == volmission.MissionId && u.UserId == Convert.ToInt64(sessionUserId));
                     int seatleft = Convert.ToInt32(volmission.Availability) - Applycunt;
                     var rat = _Idb.missionRatingList().Where(u => u.MissionId == volmission.MissionId).ToList();
+                    ViewBag.missionmedia = _Idb.allmedia().Where(m => m.MissionId == volmission.MissionId && m.DeletedAt == null).ToList();
+                    ViewBag.missionmediacount = _Idb.allmedia().Where(m => m.MissionId == volmission.MissionId && m.DeletedAt == null).ToList().Count();
                     ViewBag.ratusercouny = rat.Count();
                     int finalrat = 0;
                     if (rat.Count > 0)

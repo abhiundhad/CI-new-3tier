@@ -38,6 +38,7 @@ namespace CI.Repository.Interface
         public List <PasswordReset> storepasswordResets(string Email, string Token);
         public List <PasswordReset> Updateremovepassword(string Email, string Token,string password);
         public void addstoryMedia(long MissionId, string mediatype, string mediapath, long id ,long sid);
+        public void AddStoryUrl(long storyid, string url);
         public void Removemedia(long storyid);
         public List<StoryMedium> storyMedia();
         public List<Story> StoryList();
@@ -53,6 +54,7 @@ namespace CI.Repository.Interface
         public Admin AdminbEmail(String Email);
         public MissionTheme ADDNewTheme(String Theme);
         public List<UserSkill> UserSkills(long userid);
+        public List<UserSkill> allUserSkills();
         public MissionTheme AddTheme(string themeName);
         public MissionTheme UpdateTheme(string themeName, long themeId);
         public MissionTheme DeleteTheme(long themeId);
@@ -80,5 +82,13 @@ namespace CI.Repository.Interface
         public List<MissionMedium> allmedia();
         public void delImg(long id);
         public void delDoc(long id);
+        public Banner AddBanner(string discrption, string image, int sortorder);
+        public List<Banner> AllBanners();
+        public Banner UpdateBanner(string discrption, string image, int sortorder, long bannerId);
+        public List<UserSkill> removeUserSkills(long id);
+        public void DeleteUser(long userId);
+        public void DeleteMission(long missionId);
+        public void DeleteStory(long storyId);
+        public void DeleteBanner(long bannerId);
     }
 }

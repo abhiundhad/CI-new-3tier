@@ -40,7 +40,8 @@ namespace CI.Areas.Employee.Controllers
         {
             try
             {
-
+                ViewBag.firstBanner = _Idb.AllBanners().Where(e => e.SortOrder == 1).ToList();
+                ViewBag.Banners = _Idb.AllBanners().OrderBy(e => e.SortOrder).ToList().Skip(1);
 
                 //User user = new User();
                 return View();
@@ -57,7 +58,8 @@ namespace CI.Areas.Employee.Controllers
             try
             {
 
-
+                ViewBag.firstBanner = _Idb.AllBanners().Where(e => e.SortOrder == 1).ToList();
+                ViewBag.Banners = _Idb.AllBanners().OrderBy(e => e.SortOrder).ToList().Skip(1);
                 var obj = _Idb.UserExist(user.Email);
                 if (obj == null)
 

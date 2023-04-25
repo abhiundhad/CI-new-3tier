@@ -24,6 +24,8 @@ namespace CI.Areas.Employee.Controllers
         }
         public ActionResult Forget()
         {
+            ViewBag.firstBanner = _Idb.AllBanners().Where(e => e.SortOrder == 1).ToList();
+            ViewBag.Banners = _Idb.AllBanners().OrderBy(e => e.SortOrder).ToList().Skip(1);
             return View();
         }
         [HttpPost]
@@ -33,7 +35,8 @@ namespace CI.Areas.Employee.Controllers
         {
             try
             {
-
+                ViewBag.firstBanner = _Idb.AllBanners().Where(e => e.SortOrder == 1).ToList();
+                ViewBag.Banners = _Idb.AllBanners().OrderBy(e => e.SortOrder).ToList().Skip(1);
 
                 if (ModelState.IsValid)
                 {
@@ -91,6 +94,8 @@ namespace CI.Areas.Employee.Controllers
         {
             try
             {
+                ViewBag.firstBanner = _Idb.AllBanners().Where(e => e.SortOrder == 1).ToList();
+                ViewBag.Banners = _Idb.AllBanners().OrderBy(e => e.SortOrder).ToList().Skip(1);
 
 
                 // var passwordReset = _db.PasswordResets.FirstOrDefault(pr => pr.Email == email && pr.Token == token);
@@ -121,7 +126,8 @@ namespace CI.Areas.Employee.Controllers
             try
             {
 
-
+                ViewBag.firstBanner = _Idb.AllBanners().Where(e => e.SortOrder == 1).ToList();
+                ViewBag.Banners = _Idb.AllBanners().OrderBy(e => e.SortOrder).ToList().Skip(1);
                 if (ModelState.IsValid)
                 {
                     _Idb.Updateremovepassword(rsp.Email, rsp.Token, rsp.Password);

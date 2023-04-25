@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "D+SEKrSFB10rPXwxbZFyQ8pRIjfklsiiAIk7yrH4z7k=",
+  "Hash": "teTBbnLRf/XLQ9qM6CU82GBNCH3qItoKax8u2g98u/Y=",
   "Source": "CI",
   "BasePath": "_content/CI",
   "Mode": "Default",
@@ -627,6 +627,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\arrow.png"
+    },
+    {
+      "Identity": "A:\\CI-3tier-master\\CI\\CI\\wwwroot\\images\\bannerdefault.png",
+      "SourceId": "CI",
+      "SourceType": "Discovered",
+      "ContentRoot": "A:\\CI-3tier-master\\CI\\CI\\wwwroot\\",
+      "BasePath": "_content/CI",
+      "RelativePath": "images/bannerdefault.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\bannerdefault.png"
     },
     {
       "Identity": "A:\\CI-3tier-master\\CI\\CI\\wwwroot\\images\\bell.png",

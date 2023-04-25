@@ -13,14 +13,14 @@ namespace CI.Areas.Employee.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        private readonly CiPlatformContext _db;
+        
         private readonly IUserRepository _Idb;
 
 
         public HomeController(ILogger<HomeController> logger, CiPlatformContext db, IUserRepository Idb)
         {
             _logger = logger;
-            _db = db;
+         
             _Idb = Idb;
         }
         public IActionResult Index()
@@ -74,8 +74,8 @@ namespace CI.Areas.Employee.Controllers
                 userVM.availability = user.Availability;
                 var allskills = _Idb.skillList();
                 ViewBag.allskills = allskills;
-                var skills = from US in _db.UserSkills
-                             join S in _db.Skills on US.SkillId equals S.SkillId
+                var skills = from US in _Idb.allUserSkills()
+                             join S in _Idb.skillList() on US.SkillId equals S.SkillId
                              select new { US.SkillId, S.SkillName, US.UserId };
                 var uskills = skills.Where(e => e.UserId == id).ToList();
                 ViewBag.userskills = uskills;
@@ -145,8 +145,8 @@ namespace CI.Areas.Employee.Controllers
 
                 var allskills = _Idb.skillList();
                 ViewBag.allskills = allskills;
-                var skills = from US in _db.UserSkills
-                             join S in _db.Skills on US.SkillId equals S.SkillId
+                var skills = from US in _Idb.allUserSkills()
+                             join S in _Idb.skillList() on US.SkillId equals S.SkillId
                              select new { US.SkillId, S.SkillName, US.UserId };
                 var uskills = skills.Where(e => e.UserId == id).ToList();
                 ViewBag.userskills = uskills;
@@ -192,9 +192,8 @@ namespace CI.Areas.Employee.Controllers
 
                 var sessionUserId = HttpContext.Session.GetString("userID");
                 var id = Convert.ToInt64(sessionUserId);
-                var abc = _db.UserSkills.Where(e => e.UserId == id).ToList();
-                _db.RemoveRange(abc);
-                _db.SaveChanges();
+              _Idb.removeUserSkills(id);
+        
                 foreach (var skills in selectedSkills)
                 {
 

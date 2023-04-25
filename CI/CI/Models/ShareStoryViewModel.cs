@@ -31,6 +31,7 @@ namespace CI.Models
 
         public long userID { get; set; }
         public long StoryID { get; set; }
-        public List<IFormFile>? attachment { get; set; } 
+        public List<IFormFile>? attachment { get; set; }
+        public string url { get; set; }
     }
 }

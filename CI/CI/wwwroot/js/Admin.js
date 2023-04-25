@@ -1,4 +1,13 @@
-﻿var dashboadtime = document.getElementById("dashboadtime");
+﻿
+var loader = document.getElementById('preloader');
+window.addEventListener("load", function () {
+	loader.style.display = "none";
+});
+$(document).ready(function () {
+	filter();
+
+});
+var dashboadtime = document.getElementById("dashboadtime");
 function currentTime() {
     var time = new Date();
     var dateString = time.toDateString();

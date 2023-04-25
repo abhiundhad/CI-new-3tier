@@ -234,12 +234,24 @@ namespace CI.Repository.Repository
 
         public void addstoryMedia(long MissionId, string mediatype, string mediapath, long id, long sid)
         {
-           // var story = _db.Stories.OrderBy(s => s.CreatedAt).Where(s => s.MissionId == MissionId && s.UserId == id).FirstOrDefault();
+            // var story = _db.Stories.OrderBy(s => s.CreatedAt).Where(s => s.MissionId == MissionId && s.UserId == id).FirstOrDefault();
+          
+
+
             StoryMedium st = new StoryMedium();
             st.StoryId = sid;
             st.StoryType = mediatype;
             st.StoryPath = mediapath;
             _db.Add(st);
+            _db.SaveChanges();
+        }
+        public void AddStoryUrl(long storyid, string url)
+        {
+            StoryMedium st1 = new StoryMedium();
+            st1.StoryId = storyid;
+            st1.StoryType = "Video";
+            st1.StoryPath = url;
+            _db.Add(st1);
             _db.SaveChanges();
         }
         public void Removemedia(long storyid)
@@ -401,6 +413,11 @@ namespace CI.Repository.Repository
         {
             return _db.UserSkills.ToList();
         }
+        public List<UserSkill> allUserSkills()
+        {
+            return _db.UserSkills.ToList();
+
+        }
 
         public ContactU addContactUs(string subject, string message, string username, string email)
         {
@@ -523,7 +540,7 @@ namespace CI.Repository.Repository
             var applicationsList = from ma in _db.MissionApplications
                                    join m in _db.Missions on ma.MissionId equals m.MissionId
                                    join u in _db.Users on ma.UserId equals u.UserId
-                                   where ma.ApprovalStatus == "0"
+                                   where ma.ApprovalStatus == "0" ||ma.DeletedAt==null
                                    select new MissionApplicationViewModel
                                    {
                                        UserId = u.UserId,
@@ -601,7 +618,7 @@ namespace CI.Repository.Repository
             var applicationsList = from ma in _db.Stories
                                    join m in _db.Missions on ma.MissionId equals m.MissionId
                                    join u in _db.Users on ma.UserId equals u.UserId
-                                   where ma.Status == "Pending"
+                                   where ma.Status == "Pending" ||ma.DeletedAt==null
                                    select new AdminStoryVM
                                    {
                                        StoryId = ma.StoryId,
@@ -765,12 +782,13 @@ namespace CI.Repository.Repository
             mission.ThemeId = model.themeId;
             _db.Update(mission);
             _db.SaveChanges();
+            var abc = _db.MissionMedia.Where(e => e.MissionId == model.missionId && e.MediaType == "Video").ToList();
+            _db.RemoveRange(abc);
+            _db.SaveChanges();
             if (model.url != null)
             {
                 var videoUrls = model.url.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-                var abc = _db.MissionMedia.Where(e => e.MissionId == model.missionId && e.MediaType == "Video").ToList();
-                _db.RemoveRange(abc);
-                _db.SaveChanges();
+               
                 foreach (var videoUrl in videoUrls)
                 {
 
@@ -786,8 +804,8 @@ namespace CI.Repository.Repository
             if (model.selectedSkills != null)
             {
                 var skills = model.selectedSkills.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-                var abc = _db.MissionSkills.Where(e => e.MissionId == model.missionId).ToList();
-                _db.RemoveRange(abc);
+                var abc1 = _db.MissionSkills.Where(e => e.MissionId == model.missionId).ToList();
+                _db.RemoveRange(abc1);
                 _db.SaveChanges();
                 foreach (var skill in skills)
                 {
@@ -883,6 +901,224 @@ namespace CI.Repository.Repository
         public List<MissionDocument> MissionDocumentList()
         {
             return _db.MissionDocuments.ToList();
+        }
+
+
+        public Banner AddBanner(string discrption, string image, int sortorder)
+        {
+            Banner banner = new Banner();
+            banner.SortOrder = sortorder;
+            banner.Image = image;
+            banner.Text = discrption;
+            banner.CreatedAt = DateTime.Now;
+            _db.Add(banner);
+            _db.SaveChanges();
+            return banner;
+        }
+        public Banner UpdateBanner(string discrption, string image, int sortorder, long bannerId)
+        {
+            Banner banner = _db.Banners.FirstOrDefault(b => b.BannerId == bannerId);
+            banner.SortOrder = sortorder;
+            banner.Image = image;
+            banner.Text = discrption;
+            banner.UpdatedAt = DateTime.Now;
+            _db.Update(banner);
+            _db.SaveChanges();
+            return banner;
+        }
+        public List<Banner> AllBanners()
+        {
+            return _db.Banners.Where(b => b.DeletedAt == null).ToList();
+        }
+        public List<UserSkill> removeUserSkills(long id)
+        {
+            var abc = _db.UserSkills.Where(x => x.UserId == id).ToList();
+            _db.RemoveRange(abc);
+            _db.SaveChanges();
+            return null;
+        }
+
+
+
+        public void DeleteUser(long userId)
+        {
+            var user = _db.Users.FirstOrDefault(t => t.UserId == userId);
+            user.DeletedAt = DateTime.Now;
+            user.UpdatedAt = DateTime.Now;
+            _db.Update(user);
+            var skills = _db.UserSkills.Where(t => t.UserId == userId).ToList();
+            foreach (var skill in skills)
+            {
+                skill.DeletedAt = DateTime.Now;
+                skill.UpdatedAt = DateTime.Now;
+                _db.Update(skill);
+
+            }
+            var timesheets = _db.Timesheets.Where(t => t.UserId == userId).ToList();
+            foreach (var timesheet in timesheets)
+            {
+                timesheet.DeletedAt = DateTime.Now;
+                timesheet.UpdatedAt = DateTime.Now;
+                _db.Update(timesheet);
+
+            }
+            var story = _db.Stories.Where(t => t.UserId == userId).ToList();
+            foreach (var skill in story)
+            {
+                skill.DeletedAt = DateTime.Now;
+                skill.UpdatedAt = DateTime.Now;
+                _db.Update(skill);
+
+            }
+            var favmission = _db.FavoriteMissions.Where(t => t.UserId == userId).ToList();
+            foreach (var timesheet in favmission)
+            {
+                timesheet.DeletedAt = DateTime.Now;
+                timesheet.UpdatedAt = DateTime.Now;
+                _db.Update(timesheet);
+
+            }
+            var comment = _db.Comments.Where(t => t.UserId == userId).ToList();
+            foreach (var timesheet in comment)
+            {
+                timesheet.DeletedAt = DateTime.Now;
+                timesheet.UpdatedAt = DateTime.Now;
+                _db.Update(timesheet);
+
+            }
+            var missionRating = _db.MissionRatings.Where(t => t.UserId == userId).ToList();
+            foreach (var timesheet in missionRating)
+            {
+                timesheet.DeletedAt = DateTime.Now;
+                timesheet.UpdatedAt = DateTime.Now;
+                _db.Update(timesheet);
+
+            }
+            var missionApplication = _db.MissionApplications.Where(t => t.UserId == userId).ToList();
+            foreach (var timesheet in missionApplication)
+            {
+                timesheet.DeletedAt = DateTime.Now;
+                timesheet.UpdatedAt = DateTime.Now;
+                _db.Update(timesheet);
+
+            }
+            _db.SaveChanges();
+
+        }
+
+
+        public void DeleteMission(long missionId)
+        {
+            var mission = _db.Missions.FirstOrDefault(t => t.MissionId == missionId);
+            mission.DeletedAt = DateTime.Now;
+            mission.UpdatedAt = DateTime.Now;
+            _db.Update(mission);
+            var missionApplication = _db.MissionApplications.Where(t => t.MissionId == missionId).ToList();
+            foreach (var timesheet in missionApplication)
+            {
+                timesheet.DeletedAt = DateTime.Now;
+                timesheet.UpdatedAt = DateTime.Now;
+                _db.Update(timesheet);
+
+            }
+            var skills = _db.MissionSkills.Where(t => t.MissionId == missionId).ToList();
+            foreach (var skill in skills)
+            {
+                skill.DeletedAt = DateTime.Now;
+                skill.UpdatedAt = DateTime.Now;
+                _db.Update(skill);
+
+            }
+            var timesheets = _db.Timesheets.Where(t => t.MissionId == missionId).ToList();
+            foreach (var timesheet in timesheets)
+            {
+                timesheet.DeletedAt = DateTime.Now;
+                timesheet.UpdatedAt = DateTime.Now;
+                _db.Update(timesheet);
+
+            }
+            var story = _db.Stories.Where(t => t.MissionId == missionId).ToList();
+            foreach (var skill in story)
+            {
+                skill.DeletedAt = DateTime.Now;
+                skill.UpdatedAt = DateTime.Now;
+                _db.Update(skill);
+
+            }
+            var favmission = _db.FavoriteMissions.Where(t => t.MissionId == missionId).ToList();
+            foreach (var timesheet in favmission)
+            {
+                timesheet.DeletedAt = DateTime.Now;
+                timesheet.UpdatedAt = DateTime.Now;
+                _db.Update(timesheet);
+
+            }
+            var comment = _db.Comments.Where(t => t.MissionId == missionId).ToList();
+            foreach (var timesheet in comment)
+            {
+                timesheet.DeletedAt = DateTime.Now;
+                timesheet.UpdatedAt = DateTime.Now;
+                _db.Update(timesheet);
+
+            }
+            var missionRating = _db.MissionRatings.Where(t => t.MissionId == missionId).ToList();
+            foreach (var timesheet in missionRating)
+            {
+                timesheet.DeletedAt = DateTime.Now;
+                timesheet.UpdatedAt = DateTime.Now;
+                _db.Update(timesheet);
+
+            }
+            var missionmedia = _db.MissionMedia.Where(t => t.MissionId == missionId).ToList();
+            foreach (var timesheet in missionmedia)
+            {
+                timesheet.DeletedAt = DateTime.Now;
+                timesheet.UpdatedAt = DateTime.Now;
+                _db.Update(timesheet);
+
+            }
+            var missiondoc = _db.MissionDocuments.Where(t => t.MissionId == missionId).ToList();
+            foreach (var timesheet in missiondoc)
+            {
+                timesheet.DeletedAt = DateTime.Now;
+                timesheet.UpdatedAt = DateTime.Now;
+                _db.Update(timesheet);
+
+            }
+            var goalmission = _db.GoalMissions.Where(t => t.MissionId == missionId).ToList();
+            foreach (var timesheet in goalmission)
+            {
+                timesheet.DeletedAt = DateTime.Now;
+                timesheet.UpdatedAt = DateTime.Now;
+                _db.Update(timesheet);
+
+            }
+            _db.SaveChanges();
+        }
+
+        public void DeleteStory(long storyId)
+        {
+            var story = _db.Stories.FirstOrDefault(t => t.StoryId == storyId);
+            story.DeletedAt = DateTime.Now;
+            story.UpdatedAt = DateTime.Now;
+            _db.Update(story);
+            var storymedia = _db.StoryMedia.Where(t => t.StoryId == storyId).ToList();
+            foreach (var timesheet in storymedia)
+            {
+                timesheet.DeletedAt = DateTime.Now;
+                timesheet.UpdatedAt = DateTime.Now;
+                _db.Update(timesheet);
+
+            }
+            _db.SaveChanges();
+        }
+        public void DeleteBanner(long bannerId)
+        {
+            var banner = _db.Banners.FirstOrDefault(t => t.BannerId == bannerId);
+            banner.DeletedAt = DateTime.Now;
+            banner.UpdatedAt = DateTime.Now;
+            _db.Update(banner);
+            _db.SaveChanges();
         }
     }
 }   

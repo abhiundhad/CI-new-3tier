@@ -45,10 +45,12 @@
                                     <div class="col-12 col-lg-4  col-md-6 mb-3">
                                         <label for="title">Mission Title</label>
                                         <input asp-for="title" type="text" class="form-control" placeholder="Enter title">
+                                                <span asp-validation-for="title" class="text-danger"></span>
                                     </div>
                                     <div class="col-12 col-lg-4 col-md-6 mb-3">
                                         <label for="short description">Mission Short Description</label>
                                         <input asp-for="shortdescription" type="text" class="form-control" placeholder="Enter short description">
+                                                <span asp-validation-for="shortdescription" class="text-danger"></span>
                                     </div>
                                     <div class="col-12 col-lg-4 col-md-6 mb-3">
                                         <label for="organization name">Mission Organization Name</label>
@@ -57,6 +59,7 @@
                                     <div class="col-12 mb-3">
                                         <label for="description">Mission Description</label>
                                         <textarea asp-for="editor2" name="editor2" id="editor2" class="form-control"></textarea>
+                                                <span asp-validation-for="editor2" class="text-danger"></span>
                                     </div>
                                     <div class="col-12  mb-3">
                                         <label for="organization Detail">Mission Organization Detail</label>
@@ -75,6 +78,7 @@
 
 
                                         </Select>
+                                                <span asp-validation-for="countryId" class="text-danger"></span>
                                     </div>
                                     <div class="col-12 col-lg-4 col-md-6 mb-3">
                                         <label for="city">city</label>
@@ -85,6 +89,7 @@
                                                 <option value="@city.CityId">@city.Name</option>
                                             }
                                         </Select>
+                                                <span asp-validation-for="cityId" class="text-danger"></span>
                                     </div>
                                     <div class="col-12 col-lg-4 col-md-6 mb-3">
                                         <label>Theme</label>
@@ -95,6 +100,7 @@
                                                 <option value="@theme.MissionThemeId">@theme.Title</option>
                                             }
                                         </Select>
+                                                <span asp-validation-for="themeId" class="text-danger"></span>
                                     </div>
 
 
@@ -102,10 +108,12 @@
                                     <div class="col-12 col-lg-4 col-md-6 mb-3">
                                         <label>Mission Start Date</label>
                                         <input asp-for="startDate" type="datetime-local" class="form-control">
+                                                <span asp-validation-for="startDate" class="text-danger"></span>
                                     </div>
                                     <div class="col-12 col-lg-4 col-md-6 mb-3">
                                         <label>Mission end Date</label>
                                         <input asp-for="endDate" type="datetime-local" class="form-control">
+                                                <span asp-validation-for="endDate" class="text-danger"></span>
                                     </div>
                                     <div class="col-12 col-lg-4 col-md-6 mb-3">
                                         <label>Mission Availability</label>
@@ -115,6 +123,7 @@
                                             <option value="Weekly">Weekly</option>
                                             <option value="Monthly">Monthly</option>
                                         </Select>
+                                                <span asp-validation-for="timeavailability" class="text-danger"></span>
                                     </div>
 
                                     <div class="col-12 col-lg-4 col-md-6 mb-3">
@@ -124,15 +133,18 @@
                                             <option value="Time">Time</option>
                                             <option value="Goal">Goal</option>
                                         </Select>
+                                                <span asp-validation-for="missionType" class="text-danger"></span>
                                     </div>
 
                                     <div class="col-12 col-lg-4 col-md-6 mb-3">
                                         <label>Total Seat</label>
                                         <input asp-for="totalseats" type="number" class="form-control pe-0">
+                                                <span asp-validation-for="totalseats" class="text-danger"></span>
                                     </div>
                                     <div class="col-12 col-lg-4 col-md-6 mb-3" id="time">
                                         <label>Mission Registraion Deadline</label>
                                         <input asp-for="deadline" type="datetime-local" class="form-control">
+                                                <span asp-validation-for="deadline" class="text-danger"></span>
                                     </div>
 
                                     <div class="row" id="goal">
@@ -140,11 +152,13 @@
 
                                             <label>Goal Objective Text</label>
                                             <input asp-for="goalObjectiveText" type="text" class="form-control">
+                                                    <span asp-validation-for="goalObjectiveText" class="text-danger"></span>
                                         </div>
                                         <div class="col-6 mb-3">
 
                                             <label>Goal Value</label>
                                             <input asp-for="goalValue" type="text" class="form-control">
+                                                    <span asp-validation-for="goalValue" class="text-danger"></span>
                                         </div>
                                     </div>
 
@@ -314,6 +328,50 @@
 
             </div>
             <script>
+
+
+
+                function deletemission(missionId) {
+
+
+                    const swalWithBootstrapButtons = Swal.mixin({
+                        customClass: {
+                            confirmButton: 'btn btn-success',
+                            cancelButton: 'btn btn-danger'
+                        },
+                        buttonsStyling: true
+                    })
+
+                    swalWithBootstrapButtons.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this goalsheet!",
+                        icon: 'warning',
+                        width: '300',
+                        height: '100',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes',
+                        cancelButtonText: 'No',
+                        reverseButtons: true
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: '/Admin/Admin/DeleteMission',
+                                type: 'POST',
+                                data: { missionId: missionId },
+
+                                success: function (response) {
+
+                                    swalWithBootstrapButtons.fire(
+                                        'Deleted!',
+                                        'Your goalsheet has been deleted.',
+                                        'success'
+                                    )
+                                    $('#example').html($(response).find('#example').html());
+                                    location.reload();
+
+
+                                },
+
                 Dropzone.autoDiscover = false;
 
                 $(document).ready(function () {
@@ -361,7 +419,7 @@
                     <td>@mission.MissionType</td>
                     <td>@mission.StartDate</td>
                     <td>@mission.EndDate</td>
-                    <td><i class="fas fa-edit" data-bs-toggle="modal" data-bs-target="#AdminMissionmodal" onclick="editmission(@mission.MissionId)"></i> | <i class="fa fa-trash" style="color:red"></i></td>
+                    <td><i class="fas fa-edit" data-bs-toggle="modal" data-bs-target="#AdminMissionmodal" onclick="editmission(@mission.MissionId)"></i> | <i class="fa fa-trash" onclick="deletemission(@mission.MissionId)" style="color:red"></i></td>
                 </tr>
             }
 
@@ -370,7 +428,73 @@
 
         </tbody>
     </table>
-    @*   <script type="text/javascript">
+    <script>
+
+        function deletemission(missionId) {
+
+
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: true
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this goalsheet!",
+                icon: 'warning',
+                width: '300',
+                height: '100',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/Admin/Admin/DeleteMission',
+                        type: 'POST',
+                        data: { missionId: missionId },
+
+                        success: function (response) {
+
+                            swalWithBootstrapButtons.fire(
+                                'Deleted!',
+                                'Your goalsheet has been deleted.',
+                                'success'
+                            )
+                            $('#example').html($(response).find('#example').html());
+                            location.reload();
+
+
+                        },
+                        error: function () {
+                            alert("could not comment");
+                        }
+                    });
+
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+
+                    )
+                }
+            })
+
+
+
+
+
+        }
+    </script>
+      <script type="text/javascript">
+
+
     Dropzone.autoDiscover = false;
 
     $(document).ready(function () {
@@ -404,7 +528,7 @@
     // Do something when the upload is successful
     });
     });
-    </script>*@
+    </script>
     <script src="~/js/AdminMission.js" asp-append-version="true"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
@@ -413,6 +537,8 @@
 
 
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/js/Admin.js" asp-append-version="true"></script>
     <link href="~/css/Adminindex.css" rel="stylesheet" asp-append-version="true" />
 

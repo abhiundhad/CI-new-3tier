@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using CI.Repository.Interface;
 using System.Reflection;
+using System.Security.Cryptography;
+using System.Security.Policy;
 
 namespace CI.Areas.Employee.Controllers
 {
@@ -288,6 +290,19 @@ namespace CI.Areas.Employee.Controllers
 
                         _Idb.addstoryMedia(model.MissionId, i.ContentType.Split("/")[0], FileName, userid, storyid);
                     }
+                    if (model.url != null)
+                    {
+                        if (model.StoryID != 0)
+                        {
+                            _Idb.Removemedia(model.StoryID);
+                        }
+                        var videoUrls = model.url.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+                        foreach (var videoUrl in videoUrls)
+                        {
+                            _Idb.AddStoryUrl(storyid, videoUrl);
+                        }
+
+                    }
 
                 }
                 TempData["Story submit"] = "Story Submitted Sucessfully";
@@ -338,7 +353,23 @@ namespace CI.Areas.Employee.Controllers
                             var base64String = Convert.ToBase64String(imageBytes);
                             FileName = "data:image/png;base64," + base64String;
                         }
+
                         _Idb.addstoryMedia(model.MissionId, i.ContentType.Split("/")[0], FileName, userid, storyid);
+                    }
+                 
+
+
+                }
+                if (model.url != null)
+                {
+                    if (model.StoryID != 0)
+                    {
+                        _Idb.Removemedia(model.StoryID);
+                    }
+                    var videoUrls = model.url.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (var videoUrl in videoUrls)
+                    {
+                        _Idb.AddStoryUrl(storyid, videoUrl);
                     }
 
                 }

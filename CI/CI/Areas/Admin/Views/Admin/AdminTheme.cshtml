@@ -48,6 +48,7 @@
                                             <input type="hidden" asp-for="themeId" />
                                             <lable>Theme Name</lable>
                                             <input class="form-control" id="themeName" value="@Model.themeName" asp-for="themeName" />
+                                                    <span asp-validation-for="themeName" class="text-danger"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -139,6 +140,8 @@
 
 
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/js/Admin.js" asp-append-version="true"></script>
     <link href="~/css/Adminindex.css" rel="stylesheet" asp-append-version="true" />
 

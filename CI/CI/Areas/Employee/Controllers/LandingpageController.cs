@@ -72,7 +72,7 @@ namespace CI.Areas.Employee.Controllers
 
                 }
                 ViewBag.allavailuser = allavailuser;
-                List<Mission> allmission = _Idb.MissionsList();
+                List<Mission> allmission = _Idb.MissionsList().Where(x => x.DeletedAt == null).ToList();
                 List<VolunteeringVM> mission = new List<VolunteeringVM>();
                 foreach (Mission item in allmission)
                 {

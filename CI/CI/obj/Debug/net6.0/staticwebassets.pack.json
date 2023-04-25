@@ -257,6 +257,10 @@
       "PackagePath": "staticwebassets\\images\\arrow.png"
     },
     {
+      "Id": "A:\\CI-3tier-master\\CI\\CI\\wwwroot\\images\\bannerdefault.png",
+      "PackagePath": "staticwebassets\\images\\bannerdefault.png"
+    },
+    {
       "Id": "A:\\CI-3tier-master\\CI\\CI\\wwwroot\\images\\bell-big.png",
       "PackagePath": "staticwebassets\\images\\bell-big.png"
     },

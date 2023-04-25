@@ -24,7 +24,8 @@ namespace CI.Areas.Employee.Controllers
         {
             try
             {
-
+                ViewBag.firstBanner = _Idb.AllBanners().Where(e => e.SortOrder == 1).ToList();
+                ViewBag.Banners = _Idb.AllBanners().OrderBy(e => e.SortOrder).ToList().Skip(1);
 
                 HttpContext.Session.Clear();
                 return View();
@@ -54,7 +55,8 @@ namespace CI.Areas.Employee.Controllers
         {
             try
             {
-
+                ViewBag.firstBanner = _Idb.AllBanners().Where(e => e.SortOrder == 1).ToList();
+                ViewBag.Banners = _Idb.AllBanners().OrderBy(e => e.SortOrder).ToList().Skip(1);
 
                 if (model.MissionId != 0 && model.MissionId != null)
                 {
