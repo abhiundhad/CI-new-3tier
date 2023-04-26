@@ -115,6 +115,9 @@ namespace CI.Areas.Employee.Controllers
                 else
                 {
                     var storydetail = _db.Stories.FirstOrDefault(s => s.StoryId == StoryId);
+                    ViewBag.storymedia = _Idb.storyMedia().Where(m => m.StoryId == StoryId && m.DeletedAt == null).ToList();
+                    ViewBag.storymediacount = _Idb.storyMedia().Where(m => m.StoryId == StoryId && m.DeletedAt == null).ToList().Count();
+
                     storydetail.StoryView += 1;
                     _db.Stories.Update(storydetail);
                     _db.SaveChanges();
@@ -223,6 +226,7 @@ namespace CI.Areas.Employee.Controllers
                     var foundstory = _Idb.StoryList().FirstOrDefault(x => x.StoryId == Storyid);
                     ShareStoryData.MissionId = foundstory.MissionId;
                     ShareStoryData.StoryTitle = foundstory.Title;
+                    
                     ShareStoryData.date = foundstory.CreatedAt;
                     ShareStoryData.editor1 = foundstory.Description;
                     ShareStoryData.StoryID = Convert.ToInt64(Storyid);

@@ -89,7 +89,7 @@ namespace CI.Areas.Employee.Controllers
                     var colsed = id != null ? _Idb.MissionsList().Any(u => u.StartDate < DateTime.Now) : false;
                     ViewBag.FavoriteMissions = favrioute;
                     int seatleft = Convert.ToInt32(item.Availability) - Applycunt;
-                    var missionpath = _Idb.MissionMediaList().FirstOrDefault(m => m.MissionId == item.MissionId && m.MediaName !="Video" && m.DeletedAt==null);
+                    var missionpath = _Idb.MissionMediaList().FirstOrDefault(m => m.MissionId == item.MissionId && m.MediaType!="Video" && m.DeletedAt==null);
                     var rat = _Idb.missionRatingList().Where(u => u.MissionId == item.MissionId).ToList();
                     int finalrat = 0;
                     if (rat.Count > 0)

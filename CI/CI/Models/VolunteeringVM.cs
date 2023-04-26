@@ -1,4 +1,6 @@
-﻿namespace CI.Models
+﻿using CI_Entity.Models;
+
+namespace CI.Models
 {
     public class VolunteeringVM
     {
@@ -54,6 +56,7 @@
         public string Useravtar {get; set; }    
         public long Commentid { get; set; } 
         public long? Storyview { get; set; }
+        public List<MissionDocument> document { get; set; }
 
 
 

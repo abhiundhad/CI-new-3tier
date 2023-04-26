@@ -23,7 +23,7 @@
 .next {
     cursor: pointer;
     position: absolute;
-    top: 83%;
+    top: 79;
     background-color: rgba(0, 0, 0, 1.8);
     width: 4%;
     padding-top: 3%;
@@ -40,7 +40,8 @@
 }
 
 .prev {
-    margin-left: 2%;
+    left: 0;
+    border-radius: 3px 0 0 3px;
 }
 
 /* Position the "next button" to the right */
@@ -79,10 +80,7 @@
 }
 
 /* Six columns side by side */
-.column {
-    float: left;
-    width: 16.66%;
-}
+
 
 /* Add a transparency effect for thumnbail images */
 .demo {

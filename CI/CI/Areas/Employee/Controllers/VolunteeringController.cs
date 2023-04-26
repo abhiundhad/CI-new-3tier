@@ -206,8 +206,11 @@ namespace CI.Areas.Employee.Controllers
                     var givrats = _Idb.missionRatingList().FirstOrDefault(u => u.MissionId == volmission.MissionId && u.UserId == Convert.ToInt64(sessionUserId));
                     int seatleft = Convert.ToInt32(volmission.Availability) - Applycunt;
                     var rat = _Idb.missionRatingList().Where(u => u.MissionId == volmission.MissionId).ToList();
+                    var document = _Idb.MissionDocumentList().Where(u => u.MissionId == volmission.MissionId && u.DeletedAt == null).ToList(); 
                     ViewBag.missionmedia = _Idb.allmedia().Where(m => m.MissionId == volmission.MissionId && m.DeletedAt == null).ToList();
+                   
                     ViewBag.missionmediacount = _Idb.allmedia().Where(m => m.MissionId == volmission.MissionId && m.DeletedAt == null).ToList().Count();
+
                     ViewBag.ratusercouny = rat.Count();
                     int finalrat = 0;
                     if (rat.Count > 0)
@@ -243,6 +246,7 @@ namespace CI.Areas.Employee.Controllers
                     volunteeringVM.isPendding = pendingbtn;
                     volunteeringVM.Givenrating = givrats != null ? Convert.ToInt64(givrats.Rating) : 0;
                     volunteeringVM.AvrageRating = finalrat;
+                    volunteeringVM.document = document != null?document:null;
                     volunteeringVM.UserId = Convert.ToInt64(sessionUserId);
 
 
