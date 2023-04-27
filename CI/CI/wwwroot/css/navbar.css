@@ -1,6 +1,7 @@
-.nav-link:focus{
-    color:black;
+.nav-link:focus, .nav-link:hover {
+    color: black !important;
 }
+
 .nav-link {
     color: black;
 }
@@ -149,6 +150,13 @@ p {
 .filters-section{
     height:max-content;
 }
+.loginbtn {
+    border: 1px solid #F88634;
+    color: #F88634;
+}
 
-
+    .loginbtn:hover {
+        color: white !important;
+        background: #F88634!important;
+    }
 

@@ -83,34 +83,41 @@ function addtofav1(missionId, Id) {
 function sendRecom(missionid) {
 
     var Email = Array.from(document.querySelectorAll('input[name="email"]:checked')).map(e => e.id);
-    var sendbtn = document.getElementById("sendbutton");
-    sendbtn.innerHTML = "Sending...";
-    $.ajax
-        ({
-            url: '/Employee/Volunteering/sendRecom',
-            type: 'POST',
-            data: { missionid: missionid, Email: Email },
+    if (Email.length == 0) {
 
-            success: function (result) {
+        var sendbtn = document.getElementById("sendbutton");
+        sendbtn.innerHTML = "please Select user";
+    }
+    else {
+        var sendbtn = document.getElementById("sendbutton");
+        sendbtn.innerHTML = "Sending...";
+        $.ajax
+            ({
+                url: '/Employee/Volunteering/sendRecom',
+                type: 'POST',
+                data: { missionid: missionid, Email: Email },
 
-                const checkboxes = document.querySelectorAll('input[name="email"]:checked');
-                checkboxes.forEach((checkbox) => {
-                    checkbox.checked = false;
-                });
-                sendbtn.innerHTML = "Send successfully";
-                setTimeout(() => {
+                success: function (result) {
+
+                    const checkboxes = document.querySelectorAll('input[name="email"]:checked');
+                    checkboxes.forEach((checkbox) => {
+                        checkbox.checked = false;
+                    });
+                    sendbtn.innerHTML = "Send successfully";
+                    setTimeout(() => {
 
 
-                    sendbtn.innerHTML = "Send Recommandation";
+                        sendbtn.innerHTML = "Send Recommandation";
 
-                }, 2000);
-            },
-            error: function () {
+                    }, 2000);
+                },
+                error: function () {
 
-                // Handle error response from the server, e.g. show an error message to the user
-                alert('Error: Could not recommend mission.');
-            }
-        });
+                    // Handle error response from the server, e.g. show an error message to the user
+                    alert('Error: Could not recommend mission.');
+                }
+            });
+    }
 
 }
 

@@ -176,9 +176,19 @@ hr {
     border:1px solid black;
 }
 .cmtbtn {
-    border-color: #F88634;
+    border:1px solid #F88634;
     color: #F88634;
     font-size:20px;
+}
+    .cmtbtn:hover {
+    
+        color: white;
+        background-color: #F88634!important;
+        font-size: 20px;
+    }
+.binimg:hover {
+    color: #F88634 !important;
+    background: #F88634!important;
 }
 .comtuserimg {
     height: 52px;

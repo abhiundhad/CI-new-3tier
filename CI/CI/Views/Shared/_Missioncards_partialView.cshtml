@@ -85,8 +85,8 @@
                 @foreach (var item in Model)
                 {
 
-                    <div class="missioncard col-12 col-md-6 col-lg-4">
-                        <div class="card" style="height:100%; width:98%">
+                    <div class="missioncard col-12 col-md-6 col-lg-4 mb-2">
+                        <div class="card" style="height:100%; width:98%;">
 
 
 
@@ -109,6 +109,7 @@
 
                                     <div class="appliedbtn rounded-end" style="@(@item.isApplied?  "display:block;": "display:none;")">Applied</div>
                                     <div class="pendingbtn rounded-end" style="@(@item.isPendding?  "display:block;": "display:none;")">Pendding</div>
+                                    <div class="rejectedbtn rounded-end" style="@(@item.isRejected?  "display:block;": "display:none;")">Rejected</div>
                                 }
 
                                 <div class="closedbtn rounded-end" style="@(@item.isclosed?  "display:block;": "display:none;")">closed</div>
@@ -279,13 +280,14 @@
                                 </div>
 
                                 <hr>
+                                <div class="col-12 d-flex justify-content-center">
                                 @if (id == null)
                                 {
-                                    <a class="text-decoration-none">
-                                        <button type="submit" class="applybtn d-flex" onclick="alertmsg();">
+                                        <a class="text-decoration-none viewbtn">
+                                            <button type="submit" class="applybtn d-flex justify-content-center align-items-center rounded-5 px-2 py-1" onclick="alertmsg();">
                                             <span class="applytxt">View detail</span>
                                             <div>
-                                                <img src="~/images/right-arrow.png" alt="" class=" ms-2 ">
+                                                    <i class="bi bi-arrow-right ms-2"></i>
                                             </div>
                                         </button>
                                     </a>
@@ -295,16 +297,16 @@
                                 {
 
 
-                                    <a class="text-decoration-none" href="/Employee/Volunteering/Volunteering/@id?missionId=@item.MissionId">
-                                        <button type="submit" class="applybtn d-flex">
-                                            <span class="applytxt">View detail</span>
+                                    <a class="text-decoration-none viewbtn" href="/Employee/Volunteering/Volunteering/@id?missionId=@item.MissionId">
+                                        <button type="submit" class="applybtn d-flex justify-content-center align-items-center rounded-5 px-2 py-1">
+                                            <span class="">View detail</span>
                                             <div>
-                                                <img src="~/images/right-arrow.png" alt="" class=" ms-2 ">
+                                                <i class="bi bi-arrow-right ms-2" ></i>
                                             </div>
                                         </button>
                                     </a>
                                 }
-
+                                </div>
                             </div>
 
                         </div>

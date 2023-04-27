@@ -85,8 +85,9 @@ namespace CI.Areas.Employee.Controllers
                     var favrioute = id != null ? _Idb.favoriteMissions().Any(u => u.UserId == Convert.ToInt64(SessionUserId) && u.MissionId == item.MissionId) : false;
                     var Applybtn = id != null ? _Idb.missionApplications().Any(u => u.MissionId == item.MissionId && u.UserId == Convert.ToInt64(SessionUserId)&& u.ApprovalStatus=="1") : false;
                     var pendingbtn = id != null ? _Idb.missionApplications().Any(u => u.MissionId == item.MissionId && u.UserId == Convert.ToInt64(SessionUserId)&& u.ApprovalStatus=="0") : false;
+                    var Rejectbtn = id != null ? _Idb.missionApplications().Any(u => u.MissionId == item.MissionId && u.UserId == Convert.ToInt64(SessionUserId)&& u.ApprovalStatus== "rejected") : false;
                     int Applycunt = _Idb.missionApplications().Where(m => m.MissionId == item.MissionId && m.ApprovalStatus=="1").ToList().Count();
-                    var colsed = id != null ? _Idb.MissionsList().Any(u => u.StartDate < DateTime.Now) : false;
+                    var colsed = _Idb.MissionsList().Any(u => u.Deadline < DateTime.Now && u.MissionId == item.MissionId) ? true : false;
                     ViewBag.FavoriteMissions = favrioute;
                     int seatleft = Convert.ToInt32(item.Availability) - Applycunt;
                     var missionpath = _Idb.MissionMediaList().FirstOrDefault(m => m.MissionId == item.MissionId && m.MediaType!="Video" && m.DeletedAt==null);
@@ -126,6 +127,7 @@ namespace CI.Areas.Employee.Controllers
                         isFavriout = favrioute,
                         isApplied = Applybtn,
                         isPendding=pendingbtn,
+                        isRejected=Rejectbtn,
                         isclosed = colsed,
                         missionmediapath = missionpath != null ? missionpath.MediaPath : "",
                         UserId = Convert.ToInt64(SessionUserId),

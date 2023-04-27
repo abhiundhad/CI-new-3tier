@@ -171,7 +171,7 @@ namespace CI_PlatformWeb.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult GetMission(long missionId)
         {
-            var mission = _Idb.MissionsList().FirstOrDefault(t => t.MissionId == missionId && t.Status == "1" && t.DeletedAt == null);
+            var mission = _Idb.MissionsList().FirstOrDefault(t => t.MissionId == missionId  && t.DeletedAt == null);
             var goalmission = _Idb.GoalsList().FirstOrDefault(g => g.MissionId == missionId)!=null? _Idb.GoalsList().FirstOrDefault(g => g.MissionId == missionId).GoalValue : null;
             var goalmissiontxt = _Idb.GoalsList().FirstOrDefault(g => g.MissionId == missionId)!=null? _Idb.GoalsList().FirstOrDefault(g => g.MissionId == missionId).GoalObjectiveText : null;
             var allskills = _Idb.skillList();
