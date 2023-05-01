@@ -169,6 +169,37 @@ namespace CI.Areas.Employee.Controllers
 
         }
         [HttpPost]
+        public async Task<IActionResult> changepass(string? pass1, string? pass2, string? pass3)
+        {
+            try
+            {
+
+
+                var sessionUserId = HttpContext.Session.GetString("userID");
+                var id = Convert.ToInt64(sessionUserId);
+                //long storyid = model.storyId;
+                var userDetail = _Idb.alluser().FirstOrDefault(u => u.UserId == id);
+                if (userDetail.Password == pass1)
+                {
+                    if (pass2 == pass3)
+                    {
+                        _Idb.changepass(id, pass2);
+                    }
+
+                    return RedirectToAction("UserProfile", "Home");
+                }
+                else
+                {
+                    return Json(new { success = false, userDetail });
+                }
+                return RedirectToAction("UserProfile", "Home");
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
+        [HttpPost]
         public IActionResult Contactus(UserprofileViewModel model)
         {
             try

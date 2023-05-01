@@ -48,8 +48,8 @@ namespace CI.Areas.Employee.Controllers
         public IActionResult Filters(long userId, int id, int missionid, string? search, int? pageIndex, string? sortValue, string[] country, string[] city, string[] theme, int pg)
         {
 
-            try
-            {
+            //try
+            //{
 
 
                 var SessionUserId = HttpContext.Session.GetString("userID");
@@ -105,8 +105,16 @@ namespace CI.Areas.Employee.Controllers
                         finalrat = rating / rat.Count();
 
                     }
-
-
+                    var actionList = _Idb.TimesheetList().Where(e => e.MissionId == item.MissionId && e.DeletedAt == null).ToList();
+                    int? progress = 0;
+                var goal = _Idb.GoalsList().Where(e => e.MissionId == item.MissionId && e.DeletedAt == null).SingleOrDefault() ;
+                    if (actionList != null)
+                    {
+                        foreach (var action in actionList)
+                        {
+                            progress = progress + action.Action;
+                        }
+                    }
 
 
                     mission.Add(new VolunteeringVM
@@ -131,6 +139,9 @@ namespace CI.Areas.Employee.Controllers
                         isclosed = colsed,
                         missionmediapath = missionpath != null ? missionpath.MediaPath : "",
                         UserId = Convert.ToInt64(SessionUserId),
+                        goal = int.Parse(goal.GoalValue),
+                        progress = progress,
+                        progressInPerc = item.MissionType == "Time" ? 0 : (progress * 100 / int.Parse(goal.GoalValue)),
                     });
                 }
 
@@ -210,12 +221,12 @@ namespace CI.Areas.Employee.Controllers
 
                 return PartialView("_Missioncards_partialView", FinalMissions);
                
-            }
-            catch (Exception ex)
-            {
-                //return View("Error");
-                return RedirectToAction("Error", "Home");
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    //return View("Error");
+            //    return RedirectToAction("Error", "Home");
+            //}
         }
 
 

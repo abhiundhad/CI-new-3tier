@@ -179,8 +179,8 @@ namespace CI.Areas.Employee.Controllers
         public IActionResult Volunteering(long id, long missionid, int pg)
 
         {
-            try
-            {
+            //try
+            //{
 
 
                 var sessionUserId = HttpContext.Session.GetString("userID");
@@ -225,6 +225,17 @@ namespace CI.Areas.Employee.Controllers
                         finalrat = rating / rat.Count();
 
                     }
+                    var actionList = _Idb.TimesheetList().Where(e => e.MissionId == volmission.MissionId && e.DeletedAt == null).ToList();
+                    int? progress = 0;
+                    var goal = _Idb.GoalsList().Where(e => e.MissionId == volmission.MissionId && e.DeletedAt == null).SingleOrDefault();
+                    if (actionList != null)
+                    {
+                        foreach (var action in actionList)
+                        {
+                            progress = progress + action.Action;
+                        }
+                    }
+
 
 
                     VolunteeringVM volunteeringVM = new VolunteeringVM();
@@ -248,6 +259,9 @@ namespace CI.Areas.Employee.Controllers
                     volunteeringVM.AvrageRating = finalrat;
                     volunteeringVM.document = document != null?document:null;
                     volunteeringVM.UserId = Convert.ToInt64(sessionUserId);
+                    volunteeringVM.goal = int.Parse(goal.GoalValue);
+                    volunteeringVM.progress = progress;
+                    volunteeringVM.progressInPerc = volmission.MissionType == "Time" ? 0 : (progress * 100 / int.Parse(goal.GoalValue));
 
 
                     ViewBag.Missiondetail = volunteeringVM;
@@ -395,11 +409,11 @@ namespace CI.Areas.Employee.Controllers
 
                     return View(new { sucess = true });
                 }
-            }
-            catch (Exception ex)
-            {
-                return RedirectToAction("Error", "Home");
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    return RedirectToAction("Error", "Home");
+            //}
 
 
         }

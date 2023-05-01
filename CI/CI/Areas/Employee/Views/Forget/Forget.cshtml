@@ -1,4 +1,4 @@
-@model CI_Entity.Models.User
+@model CI.Models.FogetModel
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -82,6 +82,7 @@
                         <div class="mb-3 mt-3 ">
                                 <label asp-for="Email" for=" exampleInputEmail1" class="form-label">Email address</label>
                                 <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your email address" asp-for="Email"  onkeyup="emptyemaill()">
+                                <span asp-validation-for="Email" class="text-danger"></span>
                           <div class="text-danger"style="color:red;" id="ENOTE">
                               @ViewBag.emailerror
                           </div>
@@ -115,6 +116,9 @@
             document.getElementById("ENOTE").style.display= "none";
         }
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
+    <script src="/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 </body>
 </html>

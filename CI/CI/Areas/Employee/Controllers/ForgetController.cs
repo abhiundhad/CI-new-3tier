@@ -59,7 +59,7 @@ namespace CI.Areas.Employee.Controllers
                     var resetLink = Url.Action("ResetPassword", "Forget", new { email = model.Email, token }, Request.Scheme);
                     // Send email to user with reset password link
                     // ...
-                    var fromAddress = new MailAddress("communityempowermentportal@gmail.com", "Community Empowerment Portal");
+                    var fromAddress = new MailAddress("cimain1882@gmail.com", "Community Empowerment Portal");
                     var toAddress = new MailAddress(model.Email);
                     var subject = "Password reset request";
                     var body = $"Hi,<br /><br />Please click on the following link to reset your password:<br /><br /><a href='{resetLink}'>{resetLink}</a>";
@@ -72,7 +72,7 @@ namespace CI.Areas.Employee.Controllers
                     var smtpClient = new SmtpClient("smtp.gmail.com", 587)
                     {
                         UseDefaultCredentials = false,
-                        Credentials = new NetworkCredential("communityempowermentportal@gmail.com", "bkdkuisqaxfsjgfp"),
+                        Credentials = new NetworkCredential("cimain1882@gmail.com", "hbutjbfrbarstsyx"),
                         EnableSsl = true
                     };
                     smtpClient.Send(message);

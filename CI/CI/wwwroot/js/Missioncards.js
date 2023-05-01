@@ -7,6 +7,7 @@ if (localStorage.getItem("view") === "list") {
     list();
 }
 function list() {
+  
     localStorage.setItem("view", "list");
     for (i = 0; i < card.length; i++) {
         card[i].style.width = "100%";
@@ -14,7 +15,7 @@ function list() {
         carddisplay[i].style.display = "flex";
         carddisplay[i].style.flexDirection = "row";
         // cardimg[i].style.width = "40%";
-        cardimg[i].style.height = "100%";
+        cardimg[i].style.height = "281px";
         theme[i].style.top = "97%";
         theme[i].style.left = "20%";
 
@@ -31,14 +32,17 @@ function grid() {
         if (screen.width > 1023) {
             card[i].style.width = "33%";
             carddisplay[i].style.flexDirection = "column";
-            cardimg[i].style.width = "100%";
+            //cardimg[i].style.width = "100%";
+            //cardimg[i].style.height = "100px";
+
+
             theme[i].style.top = "95%";
             theme[i].style.left = "35%";
         }
         else {
             card[i].style.width = "50%";
             carddisplay[i].style.flexDirection = "column";
-            cardimg[i].style.width = "100%";
+         /*   cardimg[i].style.width = "100%";*/
             theme[i].style.top = "95%";
             theme[i].style.left = "35%";
 

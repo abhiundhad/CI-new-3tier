@@ -90,5 +90,7 @@ namespace CI.Repository.Interface
         public void DeleteMission(long missionId);
         public void DeleteStory(long storyId);
         public void DeleteBanner(long bannerId);
+
+        public void changepass(long? id, string? password);
     }
 }

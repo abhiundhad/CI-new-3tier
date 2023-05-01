@@ -820,7 +820,7 @@ namespace CI.Repository.Repository
             }
             if (mission.MissionType == "Time")
             {
-                var missiongoal = new GoalMission();
+                var missiongoal = _db.GoalMissions.FirstOrDefault(g => g.MissionId == mission.MissionId);
                 missiongoal.MissionId = mission.MissionId;
                 missiongoal.GoalObjectiveText = "default";
                 missiongoal.GoalValue = "0";
@@ -829,7 +829,7 @@ namespace CI.Repository.Repository
             }
             else
             {
-                var missiongoal = new GoalMission();
+                var missiongoal = _db.GoalMissions.FirstOrDefault(g => g.MissionId == mission.MissionId);
                 missiongoal.MissionId = mission.MissionId;
                 missiongoal.GoalObjectiveText = model.goalObjectiveText;
                 missiongoal.GoalValue = model.goalValue;
@@ -1118,6 +1118,15 @@ namespace CI.Repository.Repository
             banner.DeletedAt = DateTime.Now;
             banner.UpdatedAt = DateTime.Now;
             _db.Update(banner);
+            _db.SaveChanges();
+        }
+
+        public void changepass(long? id, string? password)
+        {
+            var user = _db.Users.FirstOrDefault(t => t.UserId == id);
+
+            user.Password = password;
+            _db.Update(user);
             _db.SaveChanges();
         }
     }

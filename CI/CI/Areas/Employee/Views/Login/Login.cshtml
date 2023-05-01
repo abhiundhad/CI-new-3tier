@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="/css/login.css">
 
-    <!-- <script src="/bootstrap-4.0.0-dist[1]/js/bootstrap.bundle.min.js"></script> -->
+   
 </head>
 <body>
     <div>
@@ -100,12 +100,12 @@
                                 </div>
                                 <label for="exampleInputEmail1" class="form-label " asp-for="Email">Email address</label>
                                 <input type="email" class="form-control" id="exampleInputEmail1" asp-for="Email" aria-describedby="emailHelp" placeholder="evan.donohue@gmail.com" onkeyup="emptyemail()">
-                                <span class="text-danger " asp-validation-for="Email" id="requierderremail"></span>
+                                <span class="text-danger " asp-validation-for="Email" ></span>
                         </div>
                         <div class="mb-3 psw">
                                 <label for="exampleInputPassword1" asp-for="Password" class="form-label">Password</label>
                                 <input type="password" class="form-control" id="exampleInputPassword1"  asp-for="Password" onkeyup="emptypass()">
-                                <span class="text-danger" asp-validation-for="Password" id="requierderrpass"></span>
+                                <span class="text-danger" asp-validation-for="Password" ></span>
                         </div>
                         <div class="login">
                                 <button type="submit" class="btn mt-3">login</button>
@@ -139,24 +139,29 @@
             </div>
 
                
-            </div>
+            </div>  
         </div>
 
     </div>
-    @*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>*@
-    <script>
-        function emptyemail(){
-            document.getElementById("requierderremail").style.display = "none";
-            document.getElementById("userpasserr").style.display = "none";
-            document.getElementById("Sessonerrormsg").style.display = "none";
+    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
 
-        }
-        function emptypass(){
-            document.getElementById("requierderrpass").style.display = "none";
+    <script>
+
+        function emptypass() {
+
             document.getElementById("userpasserr").style.display = "none";
-            document.getElementById("Sessonerrormsg").style.display = "none";
         }
+        function emptyemail() {
+
+            document.getElementById("userpasserr").style.display = "none";
+        }
+
+
     </script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+   
    
 </body>
 </html>

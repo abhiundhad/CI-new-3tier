@@ -56,29 +56,31 @@
                         <div class="row">
 
                             <div class="mb-3 col-12 col-md-6">
-                                <label for="exampleFormControlInput1" class="form-label">Name*</label>
-                                <input type="text" asp-for="firstname" class="form-control" id="exampleFormControlInput1" placeholder="Enter your name">
+                                <label for="" class="form-label">Name*</label>
+                                <input type="text" asp-for="firstname" class="form-control" id="firstname" placeholder="Enter your name" onkeyup="firstname()"/>
+                                <span class="text-danger" id="firstname1" style="display:none;"> First name is Requiered</span>
                             </div>
 
                             <div class="mb-3 col-12 col-md-6">
-                                <label for="exampleFormControlInput1" class="form-label">Surname*</label>
-                                <input type="text" asp-for="lastname" class="form-control" id="exampleFormControlInput1" placeholder="Enter your surname">
+                                <label for="" class="form-label">Surname*</label>
+                                <input type="text" asp-for="lastname" class="form-control" id="lastname" placeholder="Enter your surname" onkeyup="lastname()"/>
+                            <span class="text-danger" id="lastname2" style="display:none;"> Lastname is Requiered</span>
                             </div>
 
                             <div class="mb-3 col-12 col-md-6">
-                                <label for="exampleFormControlInput1" class="form-label">Employee ID</label>
-                                <input type="text" class="form-control" asp-for="employeeid" id="exampleFormControlInput1" placeholder="Enter your employee id">
+                                <label for="" class="form-label">Employee ID</label>
+                                <input type="text" class="form-control" asp-for="employeeid" id="" placeholder="Enter your employee id">
                             </div>
 
 
                             <div class="mb-3 col-12 col-md-6">
-                                <label for="exampleFormControlInput1" class="form-label">Title</label>
-                                <input type="text" class="form-control" asp-for="title" id="exampleFormControlInput1" placeholder="Enter a title">
+                                <label for="" class="form-label">Title</label>
+                                <input type="text" class="form-control" asp-for="title" id="" placeholder="Enter a title">
                             </div>
 
                             <div class="mb-3 col-12 col-md-6">
-                                <label for="exampleFormControlInput1" class="form-label">Department</label>
-                                <input type="text" class="form-control" asp-for="department" id="exampleFormControlInput1" placeholder="Enter your department details">
+                                <label for="" class="form-label">Department</label>
+                                <input type="text" class="form-control" asp-for="department" id="" placeholder="Enter your department details">
                             </div>
 
                             <div class="mb-3">
@@ -99,7 +101,7 @@
                         <hr>
                         <div class="row">
                             <div class="mb-3 col-12 col-md-6">
-                                <label for="exampleFormControlInput1" class="form-label">City</label>
+                                <label for="" class="form-label">City</label>
                                 <select class="form-select " asp-for="cityid" aria-label="Default select example" id="user-city">
                                     <option selected disabled>select your city</option>
                                     @foreach (var city in ViewBag.allcities)
@@ -137,8 +139,8 @@
                                 </select>
                             </div>
                             <div class="mb-3 col-12 col-md-6">
-                                <label for="exampleFormControlInput1" class="form-label">LinkedIn</label>
-                                <input type="text" class="form-control" asp-for="linkedinurl" id="exampleFormControlInput1" placeholder="Enter LinkedIn url">
+                                <label for="" class="form-label">LinkedIn</label>
+                                <input type="text" class="form-control" asp-for="linkedinurl" id="" placeholder="Enter LinkedIn url">
                             </div>
                         </div>
                     </div>
@@ -265,32 +267,35 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
+                    @if (ViewBag.samePas != null)
+                    {
+                        <h1>@ViewBag.samePas</h1>
+                    }
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Change Password</h1>
-                    <button type="button" class="border-0 bg-white" data-bs-dismiss="modal" aria-label="Close">
+                    <button type="button" class=" bg-white border-0" data-bs-dismiss="modal" id="close1" aria-label="Close">
                         <i class="bi bi-x-lg"></i>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12 mt-3 mb-2 ">
-                                <label>Old Password</label>
-                                <input type="password" class="form-control " />
-                            </div>
-                            <div class="col-12 mb-2">
-                                <label>New Password</label>
-                                <input type="password" class="form-control" />
-                            </div>
-                            <div class="col-12 mb-2">
-                                <label>Confirm Password</label>
-                                <input type="password" class="form-control" />
-                            </div>
-                        </div>
-                    </div>
+
+                    <span class="text-danger " style="display:none" id="oldpass" >Old Password Field is Requiered</span>
+                    <input type="password" id="inputPassword1" class=" form-control  mb-3" aria-labelledby="passwordHelpBlock" placeholder="Enter old Password" onkeyup="errorfunction()">
+
+                    <span class="text-danger " id="newpass" style="display:none" >Password Field is Requiered</span>
+                    <span class="text-danger " id="newpass2" style="display:none">Password should contain atleast 8 charachter,Uppercase,lawercase and Special Character</span>
+                   
+                    <input type="password" id="inputPassword2" class=" form-control  mb-3" aria-labelledby="passwordHelpBlock" placeholder="Enter new Password" onkeyup="errorfunction2()">
+                    <span class="text-danger " id="confirmpass" style="display:none">Confierm Password Field is Requiered</span>
+                    <input type="password" id="inputPassword3" class="form-control  boxborder" aria-labelledby="passwordHelpBlock" placeholder="Enter confirm Password" onkeyup="errorfunction3()">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="  btn closebtn" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn savebtn">Save changes</button>
+                    <button type="button" class=" user-password-cancel-btn bg-white py-1 px-2" data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button type="button" class=" user-password-change-btn bg-white py-1" onclick="changepass()">
+                        Change
+                        Password
+                    </button>
                 </div>
             </div>
         </div>
@@ -324,12 +329,15 @@
                             </div>
                               <div class="col-12  mb-2">
                                 <label>Subject</label>
-                                <input  type="text" asp-for=subject class="form-control" />
+                                <input  type="text" asp-for=subject  id="subject1" class="form-control" onkeyup="Subjectemp()"/>
+                                <span class="text-danger" style="display:none;" id="subject">Subject is requiered</span>
 
                             </div>
                             <div class="col-12  mb-2">
                                 <label>Message</label>
-                                <input  type="text" asp-for="massage" class="form-control" />
+                           
+                                <input  type="text" asp-for="massage"  id="massage1" class="form-control" onkeyup="Messageemp()"/>
+                                    <span class="text-danger"style="display:none" id="massage"> message is requiered</span>
 
                             </div>
 
@@ -352,9 +360,11 @@
         <a class="me-3 user-profile-privacy-policy" href="/Employee/Home/Privacypolicy/">Privacy Policy</a>
         <div class="user-profile-contact-us" data-bs-toggle="modal" data-bs-target="#ContactUS">Contact Us</div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
     <script src="~/js/Userprofile.js" asp-append-version="true"></script>
+
 </body>
 
 </html>

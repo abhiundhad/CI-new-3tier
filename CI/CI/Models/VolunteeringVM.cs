@@ -58,6 +58,11 @@ namespace CI.Models
         public long Commentid { get; set; } 
         public long? Storyview { get; set; }
         public List<MissionDocument> document { get; set; }
+        public int goal { get; set; }
+        public int? progressInPerc { get; set; }
+
+
+        public int? progress { get; set; }
 
 
 

@@ -176,6 +176,7 @@
                                                 </div>
                                             </div>
                                         </div>
+
                                     }
 
                                 </div>
@@ -268,10 +269,10 @@
                                         <div class="d-flex me-3 col-6">
                                             <img src="~/images/achieved.png" alt="" class="mt-2">
                                             <div class="ms-2 ">
-                                                <div class="progress mt-2" role="progressbar" aria-label="Example with label" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                                    <div class="progress-bar bg-warning" style="width: 25%">25%</div>
+                                                <div class="progress mt-2" role="progressbar" aria-label="Example with label" aria-valuenow="@item.progress" aria-valuemin="0" aria-valuemax="@item.goal">
+                                                    <div class="progress-bar bg-warning" style="width: @item.progressInPerc%"></div>
                                                 </div>
-                                                <fs-5>Deadline</fs-5>
+                                                <fs-5>@item.progress achieved </fs-5>
                                             </div>
                                         </div>
                                     }

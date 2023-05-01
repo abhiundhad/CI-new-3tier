@@ -6,13 +6,14 @@ $(document).ready(function () {
     filter();
     
 });
-function filter( pg,sortValue ) {
+function filter(pg, sortValue) {
+    check();
 
     var Search = $("input[name='searchinput']").val();
 
     console.log(Search)
 
-
+  
     var country = [];
  
 
@@ -69,6 +70,7 @@ for (var checkbox of checkboxes) {
     checkbox.addEventListener("click", function () {
         if (this.checked == true) {
             addElement(this, this.value);
+            clear()
         }
         else {
             removeElement(this.value);
@@ -128,4 +130,35 @@ function removeElement(value) {
     let elementToBeRemoved = document.getElementById(value);
     filtersSection.removeChild(elementToBeRemoved);
     filter();
+}
+function clear() {
+
+    $(".clear-all").remove();
+
+    let filtersSection = document.querySelector(".filters-section");
+
+    let clearAll = document.createElement('span');
+    clearAll.classList.add('clear-all');
+  
+    clearAll.innerHTML = "Clear All";
+    clearAll.classList.add('filter-list');
+    clearAll.classList.add('ps-3');
+    clearAll.classList.add('pe-3');
+    clearAll.classList.add('me-2');
+    clearAll.setAttribute("onclick", "ClearAll()")
+
+    filtersSection.appendChild(clearAll);
+}
+
+function check() {
+    var numberOfChecked = $('input:checkbox:checked').length;
+    if (numberOfChecked <= 0) {
+        $(".clear-all").remove();
+    }
+}
+
+
+function ClearAll() {
+    $(".filter-close-button").click()
+    $(".clear-all").remove();
 }
