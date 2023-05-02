@@ -24,11 +24,23 @@ namespace CI.Areas.Employee.Controllers
         {
             try
             {
-                ViewBag.firstBanner = _Idb.AllBanners().Where(e => e.SortOrder == 1).ToList();
-                ViewBag.Banners = _Idb.AllBanners().OrderBy(e => e.SortOrder).ToList().Skip(1);
+                var id = HttpContext.Session.GetString("userID");
+                var Firstname = HttpContext.Session.GetString("Firstname");
+                long userid = Convert.ToInt64(id);
+                if (userid != 0)
+                {
+                    return RedirectToAction("Landingpage", "Landingpage", new { @id = userid });
+                }
+                else
+                {
 
-                HttpContext.Session.Clear();
-                return View();
+
+                    ViewBag.firstBanner = _Idb.AllBanners().Where(e => e.SortOrder == 1).ToList();
+                    ViewBag.Banners = _Idb.AllBanners().OrderBy(e => e.SortOrder).ToList().Skip(1);
+
+
+                    return View();
+                }
             }
             catch (Exception ex)
             {
@@ -55,6 +67,7 @@ namespace CI.Areas.Employee.Controllers
         {
             try
             {
+
                 ViewBag.firstBanner = _Idb.AllBanners().Where(e => e.SortOrder == 1).ToList();
                 ViewBag.Banners = _Idb.AllBanners().OrderBy(e => e.SortOrder).ToList().Skip(1);
 

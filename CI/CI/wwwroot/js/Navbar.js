@@ -144,6 +144,7 @@ function clear() {
     clearAll.classList.add('filter-list');
     clearAll.classList.add('ps-3');
     clearAll.classList.add('pe-3');
+    clearAll.classList.add('py-1');
     clearAll.classList.add('me-2');
     clearAll.setAttribute("onclick", "ClearAll()")
 

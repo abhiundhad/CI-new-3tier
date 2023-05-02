@@ -28,19 +28,19 @@
 <body class="pb-0">
     <div class="container-fluid maindiv ">
         <div class="row ">
-            <div class="col col-lg-7 col-md-12 col-sm-12 col-xs-12   p-0  ">
-                <div id="carouselExampleCaptions" class="carousel slide me-0" style="height:100vh;" data-bs-ride="carousel" data-bs-interval="2000">
+            <div class="col col-lg-7 col-md-12 col-sm-12 col-xs-12 ps-0    ">
+                <div id="carouselExampleCaptions" class="carousel slide me-0" data-bs-ride="carousel" data-bs-interval="1000">
                     <div class="carousel-indicators">
                         <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                         <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
                         <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
                     </div>
-                    <div class="carousel-inner  " style="height:100vh;">
+                    <div class="carousel-inner  ">
 
                         @foreach (var banner in ViewBag.firstBanner)
                         {
                             <div class="carousel-item   active" data-bs-interval="5000">
-                                <img src="@banner.Image" class="d-block w-100 carousel-img object-fit-none border rounded" style="height:100vh;" alt="...">
+                                <img src="@banner.Image" class="d-block w-100 carousel-img object-fit-none border rounded" alt="...">
                                 <div class="carousel-caption d-none d-md-block ">
                                     <h2>Sed ut perspiciatis unde omnis iste natus voluptatem.</h2>
                                     <p>
@@ -52,7 +52,7 @@
                         @foreach (var banner in ViewBag.Banners)
                         {
                             <div class="carousel-item " data-bs-interval="5000">
-                                <img src="@banner.Image" class="d-block w-100 carousel-img object-fit-none border rounded" style="height:100vh;" alt="...">
+                                <img src="@banner.Image" class="d-block w-100 carousel-img object-fit-none border rounded " alt="...">
                                 <div class="carousel-caption d-none d-md-block ">
                                     <h2>Sed ut perspiciatis unde omnis iste natus voluptatem.</h2>
                                     <p>

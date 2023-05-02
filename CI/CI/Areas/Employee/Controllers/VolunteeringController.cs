@@ -79,7 +79,7 @@ namespace CI.Areas.Employee.Controllers
                     var resetLink = Url.Action("Volunteering", "Volunteering", new { missionid, id = userid }, Request.Scheme);
                     // Send email to user with reset password link
                     // ...
-                    var fromAddress = new MailAddress("ciproject18@gmail.com", "Community Empowerment Portal");
+                    var fromAddress = new MailAddress("cimain1882@gmail.com", "Community Empowerment Portal");
                     var toAddress = new MailAddress(email);
                     var subject = "Recomanded Mission Mail";
                     var body = $"Hi,<br /><br /> you are recomanded a mission by {sendername} Please click on the following link to see recomanded mission detail:<br /><br /><a href='{resetLink}'>{resetLink}</a>";
@@ -92,7 +92,7 @@ namespace CI.Areas.Employee.Controllers
                     var smtpClient = new SmtpClient("smtp.gmail.com", 587)
                     {
                         UseDefaultCredentials = false,
-                        Credentials = new NetworkCredential("ciproject18@gmail.com", "ypijkcuixxklhrks"),
+                        Credentials = new NetworkCredential("cimain1882@gmail.com", "hbutjbfrbarstsyx"),
                         EnableSsl = true
                     };
                     smtpClient.Send(message);
@@ -282,7 +282,7 @@ namespace CI.Areas.Employee.Controllers
                         int Applycunts = _Idb.missionApplications().Where(m => m.MissionId == item.MissionId && m.ApprovalStatus == "1").ToList().Count();
                         int relseatleft = Convert.ToInt32(item.Availability) - Applycunts;
                         var relrat = _Idb.missionRatingList().Where(u => u.MissionId == item.MissionId).ToList();
-                        var missionpath = _Idb.MissionMediaList().FirstOrDefault(m => m.MissionId == item.MissionId);
+                        var missionpath = _Idb.MissionMediaList().FirstOrDefault(m => m.MissionId == item.MissionId &&m.MediaType=="image");
                         var c = relrat.Count();
                         int relfinalrat = 0;
                         if (relrat.Count > 0)

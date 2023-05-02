@@ -64,7 +64,7 @@ namespace CI.Repository.Interface
         public User AddUser(string firstname, string lastname, string email, string password, string department, string profiletext,
             string status, string employeeid, string avatar, long cityid, long countryid);
         public User UpdateUser(string firstname, string lastname, string email, string password, string department, string profiletext,
- string status, string employeeid, string avatar, long cityid, long countryid, long userId);
+           string status, string employeeid, string avatar, long cityid, long countryid, long userId);
         public IQueryable<MissionApplicationViewModel> GetPendingMissionApplications();
         public void Approveapplication(long MaId, string status);
         public List<CmsPage> GetCmsPages();
@@ -92,5 +92,6 @@ namespace CI.Repository.Interface
         public void DeleteBanner(long bannerId);
 
         public void changepass(long? id, string? password);
+        public List<CmsPage> cmsdetail();
     }
 }

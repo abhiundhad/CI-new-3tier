@@ -78,7 +78,7 @@
                     <tr>
                         <td>@theme.Title</td>
 
-                        <td class="d-flex justify-content-center"><i class="fas fa-edit" data-bs-toggle="modal" data-bs-target="#AdminMissionthememodal" id="@theme.MissionThemeId" onclick="editAdminUser(this.id)"></i> | <i class="fa fa-trash" style="color:red" id="@theme.MissionThemeId" onclick="deleteAdminUser(this.id)"></i></td>
+                        <td class="d-flex justify-content-center"><i class="fas fa-edit" data-bs-toggle="modal" data-bs-target="#AdminMissionthememodal" id="@theme.MissionThemeId" onclick="editAdmintheme(this.id)"></i> | <i class="fa fa-trash" style="color:red" id="@theme.MissionThemeId" onclick="deleteAdminUser(this.id)"></i></td>
                     </tr>
                 }
 
@@ -98,7 +98,7 @@
             document.getElementById("themeName").value = "";
         }
 
-        function editAdminUser(themeId) {
+        function editAdmintheme(themeId) {
             $.ajax({
                 url: '/Admin/Admin/GetTheme',
                 type: 'POST',

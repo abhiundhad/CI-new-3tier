@@ -230,7 +230,8 @@ namespace CI.Areas.Employee.Controllers
                     ShareStoryData.date = foundstory.CreatedAt;
                     ShareStoryData.editor1 = foundstory.Description;
                     ShareStoryData.StoryID = Convert.ToInt64(Storyid);
-
+                    ShareStoryData.storyMedia=_db.StoryMedia.Where(s=>s.StoryId==Storyid && s.StoryType=="image").ToList();
+                    ShareStoryData.url = _db.StoryMedia.FirstOrDefault(s => s.StoryId == Storyid && s.StoryType == "Video")!=null?_db.StoryMedia.FirstOrDefault(s => s.StoryId == Storyid && s.StoryType == "Video").StoryPath:null;
 
 
 
@@ -424,7 +425,7 @@ namespace CI.Areas.Employee.Controllers
                             Useravtar = storyuser.Avatar != null ? storyuser.Avatar : "",
                             storymediapath = storymedia != null ? storymedia.StoryPath : "",
 
-                        }); ;
+                        }); 
                     }
                 }
                 var Storys = StoryList;

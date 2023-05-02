@@ -5,6 +5,7 @@ using CI_Entity.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.SqlServer.Management.Smo;
 using System.Diagnostics;
+using System.Web;
 
 namespace CI.Areas.Employee.Controllers
 {
@@ -248,6 +249,14 @@ namespace CI.Areas.Employee.Controllers
         }
         public IActionResult Privacypolicy()
         {
+            var pages = _Idb.cmsdetail().Where(e => e.DeletedAt == null).ToList();
+            ViewBag.Policy = pages;
+            var DescList = new List<string>();
+            foreach (var page in pages)
+            {
+                DescList.Add(HttpUtility.HtmlDecode(page.Description));
+            }
+            ViewBag.Desc = DescList;
             return View();
         }
 

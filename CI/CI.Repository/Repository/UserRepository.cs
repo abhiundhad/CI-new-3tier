@@ -31,7 +31,7 @@ namespace CI.Repository.Repository
         }
         public User Login(string Email, string Password)
         {
-            return _db.Users.FirstOrDefault(u => u.Email == Email && u.Password == Password);
+            return _db.Users.FirstOrDefault(u => u.Email == Email && u.Password == Password&& u.DeletedAt==null&&u.Status=="1");
 
         }
         public PasswordReset PasswordResets(string Email, string Token)
@@ -514,20 +514,20 @@ namespace CI.Repository.Repository
 
         }
         public User UpdateUser(string firstname, string lastname, string email, string password, string department, string profiletext,
-    string status, string employeeid, string avatar, long cityid, long countryid, long userId)
-        {
+      string status, string employeeid, string avatar, long cityid, long countryid, long userId)
+       {
 
             var user = _db.Users.FirstOrDefault(e => e.UserId == userId);
             user.FirstName = firstname;
             user.LastName = lastname;
             user.Email = email;
-            user.Password = password;
+            user.Password = password==null?user.Password: password;
             user.Department = department;
             user.Status = status;
             user.EmployeeId = employeeid;
             user.Avatar = avatar;
-            user.CityId = cityid;
-            user.CountryId = countryid;
+            user.CityId = cityid==0?null:cityid;
+            user.CountryId = countryid==0?null:countryid;
             user.ProfileText = profiletext;
             user.UpdatedAt = DateTime.Now;
             _db.Update(user);
@@ -1128,6 +1128,10 @@ namespace CI.Repository.Repository
             user.Password = password;
             _db.Update(user);
             _db.SaveChanges();
+        }
+        public List<CmsPage> cmsdetail()
+        {
+            return _db.CmsPages.ToList();
         }
     }
 }   

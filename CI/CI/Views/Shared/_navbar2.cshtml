@@ -39,15 +39,17 @@
                      aria-labelledby="offcanvasWithBothOptionsLabel">
                     <div class="offcanvas-header">
                         <h2 class="mt-2 me-2">CI-PLATFORM</h2>
-                        <button type="button" class="btn-close " data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        <button type="button" class=" bg-white border-0 fs-4 " data-bs-dismiss="offcanvas" aria-label="Close">
+                            <i class="bi bi-x-lg cross"></i>
+                        </button>
                     </div>
                     <div class="offcanvas-body navbar-nav me-auto mb-2 mb-lg-0 align-self-center">
 
                         @if (id == null)
                         {
-                            <a class="col-12" href="/Employee/Login/Login"><button class="w-100">Login</button></a>
-                            <a class="mt-2 col-12" href="/Employee/User/register"><button class="w-100">Register</button></a>
-
+                            <a class="col-12" href="/Employee/Login/Login"><button class="loginbtn px-3 py-1 bg-white w-100">Login</button></a>
+                            <a class="mt-2 col-12" href="/Employee/User/register"><button class=" loginbtn px-3 py-1 bg-white w-100">Register</button></a>
+                             
                         }
                         else
                         {

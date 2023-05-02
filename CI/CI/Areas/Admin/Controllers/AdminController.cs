@@ -36,7 +36,7 @@ namespace CI_PlatformWeb.Areas.Admin.Controllers
         public async Task<IActionResult> AddUser(string firstname, string lastname, string email, string password, string profiletext, string department,
             string status, string employeeid, string avatar, long userId, long cityid, long countryid)
         {
-            HttpContext.Session.SetInt32("Nav", 4);
+            //HttpContext.Session.SetInt32("Nav", 4);
             ViewBag.nav = HttpContext.Session.GetInt32("Nav");
             if (userId == null || userId == 0)
             {
@@ -51,7 +51,10 @@ namespace CI_PlatformWeb.Areas.Admin.Controllers
             {
 
                 var savedUser = _Idb.UpdateUser(firstname, lastname, email, password, department, profiletext, status, employeeid, avatar, cityid, countryid, userId);
-                return RedirectToAction("Index");
+                if (savedUser.Email == email)
+                {
+                    return RedirectToAction("Index");
+                }
             }
 
             var uservm = new CI_Entity.ViewModel.AdminUserViewModel();

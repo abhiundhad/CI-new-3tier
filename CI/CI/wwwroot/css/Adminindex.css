@@ -264,7 +264,7 @@ div#example_info {
 }
 
 #preloader {
-    background: #ffff url(/Images/14.gif) no-repeat center center;
+    background: #ffff url(/Images/16.gif) no-repeat center center;
     height: 100vh;
     width: 100%;
     position: fixed;
@@ -336,7 +336,7 @@ div#example_info {
     opacity: 1;
 }
 #preloader {
-    background: #ffff url(/images/13.gif) no-repeat center center;
+    background: #ffff url(/images/16.gif) no-repeat center center;
     height: 100vh;
     width: 100%;
     position: fixed;

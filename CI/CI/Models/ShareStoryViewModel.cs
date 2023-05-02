@@ -17,7 +17,7 @@ namespace CI.Models
         //public List<Story> DraftStory { get; set; }
 
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Please Select StoryTitle")]
+        [Required( ErrorMessage = "Please Select StoryTitle")]
         public string StoryTitle { get; set; }
 
 
@@ -33,5 +33,7 @@ namespace CI.Models
         public long StoryID { get; set; }
         public List<IFormFile>? attachment { get; set; }
         public string url { get; set; }
+        public List<StoryMedium> storyMedia { get; set; }   
+
     }
 }

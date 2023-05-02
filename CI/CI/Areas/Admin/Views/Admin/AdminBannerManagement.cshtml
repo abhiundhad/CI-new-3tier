@@ -34,7 +34,7 @@
                         <form method="post">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="exampleModalLabel">ADD NEW/Edit BANNER</h1>
-                                <button type="button" class="bg-white border-0" data-bs-dismiss="modal" aria-label="Close">
+                                <button type="button" class="bg-white border-0" data-bs-dismiss="modal" aria-label="Close" onclick="refresh()">
                                     <i class="bi bi-x-lg"></i>
                                 </button>
                             </div>
@@ -83,7 +83,7 @@
 
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn closebtn " data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn closebtn " data-bs-dismiss="modal" onclick="refresh()">Close</button>
                                 <button type="submit" class="btn savebtn" onclick="savebanner()">Save Banner</button>
                             </div>
                         </form>
@@ -140,7 +140,7 @@
 
             swalWithBootstrapButtons.fire({
                 title: 'Are you sure?',
-                text: "You won't be able to revert this goalsheet!",
+                text: "You won't be able to revert this Banner!",
                 icon: 'warning',
                 width: '300',
                 height: '100',
@@ -199,7 +199,7 @@
             reader.readAsDataURL(event.target.files[0]);         // Read the selected file as a data URL
         }
         function savebanner() {
-            if (document.getElementById("discrption").value != "" || sortorder: document.getElementById("sortorder").value) {
+            if (document.getElementById("discrption").value != "" || document.getElementById("sortorder").value) {
                 $.ajax({
                     url: '/Admin/Admin/AddBanner',
                     type: 'POST',
@@ -251,6 +251,9 @@
                     });
                 }
             });
+        }
+        function refresh(){
+            location.reload();
         }
     </script>
 

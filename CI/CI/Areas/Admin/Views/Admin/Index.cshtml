@@ -95,6 +95,7 @@
                                     </div>
                                     <div class="col-12 col-lg-4 col-md-6 mb-3">
                                         <input asp-for="password" type="password" id="password" class="form-control" placeholder="Enter Password">
+                                        <span asp-validation-for="password" style="color:red;font-size:10px;"></span>
                                     </div>
                                     <div class="col-12 col-lg-4 col-md-6 mb-3">
                                         <input asp-for="department" type="text" id="department" class="form-control" placeholder="Department">
@@ -216,7 +217,7 @@
 
             swalWithBootstrapButtons.fire({
                 title: 'Are you sure?',
-                text: "You won't be able to revert this goalsheet!",
+                text: "You won't be able to revert this UserDetail!",
                 icon: 'warning',
                 width: '300',
                 height: '100',
@@ -314,11 +315,11 @@
         }
 
         function saveAdminUser() {
-
+       
 
             if (document.getElementById("firstname").value != "" || document.getElementById("lastname").value != "" ||
                 document.getElementById("email").value != "" || document.getElementById("password").value != "") {
-                debugger;
+        
                 $.ajax({
                     url: '/Admin/Admin/AddUser',
                     type: 'POST',

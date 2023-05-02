@@ -21,7 +21,12 @@
     .filter-list:hover {
         color: white;
         background-color: #F88634;
+
+
     }
+.cross:hover {
+    color: #F88634!important;
+}
 
 .filter-close-button {
     background-color: transparent;
@@ -29,12 +34,12 @@
     cursor: pointer;
     font-size: 18px;
     margin-left: 5px;
-    color:#888;
+    color: red;
 }
-.valuelist {
-  
-    height: 40px;
-}
+   
+    .valuelist {
+        height: 40px;
+    }
 @media screen and (min-width:767px) {
     .hamburger, #offcanvasWithBothOptions, #filteroffcanvasWithBothOptions {
         display: none;
@@ -137,11 +142,11 @@ p {
     box-shadow: none !important;
 }
 #preloader {
-    background: #ffff url(/images/13.gif) no-repeat center center;
+    background: #ffff url(/images/16.gif) no-repeat center center;
     height: 100vh;
     width: 100%;
     position: fixed;
-    /*z-index: 100;*/
+    z-index: 100;
 }
 .dropdown-item:focus, .dropdown-item:hover {
     color: white !important;

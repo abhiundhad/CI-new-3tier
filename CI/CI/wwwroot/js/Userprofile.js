@@ -84,34 +84,35 @@ document.getElementById('skillSave').addEventListener("click", e => {
     });
 })
 
-function firstname(){
-    debugger;
+function firstnameemp() {
 
-    var firstname = documnent.getElementById('firstname').value;
+
+    var firstname3 = document.getElementById('firstname2').value;
     var firstnamespan = document.getElementById('firstname1');
-    if (firstname.length == 0) {
-        document.getElementById('firstname1').style.display = "block";
+
+    if (firstname3.length == 0) {
+        firstnamespan.style.display = "block";
     }
     else {
-        fdocument.getElementById('firstname1').style.display = "none";
+        firstnamespan.style.display = "none";
     }
 
 
 }
-function lastname(){
-    var lastname = documnent.getElementById('lastname').value;
+function lastnameemp() {
+    var lastname3 = document.getElementById('lastname4').value;
     var lastnamespan = document.getElementById('lastname2');
-    if (lastname.length == 0) {
-        document.getElementById('lastname2').style.display = "block";
+    if (lastname3.length == 0) {
+        lastnamespan.style.display = "block";
     }
 
     else {
-        document.getElementById('lastname2').style.display = "none";
+        lastnamespan.style.display = "none";
     }
 }
 
 function Messageemp() {
-    
+
     var message = document.getElementById('massage1').value;
     var messagespann = document.getElementById('massage');
     if (message.length == 0) {
@@ -122,7 +123,7 @@ function Messageemp() {
     }
 }
 function Subjectemp() {
-  
+
     var message = document.getElementById('subject1').value;
     var messagespann = document.getElementById('subject');
     if (message.length == 0) {
@@ -223,7 +224,7 @@ function errorfunction() {
     var errpass1 = document.getElementById('oldpass');
 
 
-  
+
 
 
 
@@ -232,15 +233,14 @@ function errorfunction() {
 
 
     }
-    else
-    {
+    else {
 
 
 
         document.getElementById('oldpass').style.display = "none";
     }
-   
-   
+
+
 
 }
 function errorfunction2() {
@@ -288,3 +288,43 @@ function errorfunction3() {
     }
 
 }
+
+function UserSubmit() {
+
+    var lastname3 = document.getElementById('lastname4').value;
+    var lastnamespan = document.getElementById('lastname2');
+
+    var firstname3 = document.getElementById('firstname2').value;
+    var firstnamespan = document.getElementById('firstname1');
+
+
+    const form = document.getElementById('UserForm');
+
+    form.addEventListener('submit', (event) => {
+        // Prevent the default form submission
+        event.preventDefault();
+
+        // Your custom condition to check
+        if (lastname3.length == 0 || firstname3.length == 0) {
+            if (lastname3.length == 0) {
+                lastnamespan.style.display = "block";
+            }
+
+            else {
+                lastnamespan.style.display = "none";
+            }
+            if (firstname3.length == 0) {
+                firstnamespan.style.display = "block";
+            }
+            else {
+                firstnamespan.style.display = "none";
+            }
+        }
+        else {
+          
+            form.submit();
+        }
+    });
+
+
+    }
