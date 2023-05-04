@@ -68,21 +68,75 @@
     </div>
     <script>
         function approve(id, status) {
-            $.ajax({
-                url: '/Admin/Admin/ApproveApplication',
-                type: 'POST',
-                data: { MaId: id, status: status },
 
-                success: function (response) {
 
-                    //document.getElementById("themeName").value = response.title;
-                    $('#example').html($(response).find('#example').html());
-
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
                 },
-                error: function () {
-                    alert("could not comment");
+                buttonsStyling: true
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+
+                text: "Are you Sure",
+                icon: 'warning',
+                width: '300',
+                height: '100',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+
+                    $.ajax({
+                        url: '/Admin/Admin/ApproveApplication',
+                        type: 'POST',
+                        data: { MaId: id, status: status },
+
+                        success: function (response) {
+
+                            //document.getElementById("themeName").value = response.title;
+                            $('#example').html($(response).find('#example').html());
+
+                        },
+                        error: function () {
+                            alert("could not comment");
+                        }
+                    });
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+
+                    )
                 }
-            });
+            })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
     </script>
     @*  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>

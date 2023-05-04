@@ -8,8 +8,13 @@
 .header2{
     box-shadow: 6px 6px 10px grey !important;
 }
-
-
+.header3 {
+    box-shadow: 0px -2px 17px grey !important;
+    background-color:white!important;
+}
+.privacy:hover {
+    color: #F88634 !important;
+}
 .filter-list {
     box-shadow: 6px 10px 10px 0px gray;
     border-radius: 25px;

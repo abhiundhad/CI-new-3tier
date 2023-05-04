@@ -445,8 +445,21 @@ namespace CI.Areas.Employee.Controllers
                 var userId = Convert.ToInt64(HttpContext.Session.GetString("userID"));
                 TimesheetViewModel timeVm = new TimesheetViewModel();
 
-                timeVm.missions = _Idb.MissionsList();
-                timeVm.missionapplication = _Idb.missionApplications().Where(m => m.UserId == userId).ToList();
+                timeVm.missions = _Idb.MissionsList().Where(x => x.DeletedAt == null).ToList();
+                timeVm.missionapplication = _Idb.missionApplications().Where(m => m.UserId == userId &&m.DeletedAt==null).ToList();
+                timeVm.goalmissions  = _Idb.GoalsList().Where(x=>x.DeletedAt == null&&x.GoalValue!="0").ToList();
+                //foreach(var goal in goalmissions)
+                //{
+                   
+                //        timeVm.goalvalue.Add(goal.GoalValue);
+
+                    
+                   
+
+                    
+                   
+
+                //}
                 var lists = _Idb.TimesheetList().Where(t => t.UserId == userId).ToList();
                 timeVm.timesheet = lists.OrderByDescending(x => x.CreatedAt).ToList();
 
@@ -523,8 +536,16 @@ namespace CI.Areas.Employee.Controllers
                 long id = Convert.ToInt64(userid);
                 //long storyid = model.storyId;
                 var timesheet = _Idb.TimesheetList().Where(t => t.TimesheetId == timesheetid).FirstOrDefault();
-
-                return Json(new { success = true, timesheet });
+                var GoalMission = _db.GoalMissions.FirstOrDefault(e => e.MissionId == timesheet.MissionId);
+                var GoalValue = GoalMission.GoalValue;
+                var timesheet2 = _Idb.TimesheetList().Where(x => x.MissionId == timesheet.MissionId && x.DeletedAt == null).ToList();
+                int? sum = 0;
+                foreach (var t in timesheet2)
+                {
+                    sum = sum + t.Action;
+                }
+                var finalremaininggoalvalue = int.Parse(GoalValue) - sum;
+                return Json(new { success = true, timesheet, finalremaininggoalvalue });
             }
             catch (Exception ex)
             {
@@ -534,5 +555,10 @@ namespace CI.Areas.Employee.Controllers
 
         }
 
+
+        public IActionResult GetGoalValue(int id)        {            var GoalMission = _db.GoalMissions.FirstOrDefault(e => e.MissionId == id);            var GoalValue = GoalMission.GoalValue;            var timesheet = _db.Timesheets.Where(x=>x.MissionId== id&&x.DeletedAt==null).ToList();            int? sum = 0;            foreach(var t in timesheet)
+            {
+                sum = sum + t.Action;
+            }           var finalremaininggoalvalue =int.Parse(GoalValue) - sum;            return Json(new { success = true, goalValue = finalremaininggoalvalue });        }
     }
 }

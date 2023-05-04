@@ -45,10 +45,12 @@ function editgoalsheet(timesheetid) {
         data: { timesheetid: timesheetid },
 
         success: function (response) {
+            console.log(response);
             console.log(response.timesheet.action);
             var ele = document.getElementById('action1');
             ele.value = response.timesheet.action;
-            var mission = document.getElementById('mission1');
+            ele.max = response.finalremaininggoalvalue;
+            var mission = document.getElementById('selectgoal');
             mission.value = response.timesheet.missionId;
             var date = document.getElementById('date2');
             date.value = response.timesheet.dateVolunteered;
@@ -98,5 +100,47 @@ function edittimesheet(timesheetid) {
             alert("could not comment");
         }
     });
+
+}
+
+function reload() {
+    location.reload();
+}
+function setmaxvalue() {
+    var id = document.getElementById("selectgoal").value;
+   
+
+    $.ajax({
+        type: "GET",
+        url: "/Employee/Volunteering/GetGoalValue",
+        data: { id: id },
+        success: function (res) {
+            console.log(res);
+            document.getElementById("GoalValue").max = res.goalValue;
+    
+        },
+        error: function () {
+            console.log("check Goal Value Error")
+        }
+    })
+
+}
+function setmaxvalue2() {
+    var id = document.getElementById("selectgoal2").value;
+
+ 
+    $.ajax({
+        type: "GET",
+        url: "/Employee/Volunteering/GetGoalValue",
+        data: { id: id },
+        success: function (res) {
+            console.log(res);
+       
+            document.getElementById("action1").max = res.goalValue;
+        },
+        error: function () {
+            console.log("check Goal Value Error")
+        }
+    })
 
 }

@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="~/css/Volunteeringtimesheet.css" asp-append-version="true" />
- 
+
 </head>
 <body>
     <div class="container timesheet">
@@ -79,7 +79,7 @@
                                                     <div class=" col-12 col-xl-6 col-1g-6 p-0  ">
                                                         <label class=" col-8 fs-6"> Minutes</label>
                                                         <input asp-for="minute" type="number" min="0" max="59" placeholder="Enter Spent Minutes " class=" ms-0 ms-xl-2  py-1 datediv rounded-1   w-100  me-2" />
-                                                   <span asp-validation-for="minute" class="text-danger"></span>
+                                                        <span asp-validation-for="minute" class="text-danger"></span>
                                                     </div>
                                                 </div>
                                                 <div class="row mt-1">
@@ -129,7 +129,7 @@
                                                 <div class="row mt-2">
                                                     <lable class="col-6 fs-6">Date Volunteered</lable>
                                                     <input class="col-12  datediv py-1 rounded-1" id="date1" type="datetime-local" min="2000-01-01" asp-for="date" />
-                                                <span asp-validation-for="date" class="text-danger"></span>
+                                                    <span asp-validation-for="date" class="text-danger"></span>
                                                 </div>
                                                 <div class="row mt-1 ">
                                                     <div class=" col-12 col-xl-6 col-1g-6 p-0">
@@ -140,9 +140,9 @@
                                                     </div>
                                                     <div class=" col-12 col-xl-6 col-1g-6 p-0  ">
                                                         <label class=" col-8 fs-6"> Minutes</label>
-                                                        
+
                                                         <input asp-for="minute" id="minute1" type="number" min="0" max="59" placeholder="Enter Spent Minutes " class=" ms-0 ms-xl-2  py-1 datediv rounded-1   w-100  me-2" />
-                                                    <span asp-validation-for="minute" class="text-danger"></span>
+                                                        <span asp-validation-for="minute" class="text-danger"></span>
                                                     </div>
                                                     <input type="hidden" asp-for="hiddenInput" id="timesheetid1" />
                                                 </div>
@@ -222,18 +222,32 @@
                                     <form asp-action="addTimesheet" asp-controller="Volunteering">
                                         <div class="modal-header">
                                             <h1 class="modal-title fs-5" id="exampleModalLabel">Please input below Volunteering Goal</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="reload()"></button>
                                         </div>
                                         <div class="modal-body">
                                             <div class="container">
                                                 <div class="row">
                                                     <lable class="col-6 fs-6">Mission</lable>
-                                                    <select asp-for="missionId" class=" datediv  py-1 ro col-12" aria-label="Default select example">
+                                                    <select asp-for="missionId" class=" datediv  py-1 ro col-12" aria-label="Default select example" id="selectgoal" onchange="setmaxvalue()">
+                                                        <option selected disabled>Please select Mission</option>
                                                         @foreach (var item in Model.missionapplication)
                                                         {
                                                             @if (item.Mission.MissionType == "Goal")
                                                             {
-                                                                <option value="@item.Mission.MissionId">@item.Mission.MissionId   @item.Mission.Title</option>
+
+
+                                                                foreach (var g in item.Mission.GoalMissions)
+                                                                {
+
+                                                                    if (g.MissionId == item.MissionId)
+                                                                    {
+
+                                                                        <option value="@item.Mission.MissionId" id="@g.GoalValue" >@item.Mission.MissionId @g.GoalValue   @item.Mission.Title</option>
+
+                                                                    }
+                                                                }
+
+
                                                             }
                                                         }
                                                     </select>
@@ -242,8 +256,9 @@
                                                 </div>
                                                 <div class="row mt-2">
                                                     <lable class="col-6 fs-6">Action</lable>
-                                                    <input asp-for="action" class="col-12  datediv py-1 rounded-1" placeholder="Enter Actions" max="1000" type="number" />
-                                                <span asp-validation-for="action" class="text-danger"></span>
+                                                    <input asp-for="action" class="col-12  datediv py-1 rounded-1" placeholder="Enter Actions" id="GoalValue" min="1" type="number" onchange="checkvalue()" />
+                                                    <span asp-validation-for="action" class="text-danger"></span>
+                                                  
                                                 </div>
                                                 <div class="row mt-1 ">
 
@@ -262,8 +277,8 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="rounded-pill bg-white px-3 py-1" data-bs-dismiss="modal">Cancel</button>
-                                            <button type="submit" class="rounded-pill addbtn  px-3 py-1">Submit</button>
+                                            <button type="button" class="rounded-pill bg-white px-3 py-1" data-bs-dismiss="modal" onclick="reload()">Cancel</button>
+                                            <button type="submit" id="myBtn" class="rounded-pill addbtn  px-3 py-1">Submit</button>
                                         </div>
                                     </form>
                                 </div>
@@ -276,18 +291,32 @@
                                     <form asp-action="addTimesheet" asp-controller="Volunteering">
                                         <div class="modal-header">
                                             <h1 class="modal-title fs-5" id="exampleModalLabel">Please input below Volunteering Goal</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="reload()"></button>
                                         </div>
                                         <div class="modal-body">
                                             <div class="container">
                                                 <div class="row">
                                                     <lable class="col-6 fs-6">Mission</lable>
-                                                    <select asp-for="missionId" id="mission1" class=" datediv  py-1 ro col-12" aria-label="Default select example">
+                                                    <select asp-for="missionId" id="selectgoal2" class=" datediv  py-1 ro col-12" aria-label="Default select example" onchange="setmaxvalue2()">
+                                                    
                                                         @foreach (var item in Model.missionapplication)
                                                         {
                                                             @if (item.Mission.MissionType == "Goal")
                                                             {
-                                                                <option value="@item.Mission.MissionId">@item.Mission.MissionId   @item.Mission.Title</option>
+
+
+                                                                foreach (var g in item.Mission.GoalMissions)
+                                                                {
+
+                                                                    if (g.MissionId == item.MissionId)
+                                                                    {
+
+                                                                        <option value="@item.Mission.MissionId" id="@g.GoalValue">@item.Mission.MissionId @g.GoalValue   @item.Mission.Title</option>
+
+                                                                    }
+                                                                }
+
+
                                                             }
                                                         }
                                                     </select>
@@ -296,8 +325,8 @@
                                                 </div>
                                                 <div class="row mt-2">
                                                     <lable class="col-6 fs-6">Action</lable>
-                                                    <input asp-for="action" id="action1" class="col-12  datediv py-1 rounded-1" placeholder="Enter Actions" max="1000" type="number" />
-                                                <span asp-validation-for="action" class="text-danger"></span>
+                                                    <input asp-for="action" id="action1" class="col-12  datediv py-1 rounded-1" placeholder="Enter Actions" min="1" type="number" />
+                                                    <span asp-validation-for="action" class="text-danger"></span>
                                                 </div>
                                                 <div class="row mt-1 ">
 
@@ -317,8 +346,8 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="rounded-pill bg-white px-3 py-1" data-bs-dismiss="modal">Cancel</button>
-                                            <button class="submitGoal rounded-pill addbtn  px-3 py-1" type="submit">Submit</button>
+                                            <button type="button" class="rounded-pill bg-white px-3 py-1" data-bs-dismiss="modal" onclick="reload()">Cancel</button>
+                                            <button class="submitGoal rounded-pill addbtn  px-3 py-1" type="submit" >Submit</button>
                                         </div>
                                     </form>
                                 </div>

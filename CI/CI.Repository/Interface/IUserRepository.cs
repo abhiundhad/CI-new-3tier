@@ -87,11 +87,12 @@ namespace CI.Repository.Interface
         public Banner UpdateBanner(string discrption, string image, int sortorder, long bannerId);
         public List<UserSkill> removeUserSkills(long id);
         public void DeleteUser(long userId);
-        public void DeleteMission(long missionId);
+        public bool DeleteMission(long missionId);
         public void DeleteStory(long storyId);
         public void DeleteBanner(long bannerId);
 
         public void changepass(long? id, string? password);
         public List<CmsPage> cmsdetail();
+        public List<MissionSkill> missionSkills();
     }
 }

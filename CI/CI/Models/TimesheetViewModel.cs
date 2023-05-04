@@ -15,6 +15,8 @@ namespace CI.Models
         public List<Mission> missions { get; set; }
 
         public List<MissionApplication> missionapplication { get; set; }
+        public List<GoalMission> goalmissions { get; set; }
+        public List<string> goalvalue { get; set; }
         public List<Timesheet> timesheet { get; set; }
         [Required(ErrorMessage = "Date is a Required field.")]
         public DateTime date { get; set; }

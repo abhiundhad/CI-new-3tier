@@ -38,10 +38,16 @@ function filter(pg, sortValue) {
     });
     console.log(theme)
 
+    var skill = [];
+    $("input[type='checkbox'][name='skill']:checked").each(function () {
+        skill.push($(this).val());
+    });
+    console.log(skill)
+
     $.ajax({
         url: "/Employee/Landingpage/Filters",
         type: "POST",
-        data: { 'search': Search, 'sortValue': sortValue, 'country': country, 'city': city, 'theme': theme, 'pg': pg },
+        data: { 'search': Search, 'sortValue': sortValue, 'country': country, 'city': city, 'theme': theme,'skill':skill, 'pg': pg },
 
         success: function (res) {
             $("#missions").html('');

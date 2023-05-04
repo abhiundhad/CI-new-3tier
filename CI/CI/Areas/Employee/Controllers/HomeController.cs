@@ -249,7 +249,7 @@ namespace CI.Areas.Employee.Controllers
         }
         public IActionResult Privacypolicy()
         {
-            var pages = _Idb.cmsdetail().Where(e => e.DeletedAt == null).ToList();
+            var pages = _Idb.cmsdetail().Where(e => e.DeletedAt == null&& e.Status=="1" &&e.Slug== "Privacy and Cookies Policy").ToList();
             ViewBag.Policy = pages;
             var DescList = new List<string>();
             foreach (var page in pages)

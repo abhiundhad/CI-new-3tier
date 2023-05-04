@@ -156,28 +156,71 @@
             });
         }
         function deletecms(id) {
-            $.ajax({
-                url: '/Admin/Admin/DeleteCms',
-                type: 'POST',
-                data: {
-                    CmsPageId: id
-                },
 
-                success: function (response) {
 
-                    //document.getElementById("themeName").value = response.title;
-                    $('#AdminCMSmodal').html($(response).find('#AdminCMSmodal').html());
-                    CKEDITOR.replace('Description');
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
                 },
-                error: function () {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Email already exists',
-                        timer: 2500,
-                    })
+                buttonsStyling: true
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this !",
+                icon: 'warning',
+                width: '300',
+                height: '100',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/Admin/Admin/DeleteCms',
+                        type: 'POST',
+                        data: {
+                            CmsPageId: id
+                        },
+
+                        success: function (response) {
+                            
+                            //document.getElementById("themeName").value = response.title;
+                            $('#AdminCMSmodal').html($(response).find('#AdminCMSmodal').html());
+                            CKEDITOR.replace('Description');
+                            location.reload();
+                        },
+                        error: function () {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Email already exists',
+                                timer: 2500,
+                            })
+                        }
+                    });
+
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+
+                    )
                 }
-            });
+            })
+
+
+
+
+
+
+
+
+        
         }
 
         CKEDITOR.replace('Description');

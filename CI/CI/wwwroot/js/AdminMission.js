@@ -50,24 +50,7 @@ function goalchange() {
 /*Dropzone.autoDiscover = false;*/
 
 $(document).ready(function () {
-    //var myDropzone = new Dropzone("#my-awesome-dropzone", {
-    //    url: "AddMission",
-    //    paramName: "file", // The name that will be used to transfer the file
-    //    maxFilesize: 10, // MB
-    //    acceptedFiles: '.jpeg,.png,.jpg,.pdf,.docx,.xlxs',
-    //    addRemoveLinks: true,
-    //    parallelUploads: 5,
-    //    autoProcessQueue: false,
-    //    uploadMultiple: true,
-    //    dictRemoveFile: '<i class="bi bi-trash"></i>',
-    //    previewsContainer: '.dropzone-previews',
-    //    clickable: '.dz-message',
-
-    //});
-    //$('#missionSave').on('click', function (e) {
-    //    e.preventDefault();
-    //    myDropzone.processQueue();
-    //});
+   
 
     myDropzone.on('sendingmultiple', function () {
         // Add any additional data you want to send with the request

@@ -1007,93 +1007,110 @@ namespace CI.Repository.Repository
         }
 
 
-        public void DeleteMission(long missionId)
+        public bool DeleteMission(long missionId)
         {
             var mission = _db.Missions.FirstOrDefault(t => t.MissionId == missionId);
-            mission.DeletedAt = DateTime.Now;
-            mission.UpdatedAt = DateTime.Now;
-            _db.Update(mission);
-            var missionApplication = _db.MissionApplications.Where(t => t.MissionId == missionId).ToList();
-            foreach (var timesheet in missionApplication)
+            var mission_app=_db.MissionApplications.FirstOrDefault(t=>t.MissionId == missionId&&t.DeletedAt==null);
+            if (mission_app != null || mission.EndDate>DateTime.Now) {
+                return false;
+            } else
             {
-                timesheet.DeletedAt = DateTime.Now;
-                timesheet.UpdatedAt = DateTime.Now;
-                _db.Update(timesheet);
+                mission.DeletedAt = DateTime.Now;
+                mission.UpdatedAt = DateTime.Now;
+                _db.Update(mission);
 
-            }
-            var skills = _db.MissionSkills.Where(t => t.MissionId == missionId).ToList();
-            foreach (var skill in skills)
-            {
-                skill.DeletedAt = DateTime.Now;
-                skill.UpdatedAt = DateTime.Now;
-                _db.Update(skill);
+                var skills = _db.MissionSkills.Where(t => t.MissionId == missionId).ToList();
+                foreach (var skill in skills)
+                {
+                    skill.DeletedAt = DateTime.Now;
+                    skill.UpdatedAt = DateTime.Now;
+                    _db.Update(skill);
 
-            }
-            var timesheets = _db.Timesheets.Where(t => t.MissionId == missionId).ToList();
-            foreach (var timesheet in timesheets)
-            {
-                timesheet.DeletedAt = DateTime.Now;
-                timesheet.UpdatedAt = DateTime.Now;
-                _db.Update(timesheet);
+                }
 
-            }
-            var story = _db.Stories.Where(t => t.MissionId == missionId).ToList();
-            foreach (var skill in story)
-            {
-                skill.DeletedAt = DateTime.Now;
-                skill.UpdatedAt = DateTime.Now;
-                _db.Update(skill);
+                var timesheets = _db.Timesheets.Where(t => t.MissionId == missionId).ToList();
+                foreach (var timesheet in timesheets)
+                {
+                    timesheet.DeletedAt = DateTime.Now;
+                    timesheet.UpdatedAt = DateTime.Now;
+                    _db.Update(timesheet);
 
-            }
-            var favmission = _db.FavoriteMissions.Where(t => t.MissionId == missionId).ToList();
-            foreach (var timesheet in favmission)
-            {
-                timesheet.DeletedAt = DateTime.Now;
-                timesheet.UpdatedAt = DateTime.Now;
-                _db.Update(timesheet);
+                }
+                var story = _db.Stories.Where(t => t.MissionId == missionId).ToList();
+                foreach (var skill in story)
+                {
+                    skill.DeletedAt = DateTime.Now;
+                    skill.UpdatedAt = DateTime.Now;
+                    _db.Update(skill);
 
-            }
-            var comment = _db.Comments.Where(t => t.MissionId == missionId).ToList();
-            foreach (var timesheet in comment)
-            {
-                timesheet.DeletedAt = DateTime.Now;
-                timesheet.UpdatedAt = DateTime.Now;
-                _db.Update(timesheet);
+                }
+                var favmission = _db.FavoriteMissions.Where(t => t.MissionId == missionId).ToList();
+                foreach (var timesheet in favmission)
+                {
+                    timesheet.DeletedAt = DateTime.Now;
+                    timesheet.UpdatedAt = DateTime.Now;
+                    _db.Update(timesheet);
 
-            }
-            var missionRating = _db.MissionRatings.Where(t => t.MissionId == missionId).ToList();
-            foreach (var timesheet in missionRating)
-            {
-                timesheet.DeletedAt = DateTime.Now;
-                timesheet.UpdatedAt = DateTime.Now;
-                _db.Update(timesheet);
+                }
+                var comment = _db.Comments.Where(t => t.MissionId == missionId).ToList();
+                foreach (var timesheet in comment)
+                {
+                    timesheet.DeletedAt = DateTime.Now;
+                    timesheet.UpdatedAt = DateTime.Now;
+                    _db.Update(timesheet);
 
-            }
-            var missionmedia = _db.MissionMedia.Where(t => t.MissionId == missionId).ToList();
-            foreach (var timesheet in missionmedia)
-            {
-                timesheet.DeletedAt = DateTime.Now;
-                timesheet.UpdatedAt = DateTime.Now;
-                _db.Update(timesheet);
+                }
 
-            }
-            var missiondoc = _db.MissionDocuments.Where(t => t.MissionId == missionId).ToList();
-            foreach (var timesheet in missiondoc)
-            {
-                timesheet.DeletedAt = DateTime.Now;
-                timesheet.UpdatedAt = DateTime.Now;
-                _db.Update(timesheet);
+                var missionRating = _db.MissionRatings.Where(t => t.MissionId == missionId).ToList();
+                foreach (var timesheet in missionRating)
+                {
+                    timesheet.DeletedAt = DateTime.Now;
+                    timesheet.UpdatedAt = DateTime.Now;
+                    _db.Update(timesheet);
 
-            }
-            var goalmission = _db.GoalMissions.Where(t => t.MissionId == missionId).ToList();
-            foreach (var timesheet in goalmission)
-            {
-                timesheet.DeletedAt = DateTime.Now;
-                timesheet.UpdatedAt = DateTime.Now;
-                _db.Update(timesheet);
+                }
+                var missionmedia = _db.MissionMedia.Where(t => t.MissionId == missionId).ToList();
+                foreach (var timesheet in missionmedia)
+                {
+                    timesheet.DeletedAt = DateTime.Now;
+                    timesheet.UpdatedAt = DateTime.Now;
+                    _db.Update(timesheet);
 
+                }
+                var missiondoc = _db.MissionDocuments.Where(t => t.MissionId == missionId).ToList();
+                foreach (var timesheet in missiondoc)
+                {
+                    timesheet.DeletedAt = DateTime.Now;
+                    timesheet.UpdatedAt = DateTime.Now;
+                    _db.Update(timesheet);
+
+                }
+                var goalmission = _db.GoalMissions.Where(t => t.MissionId == missionId).ToList();
+                foreach (var timesheet in goalmission)
+                {
+                    timesheet.DeletedAt = DateTime.Now;
+                    timesheet.UpdatedAt = DateTime.Now;
+                    _db.Update(timesheet);
+
+                }
+                _db.SaveChanges();
+                return true;
             }
-            _db.SaveChanges();
+
+            //var missionApplication = _db.MissionApplications.Where(t => t.MissionId == missionId).ToList();
+            //foreach (var timesheet in missionApplication)
+            //{
+            //    timesheet.DeletedAt = DateTime.Now;
+            //    timesheet.UpdatedAt = DateTime.Now;
+            //    _db.Update(timesheet);
+
+            //}
+
+
+
+
+
+
         }
 
         public void DeleteStory(long storyId)
@@ -1132,6 +1149,10 @@ namespace CI.Repository.Repository
         public List<CmsPage> cmsdetail()
         {
             return _db.CmsPages.ToList();
+        }
+        public List<MissionSkill> missionSkills()
+        {
+            return _db.MissionSkills.Where(x => x.DeletedAt == null).ToList();
         }
     }
 }   

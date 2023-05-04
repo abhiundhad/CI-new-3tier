@@ -116,21 +116,65 @@
             });
         }
         function deleteAdminUser(themeId) {
-            $.ajax({
-                url: '/Admin/Admin/deleteTheme',
-                type: 'POST',
-                data: { themeId: themeId },
 
-                success: function (response) {
-
-                    //document.getElementById("themeName").value = response.title;
-                    $('#example').html($(response).find('#example').html());
-
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
                 },
-                error: function () {
-                    alert("could not comment");
+                buttonsStyling: true
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this Theme!",
+                icon: 'warning',
+                width: '300',
+                height: '100',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/Admin/Admin/deleteTheme',
+                        type: 'POST',
+                        data: { themeId: themeId },
+
+                        success: function (response) {
+
+                            //document.getElementById("themeName").value = response.title;
+                            $('#example').html($(response).find('#example').html());
+                            location.reload();
+
+                        },
+                        error: function () {
+                            alert("could not comment");
+                        }
+                    });
+
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+
+                    )
                 }
-            });
+            })
+
+
+
+
+
+
+
+
+
+
+     
         }
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>

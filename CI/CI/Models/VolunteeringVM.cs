@@ -10,6 +10,7 @@ namespace CI.Models
         public string Cityname { get; set; }
         public string username { get; set; }
         public string lastname { get; set; }
+        public List<string> skills { get; set; }
         public long CountryId { get; set; } 
         public string Countryname { get; set; } 
 

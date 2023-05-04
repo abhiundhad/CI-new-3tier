@@ -412,13 +412,19 @@
                 cancelButtonText: 'No',
                 reverseButtons: true
             }).then((result) => {
-                if (result.isConfirmed) {
+                if (result.isConfirmed) 
+                {
                     $.ajax({
                         url: '/Admin/Admin/DeleteMission',
                         type: 'POST',
                         data: { missionId: missionId },
 
                         success: function (response) {
+                            
+                            
+                            if(response==true){
+
+                           
 
                             swalWithBootstrapButtons.fire(
                                 'Deleted!',
@@ -427,10 +433,20 @@
                             )
                             $('#example').html($(response).find('#example').html());
                             location.reload();
+                            }else
+                            {
+                                swalWithBootstrapButtons.fire(
+                                    ' Can Not Delete!',
+                                    'Not Deleted',
+                                    'error'
+                                )
+                            }
+
 
 
                         },
                         error: function () {
+                            debugger;
                             alert("could not comment");
                         }
                     });

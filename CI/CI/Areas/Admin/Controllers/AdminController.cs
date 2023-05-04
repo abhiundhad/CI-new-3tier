@@ -452,13 +452,21 @@ namespace CI_PlatformWeb.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult DeleteMission(long missionId)
         {
-            _Idb.DeleteMission(missionId);
-            var missionvm = new AdminMissionViewModel();
-            missionvm.missions = _Idb.MissionsList();
-            missionvm.countries = _Idb.CountryList();
-            missionvm.cities = _Idb.CityList();
-            missionvm.themes = _Idb.ThemeList();
-            return RedirectToAction("AdminMission");
+           var deleted= _Idb.DeleteMission(missionId);
+            //var missionvm = new AdminMissionViewModel();
+            //missionvm.missions = _Idb.MissionsList();
+            //missionvm.countries = _Idb.CountryList();
+            //missionvm.cities = _Idb.CityList();
+            //missionvm.themes = _Idb.ThemeList();
+            if (deleted == true)
+            {
+                return RedirectToAction("AdminMission");
+            }
+            else
+            {
+              return Json(deleted);
+            }
+        
         }
         [HttpPost]
         public IActionResult DeleteStory(long storyId)
